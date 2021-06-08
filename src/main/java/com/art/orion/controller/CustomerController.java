@@ -1,7 +1,10 @@
-package controllers;
+package com.art.orion.controller;
 
-import validators.EmailValidator;
-import validators.StringValidator;
+import com.art.orion.validator.EmailValidator;
+import com.art.orion.validator.StringValidator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +17,7 @@ import java.util.List;
 
 @WebServlet(name = "CustomerController", urlPatterns = "/registration")
 public class CustomerController extends HttpServlet {
-
+    static Logger logger = LogManager.getLogger();
     @Override
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)
@@ -29,6 +32,7 @@ public class CustomerController extends HttpServlet {
         }
 
         String url = determineUrl(violations);
+        logger.log(Level.INFO, "работа в методе doPost");
         request.getRequestDispatcher(url).forward(request, response);
     }
 
@@ -36,6 +40,7 @@ public class CustomerController extends HttpServlet {
         if (!violations.isEmpty()) {
             return "/";
         } else {
+            logger.log(Level.INFO, "работа в методе determineUrl");
             return "/WEB-INF/views/customerinfo.jsp";
         }
     }

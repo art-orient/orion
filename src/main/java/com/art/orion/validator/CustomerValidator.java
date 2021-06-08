@@ -1,7 +1,7 @@
-package validators;
+package com.art.orion.validator;
 
 
-import entities.Customer;
+import com.art.orion.entity.Customer;
 
 public class CustomerValidator extends BeanValidator<Customer> {
 

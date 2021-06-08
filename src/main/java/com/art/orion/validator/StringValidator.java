@@ -1,4 +1,4 @@
-package validators;
+package com.art.orion.validator;
 
 public class StringValidator {
 

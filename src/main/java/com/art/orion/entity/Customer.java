@@ -1,4 +1,4 @@
-package entities;
+package com.art.orion.entity;
 
 public class Customer {
 
