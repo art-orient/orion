@@ -1,7 +1,7 @@
 package com.art.orion.controller;
 
-import com.art.orion.validator.EmailValidator;
-import com.art.orion.validator.StringValidator;
+import com.art.orion.model.validator.EmailValidator;
+import com.art.orion.model.validator.StringValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package com.art.orion.validator;
+package com.art.orion.model.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

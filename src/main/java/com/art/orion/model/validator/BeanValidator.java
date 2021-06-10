@@ -1,4 +1,4 @@
-package com.art.orion.validator;
+package com.art.orion.model.validator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
