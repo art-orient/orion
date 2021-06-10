@@ -32,6 +32,12 @@ PRIMARY KEY (shoes_id, size),
 FOREIGN KEY (shoes_id) REFERENCES shoes (shoes_id)
 );
 
+CREATE table shoes_add_photos (
+path varchar(100) primary key,
+shoes_id int,
+FOREIGN KEY (shoes_id) REFERENCES shoes (shoes_id)
+);
+
 CREATE table clothes (
 clothes_id int primary key auto_increment,
 brand varchar(30),

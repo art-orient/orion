@@ -1,7 +1,0 @@
-validators\BeanValidator.class
-controllers\CustomerController.class
-controllers\CustomerController$RequestCustomer.class
-entities\Customer.class
-validators\EmailValidator.class
-validators\StringValidator.class
-validators\CustomerValidator.class
