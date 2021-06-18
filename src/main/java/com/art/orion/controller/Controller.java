@@ -25,7 +25,6 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Command command = CommandFactory.defineCommand(req);
@@ -34,13 +33,5 @@ public class Controller extends HttpServlet {
         if (page != null) {
             req.getRequestDispatcher(page).forward(req, resp);
         }
-//        else {
-//            req.setAttribute(REQUEST_ERROR_CODE,
-//                    MessageManager.getMessage("msg.errorCode404"));
-//            req.setAttribute(REQUEST_ERROR_MESSAGE,
-//                    MessageManager.getMessage("msg.errorMessage404"));
-//            req.getRequestDispatcher(ConfigurationManger.getProperty("page.error"))
-//                    .forward(req, resp);
-//        }
     }
 }

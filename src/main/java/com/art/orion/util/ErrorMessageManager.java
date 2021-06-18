@@ -3,10 +3,10 @@ package com.art.orion.util;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MessageManager {
-    protected static final String BUNDLE_NAME = "messages";
+public class ErrorMessageManager {
+    protected static final String BUNDLE_NAME = "message";
 
-    private MessageManager() {
+    private ErrorMessageManager() {
     }
 
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);

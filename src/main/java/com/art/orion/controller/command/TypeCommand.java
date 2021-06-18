@@ -1,10 +1,11 @@
 package com.art.orion.controller.command;
 
 import com.art.orion.controller.command.impl.LanguageCommand;
+import com.art.orion.controller.command.impl.RegistrationCommand;
 
 public enum TypeCommand {
-    LANGUAGE(new LanguageCommand());
-//    REGISTRATION(new RegistrationCommand()),
+    LANGUAGE(new LanguageCommand()),
+    REGISTRATION(new RegistrationCommand());
 //    LOGIN(new LoginCommand()),
 //    LOGOUT(new LogoutCommand()),
 //    HOME(new HomeCommand())

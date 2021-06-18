@@ -10,11 +10,45 @@
 </head>
 <body>
 <jsp:include page="jsp/header.jsp"/>
-
-Кроссовки<br><br>
-Одежда<br><br>
-Акссессуары<br><br>
-Скидки<br><br><br><br><br><br><br><br>
+<br>
+    <div class="catalog">
+    <div class="container">
+    <div class="grid">
+        <div class="grid-cell">
+            <a href="shoes" class="catalog-item">
+                <div class="catalog-img">
+                    <img src="images/clothing.PNG" alt="Кроссовки">
+                </div>
+                <div class="catalog-name">Кроссовки</div>
+            </a>
+        </div>
+        <div class="grid-cell">
+            <a href="clothing" class="catalog-item">
+                <div class="catalog-img">
+                    <img src="images/clothing.PNG" alt="Одежда">
+                </div>
+                <div class="catalog-name">Одежда</div>
+            </a>
+        </div>
+        <div class="grid-cell">
+            <a href="accessory" class="catalog-item">
+                <div class="catalog-img">
+                    <img src="images/clothing.PNG" alt="Аксессуары">
+                </div>
+                <div class="catalog-name">Аксессуары</div>
+            </a>
+        </div>
+        <div class="grid-cell">
+            <a href="sale" class="catalog-item">
+                <div class="catalog-img">
+                    <img src="images/clothing.PNG" alt="Товары со скидкой">
+                </div>
+                <div class="catalog-name">Товары со скидкой</div>
+            </a>
+        </div>
+    </div>
+    </div>
+    </div>
 
 <jsp:include page="jsp/footer.jsp"/>
 </body>

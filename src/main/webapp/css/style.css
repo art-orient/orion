@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
 img {
     display: block;
     border-radius:25px;
-    max-width: 100%
+    max-width: 70%
 }
 
 a {
@@ -88,9 +88,9 @@ em {
 
 @media screen and (min-width:750px) {
     .header {
-        background: -webkit-linear-gradient(top, rgba(0, 0, 0, .2),
-        rgba(0, 0, 0, .5)), url(../images/backgrounds/running.jpg);
-        background: linear-gradient(180deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5)),
+        background: -webkit-linear-gradient(top, rgba(0, 0, 0, .1),
+        rgba(0, 0, 0, .1)), url(../images/backgrounds/running.jpg);
+        background: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)),
         url(../images/backgrounds/running.jpg);
         background-repeat: no-repeat;
         background-position: center center;
@@ -102,9 +102,9 @@ em {
 
 @media screen and (max-width:750px) {
     .header {
-        background: -webkit-linear-gradient(top, rgba(0, 0, 0, .2),
-        rgba(0, 0, 0, .5)), url(../images/backgrounds/running.jpg);
-        background: linear-gradient(180deg, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5)),
+        background: -webkit-linear-gradient(top, rgba(0, 0, 0, .1),
+        rgba(0, 0, 0, .1)), url(../images/backgrounds/running.jpg);
+        background: linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .1)),
         url(../images/backgrounds/running.jpg);
         background-repeat: no-repeat;
         background-position: center center;
@@ -242,13 +242,12 @@ em {
     -ms-flex-align: end;
     align-items: flex-end;
     background: -webkit-linear-gradient(top, transparent, #312a10),
-    url(../images/backgrounds/discthrower.jpg);
-    background: linear-gradient(180deg, transparent, #312a10),
-    url(../images/backgrounds/discthrower.jpg);
+    url(../images/backgrounds/orient.jpg);
+    background: url(../images/backgrounds/orient.jpg);
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center bottom;
     background-size: cover;
-    height: 100vh;
+    height: 75vh;
     max-height: 800px
 }
 
@@ -698,3 +697,21 @@ section#login {
     text-align: center;
 }
 
+.catalog {
+    padding: 30px, 0, 15px, 0;
+}
+
+.grid {
+    padding: 30px, 0, 15px, 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+.grid-cell {
+    width: 25%;
+    margin-bottom: 8px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
