@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
+    private static final String CURRENT_PAGE = "current_page";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,7 +30,7 @@ public class Controller extends HttpServlet {
             throws ServletException, IOException {
         Command command = CommandFactory.defineCommand(req);
         String page = command.execute(req);
-        System.out.println(page);
+        req.getSession().setAttribute(CURRENT_PAGE, page);
         if (page != null) {
             req.getRequestDispatcher(page).forward(req, resp);
         }

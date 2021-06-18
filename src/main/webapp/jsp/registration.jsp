@@ -25,12 +25,12 @@
 
 <form action="${pageContext.request.contextPath}/registration" method="post">
     <label for="firstname"><fmt:message key="ui.firstname"/>: </label>
-    <input type="text" name="firstname" id="firstname" value="${firstname}">
+    <input type="text" name="firstname" id="firstname" value="${firstname}"><br>
     <label for="lastname"><fmt:message key="ui.lastname"/>:
-        <input type="text" name="lastname" id="lastname" value="${lastname}">
-        <label for="email">Email: </label>
-        <input type="text" name="email" id="email" value="${email}">
-        <input type="submit" name="signup" value="Sign Up">
+        <input type="text" name="lastname" id="lastname" value="${lastname}"><br>
+        <label for="email">e-mail: </label>
+        <input type="text" name="email" id="email" value="${email}"><br>
+        <input type="submit" name="signup" value="<fmt:message key="ui.signUp"/>">
 </form>
 <br><br>
 <jsp:include page="footer.jsp"/>

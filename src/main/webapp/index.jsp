@@ -49,7 +49,7 @@
     </div>
     </div>
     </div>
-
+<br>
 <jsp:include page="jsp/footer.jsp"/>
 </body>
 </html>

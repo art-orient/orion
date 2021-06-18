@@ -13,15 +13,17 @@
 <nav class="nav" role="navigation">
     <div class="container nav-elements">
         <div class="branding">
-            <a href="/"><img src="images/OrionLogo.PNG" alt="Logo of club Orion"></a>
+            <a href="/controller?command=home"><img src="images/OrionLogo.PNG" alt="Logo of club Orion"></a>
         </div>
     <ul class="navbar">
-        <li>
-            <form action="controller" method="get">
-                <input type="hidden" name="command" value="home"/>
-                <input type="submit" value='<fmt:message key="ui.header.home"/>'/>
-            </form>
-        </li>
+        <c:if test="${sessionScope.current_page != null && sessionScope.current_page != 'index.jsp'}">
+            <li>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="home"/>
+                    <input type="submit" value='<fmt:message key="ui.header.home"/>'/>
+                </form>
+            </li>
+        </c:if>
         <li>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="searchShoes"/>
