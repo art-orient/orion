@@ -17,7 +17,7 @@
         <div class="grid-cell">
             <a href="shoes" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/clothing.PNG" alt="Кроссовки">
+                    <img src="images/asics.JPG" alt="Кроссовки">
                 </div>
                 <div class="catalog-name">Кроссовки</div>
             </a>
@@ -25,7 +25,7 @@
         <div class="grid-cell">
             <a href="clothing" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/clothing.PNG" alt="Одежда">
+                    <img src="images/noname.JPEG" alt="Одежда">
                 </div>
                 <div class="catalog-name">Одежда</div>
             </a>
@@ -33,7 +33,7 @@
         <div class="grid-cell">
             <a href="accessory" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/clothing.PNG" alt="Аксессуары">
+                    <img src="images/mizuno.jpg" alt="Аксессуары">
                 </div>
                 <div class="catalog-name">Аксессуары</div>
             </a>
@@ -41,7 +41,7 @@
         <div class="grid-cell">
             <a href="sale" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/clothing.PNG" alt="Товары со скидкой">
+                    <img src="images/saucony.JPG" alt="Товары со скидкой">
                 </div>
                 <div class="catalog-name">Товары со скидкой</div>
             </a>
