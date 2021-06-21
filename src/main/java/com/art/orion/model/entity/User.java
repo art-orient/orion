@@ -13,14 +13,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, String email, Role role) {
+    public User(String username, String firstName, String lastName, String email) {
         this.username = username;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = role;
-        this.active = true;
     }
 
     public String getUsername() {
@@ -77,5 +74,18 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", active=" + active +
+                '}';
     }
 }

@@ -20,7 +20,7 @@
     <div class="container">
     <div class="grid">
         <div class="grid-cell">
-            <a href="shoes" class="catalog-item">
+            <a href="/controller?command=shoes" class="catalog-item">
                 <div class="catalog-img">
                     <img src="images/asics.JPG" alt="<fmt:message key="ui.shoes"/>">
                 </div>
@@ -28,7 +28,7 @@
             </a>
         </div>
         <div class="grid-cell">
-            <a href="clothing" class="catalog-item">
+            <a href="/controller?command=clothing" class="catalog-item">
                 <div class="catalog-img">
                     <img src="images/noname.JPEG" alt="<fmt:message key="ui.clothing"/>">
                 </div>
@@ -36,7 +36,7 @@
             </a>
         </div>
         <div class="grid-cell">
-            <a href="accessory" class="catalog-item">
+            <a href="/controller?command=accessories" class="catalog-item">
                 <div class="catalog-img">
                     <img src="images/mizuno.jpg" alt="<fmt:message key="ui.accessory"/>">
                 </div>
@@ -44,7 +44,7 @@
             </a>
         </div>
         <div class="grid-cell">
-            <a href="sale" class="catalog-item">
+            <a href="/controller?command=sale" class="catalog-item">
                 <div class="catalog-img">
                     <img src="images/saucony.JPG" alt="<fmt:message key="ui.sale"/>">
                 </div>

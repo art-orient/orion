@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:if test="${sessionScope.language != null}">
@@ -20,21 +20,16 @@
         <h1><fmt:message key="ui.registration"/></h1>
         <br>
         <em>${sessionScope.registrationStatus}</em>
-        <c:if test="${violations != null}">
-            <c:forEach items="${violations}" var="violation">
-                <p>${violation}.</p>
-            </c:forEach>
-        </c:if>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="register_user"/>
             <label for="username"><fmt:message key="ui.username"/>: </label><br>
-            <input type="text" minlength="4" maxlength="30" name="username" id="username"
+            <input type="text" minlength="3" maxlength="30" name="username" id="username"
                    value="${username}" required><br><br>
             <label for="password"><fmt:message key="ui.password"/>: </label><br>
-            <input type="text" minlength="8" maxlength="40" name="password" id="password"
+            <input type="text" minlength="6" maxlength="40" name="password" id="password"
                    value="${password}" required><br><br>
             <label for="confirmPassword"><fmt:message key="ui.confirmPassword"/>: </label><br>
-            <input type="text" minlength="8" maxlength="40" name="confirmPassword" id="confirmPassword"
+            <input type="text" minlength="6" maxlength="40" name="confirmPassword" id="confirmPassword"
                    value="${confirmPassword}" required><br><br>
             <label for="firstname"><fmt:message key="ui.firstname"/>: </label><br>
             <input type="text" minlength="2" name="firstname" id="firstname" value="${firstname}"><br><br>

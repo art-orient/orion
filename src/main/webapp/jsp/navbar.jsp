@@ -26,19 +26,19 @@
         </c:if>
         <li>
             <form action="controller" method="get">
-                <input type="hidden" name="command" value="searchShoes"/>
+                <input type="hidden" name="command" value="shoes"/>
                 <input type="submit" value='<fmt:message key="ui.shoes"/>'/>
             </form>
         </li>
         <li>
             <form action="controller" method="get">
-                <input type="hidden" name="command" value="searchClothing"/>
+                <input type="hidden" name="command" value="clothing"/>
                 <input type="submit" value='<fmt:message key="ui.clothing"/>'/>
             </form>
         </li>
         <li>
             <form action="controller" method="get">
-                <input type="hidden" name="command" value="searchAccessory"/>
+                <input type="hidden" name="command" value="accessories"/>
                 <input type="submit" value='<fmt:message key="ui.accessory"/>'/>
             </form>
         </li>

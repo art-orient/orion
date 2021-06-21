@@ -20,13 +20,13 @@
             <br><br>
             <h2><fmt:message key="ui.error.headline"/></h2>
             <p>
-                <fmt:message key="ui.error.code"/> ${errorCode}
+                <fmt:message key="ui.error.code"/> <c:out value="${errorCode}"/>
                 <c:if test="${errorCode == null}">
                     <fmt:message key="ui.errorCode500"/>
                 </c:if>
             </p>
             <p>
-                ${errorMessage}
+                <c:out value="${errorMessage}"/>
                 <c:if test="${errorMessage == null}">
                     <fmt:message key="ui.errorMessage500"/><br>
                     <fmt:message key="ui.tryAgain"/>

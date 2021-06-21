@@ -2,7 +2,6 @@ package com.art.orion.controller;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.CommandFactory;
-import com.art.orion.util.Constant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +35,7 @@ public class Controller extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         Command command = CommandFactory.defineCommand(req);
         String page = command.execute(req);
         req.getSession().setAttribute(CURRENT_PAGE, page);
