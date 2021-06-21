@@ -19,7 +19,7 @@
         <br>
         <h1><fmt:message key="ui.registration"/></h1>
         <br>
-        <em>${sessionScope.registrationStatus}</em>
+        <em><c:out value="${sessionScope.registrationStatus}"/></em><br><br>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="register_user"/>
             <label for="username"><fmt:message key="ui.username"/>: </label><br>

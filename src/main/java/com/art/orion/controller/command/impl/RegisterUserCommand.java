@@ -41,7 +41,6 @@ public class RegisterUserCommand implements Command {
                 user.setRole(Role.CUSTOMER);
             }
             user.setActive(true);
-            System.out.println(user);
             if (UserService.registerUser(user)) {
                 registrationStatus = ErrorMessageManager.getMessage("msg.registrationSuccess");
                 logger.log(Level.INFO, "User registered successfully");
@@ -52,7 +51,7 @@ public class RegisterUserCommand implements Command {
         } else {
             registrationStatus = validationStatus.toString();
         }
-        req.setAttribute(REGISTRATION_STATUS, registrationStatus);
-        return ConfigManager.getProperty("page.confirmRegistration");
+        req.getSession().setAttribute(REGISTRATION_STATUS, registrationStatus);
+        return ConfigManager.getProperty("page.registration");
     }
 }

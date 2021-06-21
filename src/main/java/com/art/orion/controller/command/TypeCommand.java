@@ -1,9 +1,6 @@
 package com.art.orion.controller.command;
 
-import com.art.orion.controller.command.impl.HomeCommand;
-import com.art.orion.controller.command.impl.LanguageCommand;
-import com.art.orion.controller.command.impl.RegisterUserCommand;
-import com.art.orion.controller.command.impl.RegistrationCommand;
+import com.art.orion.controller.command.impl.*;
 
 public enum TypeCommand {
     LANGUAGE(new LanguageCommand()),
