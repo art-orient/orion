@@ -8,12 +8,16 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class RegistrationCommand implements Command {
+import static com.art.orion.util.Constant.CURRENT_PAGE;
+
+public class EmptyCommand implements Command {
     static Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
-        logger.log(Level.INFO, "redirect on page for registration");
-        return ConfigManager.getProperty("page.registration");
+        logger.log(Level.INFO, "redirect on error page");
+        String errorPage = ConfigManager.getProperty("page.error");
+        req.getSession().setAttribute(CURRENT_PAGE, errorPage);
+        return errorPage;
     }
 }

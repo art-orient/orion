@@ -1,5 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:if test="${sessionScope.language != null}">
+    <fmt:setLocale value="${sessionScope.language}"/>
+</c:if>
+<fmt:setBundle basename="ui"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,33 +22,33 @@
         <div class="grid-cell">
             <a href="shoes" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/asics.JPG" alt="Кроссовки">
+                    <img src="images/asics.JPG" alt="<fmt:message key="ui.shoes"/>">
                 </div>
-                <div class="catalog-name">Кроссовки</div>
+                <div class="catalog-name"><fmt:message key="ui.shoes"/></div>
             </a>
         </div>
         <div class="grid-cell">
             <a href="clothing" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/noname.JPEG" alt="Одежда">
+                    <img src="images/noname.JPEG" alt="<fmt:message key="ui.clothing"/>">
                 </div>
-                <div class="catalog-name">Одежда</div>
+                <div class="catalog-name"><fmt:message key="ui.clothing"/></div>
             </a>
         </div>
         <div class="grid-cell">
             <a href="accessory" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/mizuno.jpg" alt="Аксессуары">
+                    <img src="images/mizuno.jpg" alt="<fmt:message key="ui.accessory"/>">
                 </div>
-                <div class="catalog-name">Аксессуары</div>
+                <div class="catalog-name"><fmt:message key="ui.accessory"/></div>
             </a>
         </div>
         <div class="grid-cell">
             <a href="sale" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/saucony.JPG" alt="Товары со скидкой">
+                    <img src="images/saucony.JPG" alt="<fmt:message key="ui.sale"/>">
                 </div>
-                <div class="catalog-name">Товары со скидкой</div>
+                <div class="catalog-name"><fmt:message key="ui.sale"/></div>
             </a>
         </div>
     </div>

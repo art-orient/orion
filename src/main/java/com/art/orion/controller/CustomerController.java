@@ -18,6 +18,7 @@ import java.util.List;
 @WebServlet(name = "CustomerController", urlPatterns = "/registration")
 public class CustomerController extends HttpServlet {
     static Logger logger = LogManager.getLogger();
+
     @Override
     protected void doPost(
             HttpServletRequest request, HttpServletResponse response)

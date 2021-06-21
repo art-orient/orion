@@ -16,6 +16,7 @@ public class ErrorMessageManager {
     }
 
     public static void setLocale(String language) {
+        Locale.setDefault(new Locale(language));
         resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME, new Locale(language));
     }
 }

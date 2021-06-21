@@ -1,19 +1,25 @@
 package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
-import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class RegistrationCommand implements Command {
+import static com.art.orion.util.Constant.USERNAME;
+import static com.art.orion.util.Constant.PASSWORD;
+
+public class RegisterUserCommand implements Command {
     static Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
-        logger.log(Level.INFO, "redirect on page for registration");
-        return ConfigManager.getProperty("page.registration");
+        String username = req.getParameter(USERNAME);
+        String password = req.getParameter(PASSWORD);
+
+
+        logger.log(Level.INFO, "registration of new user");
+        return null;
     }
 }

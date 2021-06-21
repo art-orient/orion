@@ -289,6 +289,12 @@ em {
     line-height: 110%
 }
 
+#error.section {
+    background: url(../images/backgrounds/404.JPG);
+    height: 25em;
+    justify-content: flex-start;
+}
+
 .section {
     min-height: 40vh;
     display: -webkit-box;
@@ -304,7 +310,7 @@ em {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     justify-content: center;
-    line-height: 160%
+    line-height: 100%
 }
 
 .headline {
@@ -581,18 +587,6 @@ section#products>li>button {
     margin: 5px;
 }
 
-#registration input#username {
-    margin: 5px;
-}
-
-#registration input#age {
-    margin-left: 65px;
-}
-
-#registration input#password {
-    margin-left: 10px;
-}
-
 #registration input[type="submit"]{
     padding: 5px 10px;;
     background-color: #f3d350;
@@ -603,8 +597,6 @@ section#products>li>button {
 #registration label {
     font-family: Raleway, Helvetica, Arial, sans-serif;
     color: #fff;
-
-
 }
 
 section#registration {
@@ -800,4 +792,5 @@ section#login {
     bottom: 0;
     margin: auto 0;
 }
+
 
