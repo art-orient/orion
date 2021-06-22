@@ -5,7 +5,17 @@ import com.art.orion.model.entity.User;
 
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoJdbc implements UserDao {
+    private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
+
+
+    private UserDaoJdbc() {
+    }
+
+    public static UserDaoJdbc getInstance() {
+        return INSTANCE;
+    }
+
     @Override
     public boolean createUser(User user) {
         return false;

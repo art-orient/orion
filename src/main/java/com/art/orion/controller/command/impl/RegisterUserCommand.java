@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.art.orion.util.Constant.*;
 
 public class RegisterUserCommand implements Command {
-    static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
