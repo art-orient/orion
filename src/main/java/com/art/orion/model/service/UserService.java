@@ -1,8 +1,15 @@
 package com.art.orion.model.service;
 
+import com.art.orion.model.dao.UserDao;
+import com.art.orion.model.dao.impl.UserDaoJdbc;
 import com.art.orion.model.entity.User;
 
 public class UserService {
+    private static final UserDao USER_DAO = UserDaoJdbc.getInstance();
+
+    private UserService() {
+    }
+
     public static boolean isUsernameExists (String username) {
         boolean isUsernameExists = false;
 //        get data from DB
@@ -15,7 +22,6 @@ public class UserService {
     }
 
     public static boolean registerUser(User user) {
-//        send data to DB
-        return true;
+        return USER_DAO.createUser(user);
     }
 }

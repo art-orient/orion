@@ -28,10 +28,10 @@
             <input type="text" minlength="3" maxlength="30" name="username" id="username"
                    value="${username}" required><br><br>
             <label for="password"><fmt:message key="ui.password"/>: </label><br>
-            <input type="text" minlength="6" maxlength="40" name="password" id="password"
+            <input type="text" minlength="5" maxlength="40" name="password" id="password"
                    value="${password}" required><br><br>
             <label for="confirmPassword"><fmt:message key="ui.confirmPassword"/>: </label><br>
-            <input type="text" minlength="6" maxlength="40" name="confirmPassword" id="confirmPassword"
+            <input type="text" minlength="5" maxlength="40" name="confirmPassword" id="confirmPassword"
                    value="${confirmPassword}" required><br><br>
             <label for="firstname"><fmt:message key="ui.firstname"/>: </label><br>
             <input type="text" minlength="2" name="firstname" id="firstname" value="${firstname}"><br><br>

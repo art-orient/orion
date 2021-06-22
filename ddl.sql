@@ -4,7 +4,7 @@ USE orion;
 
 CREATE table users (
 username varchar(30) primary key not null,
-password varchar(30) not null,
+password varchar(65) not null,
 first_name varchar(30),
 last_name varchar(30),
 email varchar(50),
