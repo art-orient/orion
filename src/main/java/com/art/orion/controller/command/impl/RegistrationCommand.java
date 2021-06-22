@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationCommand implements Command {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {

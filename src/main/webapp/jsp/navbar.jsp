@@ -51,7 +51,7 @@
             </li>
             <li>
                 <form action="controller" method="get">
-                    <input type="hidden" name="command" value="registration"/>
+                    <input type="hidden" name="command" value="check_reg_status"/>
                     <input type="submit" value='<fmt:message key="ui.newUser"/>'/>
                 </form>
             </li>

@@ -19,7 +19,9 @@
         <br>
         <h1><fmt:message key="ui.registration"/></h1>
         <br>
+    <c:if test="${sessionScope.registrationStatus != ''}">
         <em><c:out value="${sessionScope.registrationStatus}"/></em><br><br>
+    </c:if>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="register_user"/>
             <label for="username"><fmt:message key="ui.username"/>: </label><br>

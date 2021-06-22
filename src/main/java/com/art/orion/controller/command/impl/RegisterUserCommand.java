@@ -51,7 +51,7 @@ public class RegisterUserCommand implements Command {
         } else {
             registrationStatus = validationStatus.toString();
         }
-        req.getSession().setAttribute(REGISTRATION_STATUS, registrationStatus);
-        return ConfigManager.getProperty("page.registration");
+        req.setAttribute(REGISTRATION_STATUS, registrationStatus);
+        return ConfigManager.getProperty("page.checkRegStatus");
     }
 }
