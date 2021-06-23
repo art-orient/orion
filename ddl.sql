@@ -5,10 +5,10 @@ USE orion;
 CREATE table users (
 username varchar(30) primary key not null,
 password varchar(64) not null,
-first_name varchar(30),
-last_name varchar(30),
+firstname varchar(30),
+lastname varchar(30),
 email varchar(50),
-user_role int not null,
+role int not null,
 active boolean
 );
 

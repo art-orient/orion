@@ -39,7 +39,7 @@ public enum ConnectionPool {
             logger.log(Level.INFO, "Database connection pool created");
         } catch (ClassNotFoundException | SQLException e) {
             logger.log(Level.FATAL,e.getMessage(), e);
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // user exceptions
         }
     }
 
@@ -67,7 +67,7 @@ public enum ConnectionPool {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 freeConnections.take().reallyClose();
-                logger.log(Level.DEBUG, "MySQL driver deregistered");
+                logger.log(Level.INFO, "Connection is closed");
             } catch (SQLException | InterruptedException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
             }
@@ -79,6 +79,7 @@ public enum ConnectionPool {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
                 DriverManager.deregisterDriver(driver);
+                logger.log(Level.DEBUG, "MySQL driver deregistered");
             } catch (SQLException e) {
                 logger.log(Level.ERROR, e.getMessage(), e);
             }

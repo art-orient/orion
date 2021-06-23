@@ -31,7 +31,8 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
     font-family: Raleway, Helvetica, Arial, sans-serif;
-    color: #bfc406
+    color: #bfc406;
+    text-transform: uppercase;
 }
 
 img {
@@ -594,7 +595,7 @@ section#products>li>button {
     border-radius: 5px;
 }
 
-#registration label {
+#registration label, #login label {
     font-family: Raleway, Helvetica, Arial, sans-serif;
     color: #fff;
 }
@@ -645,10 +646,6 @@ span#size{
 
 section#login {
     background-color: #8f9305;
-}
-
-#login input#password{
-    margin-left: 5px;
 }
 
 #orderHistory th{

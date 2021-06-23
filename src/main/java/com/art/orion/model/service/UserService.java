@@ -21,4 +21,12 @@ public class UserService {
     public static boolean registerUser(User user) {
         return USER_DAO.createUser(user);
     }
+
+    public static boolean validateCredentials(String username, String password) {
+        return USER_DAO.validateCredentials(username, password);
+    }
+
+    public static User getUser(String username) {
+        return USER_DAO.getUser(username);
+    }
 }

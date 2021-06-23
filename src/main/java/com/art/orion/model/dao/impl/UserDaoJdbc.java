@@ -1,8 +1,10 @@
 package com.art.orion.model.dao.impl;
 
 import com.art.orion.model.dao.UserDao;
+import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
 import com.art.orion.model.pool.ConnectionPool;
+import com.art.orion.util.Constant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,12 +12,15 @@ import org.apache.logging.log4j.Logger;
 import java.sql.*;
 import java.util.List;
 
+import static com.art.orion.util.Constant.*;
+
 public class UserDaoJdbc implements UserDao {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
     private static final String INSERT_USER = "INSERT INTO users VALUE (?, ?, ?, ?, ?, ?, ?)";
     private static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
     private static final String GET_USER = "SELECT * FROM users WHERE username = ?";
+    private static final String GET_USER_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ? AND password = ?";
 
     private UserDaoJdbc() {
     }
@@ -66,13 +71,26 @@ public class UserDaoJdbc implements UserDao {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
             preparedStatement.setString(1, username);
-            preparedStatement.executeUpdate();
-
-        // ......create user...
-
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    user = createUserFromDatabase(resultSet);
+                }
+            }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
         }
+        return user;
+    }
+
+    private User createUserFromDatabase(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setUsername(resultSet.getString(USERNAME));
+        user.setPassword(resultSet.getString(PASSWORD));
+        user.setFirstName(resultSet.getString(FIRSTNAME));
+        user.setLastName(resultSet.getString(LASTNAME));
+        user.setEmail(resultSet.getString(EMAIL));
+        user.setRole(Role.values()[resultSet.getInt(ROLE)]);
+        user.setActive(resultSet.getBoolean(ACTIVE));
         return user;
     }
 
@@ -104,6 +122,19 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public boolean validateCredentials(String username, String password) {
-        return false;
+        boolean isValid = false;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_CREDENTIALS)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    isValid = true;
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage(), e);
+        }
+        return isValid;
     }
 }

@@ -7,9 +7,10 @@ public enum TypeCommand {
     HOME(new HomeCommand()),
     REGISTRATION(new RegistrationCommand()),
     REGISTER_USER(new RegisterUserCommand()),
-    CHECK_REG_STATUS(new CheckRegStatusCommand());
-//    LOGIN(new LoginCommand()),
-//    LOGOUT(new LogoutCommand()),
+    CHECK_REG_STATUS(new CheckRegStatusCommand()),
+    LOGIN(new LoginCommand()),
+    LOGIN_USER(new LoginUserCommand()),
+    LOGOUT(new LogoutCommand());
 
     private final Command command;
 

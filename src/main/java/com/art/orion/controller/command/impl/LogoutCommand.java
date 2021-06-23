@@ -8,12 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class HomeCommand implements Command {
+public class LogoutCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
-        logger.log(Level.INFO, "redirect on index");
+        req.getSession().invalidate();
+        logger.log(Level.INFO, "user's logout");
         return ConfigManager.getProperty("page.index");
     }
 }

@@ -14,7 +14,7 @@ import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 
 public class LanguageCommand implements Command {
-    static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {

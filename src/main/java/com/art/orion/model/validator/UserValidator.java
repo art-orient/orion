@@ -5,7 +5,7 @@ import com.art.orion.util.ErrorMessageManager;
 
 public class UserValidator {
     private static final String USERNAME_REGEX = "[a-zA-Z\\d_\\-.]{3,30}";
-    private static final String PASSWORD_REGEX = "[a-zA-Zа-яА-я\\d\\p{Punct}]{5,40}";
+    private static final String PASSWORD_REGEX = "[a-zA-ZА-я\\d\\p{Punct}]{5,40}";
     private static final String NAME_REGEX = "[a-zA-ZА-я-]{2,30}";
 
     public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
@@ -43,7 +43,7 @@ public class UserValidator {
     }
 
     private boolean isNotValidUsername(String username) {
-        boolean isNotValidUsername = false;
+        boolean isNotValidUsername;
         if (username==null || username.isEmpty()) {
             isNotValidUsername = true;
         } else {
@@ -53,7 +53,7 @@ public class UserValidator {
     }
 
     private boolean isNotValidPassword(String password) {
-        boolean isNotValidPassword = false;
+        boolean isNotValidPassword;
         if (password==null || password.isEmpty()) {
             isNotValidPassword = true;
         } else {

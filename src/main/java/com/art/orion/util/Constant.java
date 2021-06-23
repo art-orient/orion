@@ -13,4 +13,7 @@ public class Constant {
     public static final String LASTNAME = "lastname";
     public static final String EMAIL = "email";
     public static final String REGISTRATION_STATUS = "registrationStatus";
+    public static final String ROLE = "role";
+    public static final String ERROR = "error";
+    public static final String ACTIVE = "active";
 }

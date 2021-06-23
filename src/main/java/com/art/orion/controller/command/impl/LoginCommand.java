@@ -8,12 +8,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class HomeCommand implements Command {
+public class LoginCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
-        logger.log(Level.INFO, "redirect on index");
-        return ConfigManager.getProperty("page.index");
+        logger.log(Level.DEBUG, "Call login page");
+        return ConfigManager.getProperty("page.login");
     }
 }
