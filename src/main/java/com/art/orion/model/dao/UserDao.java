@@ -8,11 +8,13 @@ public interface UserDao {
 
     boolean createUser(User user);
 
+    boolean checkIsUsernameBusy(String username);
+
+    int countUsers();
+
     User getUser (String username);
 
     boolean updateUser (User user);
-
-    int countUsers();
 
     List<User> getUsers();
 

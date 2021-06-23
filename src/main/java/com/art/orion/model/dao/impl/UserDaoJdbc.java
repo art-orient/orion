@@ -15,6 +15,7 @@ public class UserDaoJdbc implements UserDao {
     private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
     private static final String INSERT_USER = "INSERT INTO users VALUE (?, ?, ?, ?, ?, ?, ?)";
     private static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
+    private static final String GET_USER = "SELECT * FROM users WHERE username = ?";
 
     private UserDaoJdbc() {
     }
@@ -43,8 +44,36 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
+    public boolean checkIsUsernameBusy(String username) {
+        boolean isUsernameBusy = false;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    isUsernameBusy = true;
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage(), e);
+        }
+        return isUsernameBusy;
+    }
+
+    @Override
     public User getUser(String username) {
-        return null;
+        User user = null;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
+            preparedStatement.setString(1, username);
+            preparedStatement.executeUpdate();
+
+        // ......create user...
+
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage(), e);
+        }
+        return user;
     }
 
     @Override
@@ -69,6 +98,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public List<User> getUsers() {
+
         return null;
     }
 

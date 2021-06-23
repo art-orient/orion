@@ -11,7 +11,7 @@ public class UserValidator {
     public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
                                 String lastname, String email, StringBuilder validationStatus) {
         boolean isValidUser = true;
-        if (UserService.isUsernameExists(username)) {
+        if (UserService.checkIsUsernameBusy(username)) {
             validationStatus.append(ErrorMessageManager.getMessage("msg.nameExists")).append("\n");
             isValidUser = false;
         }

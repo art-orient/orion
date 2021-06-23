@@ -10,10 +10,8 @@ public class UserService {
     private UserService() {
     }
 
-    public static boolean isUsernameExists (String username) {
-        boolean isUsernameExists = false;
-//        get data from DB
-        return isUsernameExists;
+    public static boolean checkIsUsernameBusy(String username) {
+        return USER_DAO.checkIsUsernameBusy(username);
     }
 
     public static boolean isFirstUser() {
