@@ -17,8 +17,7 @@ public class UserService {
     }
 
     public static boolean isFirstUser() {
-//        get data from DB
-        return true;
+        return USER_DAO.countUsers() == 0;
     }
 
     public static boolean registerUser(User user) {

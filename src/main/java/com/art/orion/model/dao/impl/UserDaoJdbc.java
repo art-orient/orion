@@ -7,15 +7,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public class UserDaoJdbc implements UserDao {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
-    private static final String INSERT_USER = "INSERT into users value (?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER = "INSERT INTO users VALUE (?, ?, ?, ?, ?, ?, ?)";
+    private static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
 
     private UserDaoJdbc() {
     }
@@ -31,7 +30,6 @@ public class UserDaoJdbc implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
-            System.out.println(user.getPassword().length() + "--------");
             preparedStatement.setString(3, user.getFirstName());
             preparedStatement.setString(4, user.getLastName());
             preparedStatement.setString(5, user.getEmail());
@@ -56,7 +54,17 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public int countUsers() {
-        return 0;
+        int numberUsers = 0;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_USERS)) {
+            if (resultSet.next()) {
+                numberUsers = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e.getMessage(), e);
+        }
+        return numberUsers;
     }
 
     @Override
