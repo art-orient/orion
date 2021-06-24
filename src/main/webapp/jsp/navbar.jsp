@@ -85,6 +85,29 @@
         </li>
     </ul>
     </div>
+<c:if test="${sessionScope.role == 'ADMIN'}">
+    <br><br>
+    <ul class="navbar" id="admin">
+        <li>
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="product_management"/>
+                <input type="submit" value='<fmt:message key="ui.productManagement"/>'/>
+            </form>
+        </li><br>
+        <li>
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="product_management"/>
+                <input type="submit" value='<fmt:message key="ui.userManagement"/>'/>
+            </form>
+        </li><br>
+        <li>
+            <form action="controller" method="get">
+                <input type="hidden" name="command" value="product_management"/>
+                <input type="submit" value='<fmt:message key="ui.orderManagement"/>'/>
+            </form>
+        </li>
+    </div>
+</c:if>
 </nav>
 </body>
 </html>

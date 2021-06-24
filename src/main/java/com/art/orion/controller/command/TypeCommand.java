@@ -10,7 +10,9 @@ public enum TypeCommand {
     CHECK_REG_STATUS(new CheckRegStatusCommand()),
     LOGIN(new LoginCommand()),
     LOGIN_USER(new LoginUserCommand()),
-    LOGOUT(new LogoutCommand());
+    LOGOUT(new LogoutCommand()),
+    PRODUCT_MANAGEMENT(new ProductManagementCommand()),
+    ACCESSORIES(new AccessoriesCommand());
 
     private final Command command;
 
