@@ -67,13 +67,13 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public User getUser(String username) {
-        User user = null;
+        User user = new User();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
             preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    user = createUserFromDatabase(resultSet);
+                    user = createUserFromDatabase(resultSet, user);
                 }
             }
         } catch (SQLException e) {
@@ -82,8 +82,7 @@ public class UserDaoJdbc implements UserDao {
         return user;
     }
 
-    private User createUserFromDatabase(ResultSet resultSet) throws SQLException {
-        User user = new User();
+    private User createUserFromDatabase(ResultSet resultSet, User user) throws SQLException {
         user.setUsername(resultSet.getString(USERNAME));
         user.setPassword(resultSet.getString(PASSWORD));
         user.setFirstName(resultSet.getString(FIRSTNAME));

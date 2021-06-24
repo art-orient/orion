@@ -1,5 +1,6 @@
 package com.art.orion.model.pool;
 
+import com.art.orion.model.service.OrionDatabaseException;
 import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +40,7 @@ public enum ConnectionPool {
             logger.log(Level.INFO, "Database connection pool created");
         } catch (ClassNotFoundException | SQLException e) {
             logger.log(Level.FATAL,e.getMessage(), e);
-            throw new RuntimeException(e); // user exceptions
+            throw new OrionDatabaseException(e);
         }
     }
 
