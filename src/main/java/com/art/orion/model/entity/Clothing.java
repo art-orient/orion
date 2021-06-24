@@ -10,12 +10,14 @@ public class Clothing extends Product {
     public Clothing() {
     }
 
-    public Clothing(long id, String brand, String modelName, String color, String description, String imgPath,
-                     BigDecimal cost, boolean active) {
+    public Clothing(long id, String brand, String modelName, String color, String descriptionRu,
+                    String descriptionEn, String imgPath, BigDecimal cost, boolean active) {
         this.id = id;
         this.brand = brand;
         this.modelName = modelName;
-        this.description = description;
+        this.color=color;
+        this.descriptionRu = descriptionRu;
+        this.descriptionEn = descriptionEn;
         this.imgPath = imgPath;
         this.cost = cost;
         this.active = active;

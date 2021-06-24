@@ -8,12 +8,13 @@ public class Accessory extends Product {
     public Accessory() {
     }
 
-    public Accessory(long id, String brand, String modelName, String description, String imgPath,
-                     BigDecimal cost, int availability, boolean active) {
+    public Accessory(long id, String brand, String modelName, String descriptionRu, String descriptionEn,
+                     String imgPath, BigDecimal cost, int availability, boolean active) {
         this.id = id;
         this.brand = brand;
         this.modelName = modelName;
-        this.description = description;
+        this.descriptionRu = descriptionRu;
+        this.descriptionEn = descriptionEn;
         this.imgPath = imgPath;
         this.cost = cost;
         this.availability = availability;

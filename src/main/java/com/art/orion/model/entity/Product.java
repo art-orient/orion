@@ -6,7 +6,8 @@ public abstract class Product {
     protected long id;
     protected String brand;
     protected String modelName;
-    protected String description;
+    protected String descriptionRu;
+    protected String descriptionEn;
     protected String imgPath;
     protected BigDecimal cost;
     protected boolean active;
@@ -35,12 +36,20 @@ public abstract class Product {
         this.modelName = modelName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionRu() {
+        return descriptionRu;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
     }
 
     public String getImgPath() {

@@ -12,6 +12,7 @@ public enum TypeCommand {
     LOGIN_USER(new LoginUserCommand()),
     LOGOUT(new LogoutCommand()),
     PRODUCT_MANAGEMENT(new ProductManagementCommand()),
+    ADD_PRODUCT_PAGE(new AddProductPageCommand()),
     ACCESSORIES(new AccessoriesCommand());
 
     private final Command command;
