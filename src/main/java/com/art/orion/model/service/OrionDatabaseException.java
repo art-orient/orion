@@ -1,6 +1,6 @@
 package com.art.orion.model.service;
 
-public class OrionDatabaseException extends RuntimeException {
+public class OrionDatabaseException extends Exception {
     public OrionDatabaseException() {
     }
 

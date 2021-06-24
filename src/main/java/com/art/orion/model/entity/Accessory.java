@@ -1,24 +1,33 @@
 package com.art.orion.model.entity;
 
-import java.math.BigDecimal;
-
-public class Accessory extends Product {
+public class Accessory {
+    private int accessoryId;
+    private ProductInfo productInfo;
     private int availability;
 
     public Accessory() {
     }
 
-    public Accessory(long id, String brand, String modelName, String descriptionRu, String descriptionEn,
-                     String imgPath, BigDecimal cost, int availability, boolean active) {
-        this.id = id;
-        this.brand = brand;
-        this.modelName = modelName;
-        this.descriptionRu = descriptionRu;
-        this.descriptionEn = descriptionEn;
-        this.imgPath = imgPath;
-        this.cost = cost;
+    public Accessory(int accessoryId, ProductInfo productInfo, int availability) {
+        this.accessoryId = accessoryId;
+        this.productInfo = productInfo;
         this.availability = availability;
-        this.active = active;
+    }
+
+    public int getAccessoryId() {
+        return accessoryId;
+    }
+
+    public void setAccessoryId(int accessoryId) {
+        this.accessoryId = accessoryId;
+    }
+
+    public ProductInfo getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(ProductInfo productInfo) {
+        this.productInfo = productInfo;
     }
 
     public int getAvailability() {

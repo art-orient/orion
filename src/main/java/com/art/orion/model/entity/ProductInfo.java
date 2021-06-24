@@ -2,22 +2,27 @@ package com.art.orion.model.entity;
 
 import java.math.BigDecimal;
 
-public abstract class Product {
-    protected long id;
-    protected String brand;
-    protected String modelName;
-    protected String descriptionRu;
-    protected String descriptionEn;
-    protected String imgPath;
-    protected BigDecimal cost;
-    protected boolean active;
+public class ProductInfo {
+    private String brand;
+    private String modelName;
+    private String descriptionRu;
+    private String descriptionEn;
+    private String imgPath;
+    private BigDecimal cost;
+    private boolean active;
 
-    public long getId() {
-        return id;
+    public ProductInfo() {
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public ProductInfo(String brand, String modelName, String descriptionRu, String descriptionEn,
+                       String imgPath, BigDecimal cost, boolean active) {
+        this.brand = brand;
+        this.modelName = modelName;
+        this.descriptionRu = descriptionRu;
+        this.descriptionEn = descriptionEn;
+        this.imgPath = imgPath;
+        this.cost = cost;
+        this.active = active;
     }
 
     public String getBrand() {

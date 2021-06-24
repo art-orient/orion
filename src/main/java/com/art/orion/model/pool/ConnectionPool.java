@@ -1,16 +1,16 @@
 package com.art.orion.model.pool;
 
-import com.art.orion.model.service.OrionDatabaseException;
 import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.Enumeration;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -20,27 +20,38 @@ public enum ConnectionPool {
 
     private final Logger logger = LogManager.getLogger();
     private static final int POOL_SIZE = 8;
-    private final BlockingQueue<ProxyConnection> freeConnections;
-    private final Queue<ProxyConnection> givenConnections;
+    private BlockingQueue<ProxyConnection> freeConnections;
+    private BlockingQueue<ProxyConnection> givenAwayConnections;
 
     ConnectionPool() {
+    }
+
+    public void initPool() throws ConnectionPoolException {
         freeConnections = new LinkedBlockingQueue<>(POOL_SIZE);
-        givenConnections = new ArrayDeque<>();
+        givenAwayConnections = new ArrayBlockingQueue<>(POOL_SIZE);
         String driverName = ConfigManager.getProperty("db.driver");
         String url = ConfigManager.getProperty("db.url");
         String username = ConfigManager.getProperty("db.username");
         String password = ConfigManager.getProperty("db.password");
         try {
             Class.forName(driverName);
-            logger.log(Level.DEBUG, "MySQL driver loaded");
-            for (int i = 0; i < POOL_SIZE; i++) {
+        } catch (ClassNotFoundException e) {
+            logger.log(Level.FATAL, "MySQL driver not found", e);
+            throw new ConnectionPoolException("MySQL driver not found", e);
+        }
+        logger.log(Level.DEBUG, "MySQL driver loaded");
+        for (int i = 0; i < POOL_SIZE; i++) {
+            try {
                 Connection connection = DriverManager.getConnection(url, username, password);
-                freeConnections.offer(new ProxyConnection(connection));
+                freeConnections.add(new ProxyConnection(connection));
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, "database access error, connection not received", e);
             }
-            logger.log(Level.INFO, "Database connection pool created");
-        } catch (ClassNotFoundException | SQLException e) {
-            logger.log(Level.FATAL,e.getMessage(), e);
-            throw new OrionDatabaseException(e);
+        }
+        logger.log(Level.INFO, "Database connection pool created");
+        if (freeConnections.isEmpty()) {
+            logger.log(Level.FATAL, "connection pool initialization error");
+            throw new ConnectionPoolException("connection pool initialization error");
         }
     }
 
@@ -48,7 +59,7 @@ public enum ConnectionPool {
         ProxyConnection connection = null;
         try {
             connection = freeConnections.take();
-            givenConnections.offer(connection);
+            givenAwayConnections.offer(connection);
         } catch (InterruptedException e) {
             logger.log(Level.WARN,"Thread was interrupted", e);
         }
@@ -56,35 +67,40 @@ public enum ConnectionPool {
     }
 
     public void releaseConnection(Connection connection) {
-        if (connection instanceof ProxyConnection) {
-            givenConnections.remove(connection);
+        if (connection instanceof ProxyConnection &&
+                givenAwayConnections.remove(connection)) {
             freeConnections.offer((ProxyConnection) connection);
         } else {
             logger.log(Level.WARN,"Connection is not instance of ProxyConnection");
         }
     }
 
-    public void destroyPool() {
+    public void destroyPool() throws ConnectionPoolException {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 freeConnections.take().reallyClose();
                 logger.log(Level.INFO, "Connection is closed");
-            } catch (SQLException | InterruptedException e) {
-                logger.log(Level.ERROR, e.getMessage(), e);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                throw new ConnectionPoolException("Thread was interrupted", e);
+            } catch (SQLException e) {
+                throw new ConnectionPoolException("Closing connection error", e);
             }
         }
         deregisterDriver();
     }
 
-    private void deregisterDriver() {
-        DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
+    private void deregisterDriver() throws ConnectionPoolException {
+        Enumeration<Driver> drivers = DriverManager.getDrivers();
+        while (drivers.hasMoreElements()) {
+            Driver driver = drivers.nextElement();
             try {
                 DriverManager.deregisterDriver(driver);
                 logger.log(Level.DEBUG, "MySQL driver deregistered");
             } catch (SQLException e) {
-                logger.log(Level.ERROR, e.getMessage(), e);
+                throw new ConnectionPoolException("driver deregistration error", e);
             }
-        });
+        }
     }
 }
 

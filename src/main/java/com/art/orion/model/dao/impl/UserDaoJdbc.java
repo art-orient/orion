@@ -4,7 +4,6 @@ import com.art.orion.model.dao.UserDao;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.util.Constant;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

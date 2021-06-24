@@ -1,26 +1,37 @@
 package com.art.orion.model.entity;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
-public class Clothing extends Product {
+public class Clothing {
+    private int clothingId;
+    private ProductInfo productInfo;
     private String color;
     private Map<Integer, Integer> sizes;
 
     public Clothing() {
     }
 
-    public Clothing(long id, String brand, String modelName, String color, String descriptionRu,
-                    String descriptionEn, String imgPath, BigDecimal cost, boolean active) {
-        this.id = id;
-        this.brand = brand;
-        this.modelName = modelName;
-        this.color=color;
-        this.descriptionRu = descriptionRu;
-        this.descriptionEn = descriptionEn;
-        this.imgPath = imgPath;
-        this.cost = cost;
-        this.active = active;
+    public Clothing(int clothingId, ProductInfo productInfo, String color, Map<Integer, Integer> sizes) {
+        this.clothingId = clothingId;
+        this.productInfo = productInfo;
+        this.color = color;
+        this.sizes = sizes;
+    }
+
+    public int getClothingId() {
+        return clothingId;
+    }
+
+    public void setClothingId(int clothingId) {
+        this.clothingId = clothingId;
+    }
+
+    public ProductInfo getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(ProductInfo productInfo) {
+        this.productInfo = productInfo;
     }
 
     public String getColor() {
