@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
 
@@ -23,7 +23,7 @@ public class SaveProductCommand implements Command {
         String modelName = req.getParameter(MODEL_NAME);
         String descriptionRu = req.getParameter(DESCRIPTION_RU);
         String descriptionEn = req.getParameter(DESCRIPTION_EN);
-        String filename = ImageProcessor.uploadImage(req, brand, modelName);
+//        String filename = ImageProcessor.uploadImage(req, brand, modelName);
 //        String imagePath = req.getParameter(IMAGE);
         try {
             BigDecimal cost = BigDecimal.valueOf(Double.parseDouble(req.getParameter(COST)));
