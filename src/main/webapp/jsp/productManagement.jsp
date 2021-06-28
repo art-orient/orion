@@ -16,17 +16,17 @@
 <jsp:include page="header.jsp"/>
 <section id="products" class="section">
     <div class="container">
-        <form method="get" action="controller">
+        <h2><fmt:message key="ui.addProduct"/></h2><br>
+        Выберите категорию:<br>
+        <form action="controller" method="get">
             <input type="hidden" name="command" value="add_product_page">
-            <button><fmt:message key="ui.addShoes"/></button>
-        </form>
-        <form method="get" action="controller">
-            <input type="hidden" name="command" value="add_product_page">
-            <button><fmt:message key="ui.addClothing"/></button>
-        </form>
-        <form method="get" action="controller">
-            <input type="hidden" name="command" value="add_product_page">
-            <button><fmt:message key="ui.addAccessory"/></button>
+            <select name="category">
+                <option value="" style="display:none"><fmt:message key="ui.selectCategory"/></option>
+                <option value="shoes"><fmt:message key="ui.addShoes"/></option>
+                <option value="clothing"><fmt:message key="ui.addClothing"/></option>
+                <option value="accessory"><fmt:message key="ui.addAccessory"/></option>
+            </select>
+            <button><fmt:message key="ui.addProduct"/></button>
         </form>
     </div>
 </section>

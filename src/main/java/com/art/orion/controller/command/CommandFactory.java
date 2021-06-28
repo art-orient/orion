@@ -20,7 +20,7 @@ public class CommandFactory {
 
     public static Command defineCommand(HttpServletRequest req) {
         String action = req.getParameter(COMMAND);
-        logger.log(Level.DEBUG, action);
+        logger.log(Level.DEBUG, "command action = " + action);
         Command command = new EmptyCommand();
         if (action == null || action.isEmpty()) {
             sendPageNotFound(req);

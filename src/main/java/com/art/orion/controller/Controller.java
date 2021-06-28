@@ -36,6 +36,7 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        logger.log(Level.DEBUG, "parameters value = " + req.getParameterNames());
         Command command = CommandFactory.defineCommand(req);
         String page = command.execute(req);
         req.getSession().setAttribute(CURRENT_PAGE, page);

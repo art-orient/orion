@@ -4,14 +4,14 @@ import java.util.Map;
 
 public class Clothing {
     private int clothingId;
-    private ProductInfo productInfo;
+    private ProductDetails productInfo;
     private String color;
     private Map<Integer, Integer> sizes;
 
     public Clothing() {
     }
 
-    public Clothing(int clothingId, ProductInfo productInfo, String color, Map<Integer, Integer> sizes) {
+    public Clothing(int clothingId, ProductDetails productInfo, String color, Map<Integer, Integer> sizes) {
         this.clothingId = clothingId;
         this.productInfo = productInfo;
         this.color = color;
@@ -26,11 +26,11 @@ public class Clothing {
         this.clothingId = clothingId;
     }
 
-    public ProductInfo getProductInfo() {
+    public ProductDetails getProductInfo() {
         return productInfo;
     }
 
-    public void setProductInfo(ProductInfo productInfo) {
+    public void setProductInfo(ProductDetails productInfo) {
         this.productInfo = productInfo;
     }
 

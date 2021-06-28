@@ -2,7 +2,7 @@ package com.art.orion.model.entity;
 
 import java.math.BigDecimal;
 
-public class ProductInfo {
+public class ProductDetails {
     private String brand;
     private String modelName;
     private String descriptionRu;
@@ -11,11 +11,11 @@ public class ProductInfo {
     private BigDecimal cost;
     private boolean active;
 
-    public ProductInfo() {
+    public ProductDetails() {
     }
 
-    public ProductInfo(String brand, String modelName, String descriptionRu, String descriptionEn,
-                       String imgPath, BigDecimal cost, boolean active) {
+    public ProductDetails(String brand, String modelName, String descriptionRu, String descriptionEn,
+                          String imgPath, BigDecimal cost, boolean active) {
         this.brand = brand;
         this.modelName = modelName;
         this.descriptionRu = descriptionRu;

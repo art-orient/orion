@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Shoes {
     private int shoesId;
-    private ProductInfo productInfo;
+    private ProductDetails productInfo;
     private String color;
     private String category;
     private Map<Integer, Integer> sizes;
@@ -14,7 +14,7 @@ public class Shoes {
     public Shoes() {
     }
 
-    public Shoes(int shoesId, ProductInfo productInfo, String color, String category,
+    public Shoes(int shoesId, ProductDetails productInfo, String color, String category,
                  Map<Integer, Integer> sizes, List<String> additionalImgPaths) {
         this.shoesId = shoesId;
         this.productInfo = productInfo;
@@ -32,11 +32,11 @@ public class Shoes {
         this.shoesId = shoesId;
     }
 
-    public ProductInfo getProductInfo() {
+    public ProductDetails getProductInfo() {
         return productInfo;
     }
 
-    public void setProductInfo(ProductInfo productInfo) {
+    public void setProductInfo(ProductDetails productInfo) {
         this.productInfo = productInfo;
     }
 

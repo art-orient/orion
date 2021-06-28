@@ -16,4 +16,10 @@ public class Constant {
     public static final String ROLE = "role";
     public static final String ERROR = "error";
     public static final String ACTIVE = "active";
+    public static final String BRAND = "brand";
+    public static final String MODEL_NAME = "modelName";
+    public static final String DESCRIPTION_RU = "descriptionRu";
+    public static final String DESCRIPTION_EN = "descriptionEn";
+    public static final String IMAGE = "image";
+    public static final String COST = "cost";
 }

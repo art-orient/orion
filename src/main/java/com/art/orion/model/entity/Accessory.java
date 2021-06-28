@@ -2,13 +2,13 @@ package com.art.orion.model.entity;
 
 public class Accessory {
     private int accessoryId;
-    private ProductInfo productInfo;
+    private ProductDetails productInfo;
     private int availability;
 
     public Accessory() {
     }
 
-    public Accessory(int accessoryId, ProductInfo productInfo, int availability) {
+    public Accessory(int accessoryId, ProductDetails productInfo, int availability) {
         this.accessoryId = accessoryId;
         this.productInfo = productInfo;
         this.availability = availability;
@@ -22,11 +22,11 @@ public class Accessory {
         this.accessoryId = accessoryId;
     }
 
-    public ProductInfo getProductInfo() {
+    public ProductDetails getProductInfo() {
         return productInfo;
     }
 
-    public void setProductInfo(ProductInfo productInfo) {
+    public void setProductInfo(ProductDetails productInfo) {
         this.productInfo = productInfo;
     }
 

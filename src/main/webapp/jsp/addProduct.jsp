@@ -15,11 +15,11 @@
 <body>
 <jsp:include page="header.jsp"/>
 
-<section id="orders" class="section">
+<section class="section">
     <div class="container">
         <h2 class="headline"><fmt:message key="ui.addProduct"/></h2><br>
         <form action="controller" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="command" value="add_product"/>
+            <input type="hidden" name="command" value="save_product"/>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
             <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>
             <br>
@@ -27,13 +27,13 @@
             <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" required>
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
-            <textarea rows="5" cols="25" name="descriptionRu" id="descriptionRu" required></textarea>
+            <textarea rows="5" cols="25" name="descriptionRu" id="descriptionRu"></textarea>
             <br>
             <label for="descriptionEn"><fmt:message key="ui.description"/> <fmt:message key="ui.english"/></label><br/>
-            <textarea rows="5" cols="25" name="descriptionEn" id="descriptionEn" required></textarea>
+            <textarea rows="5" cols="25" name="descriptionEn" id="descriptionEn"></textarea>
             <br>
             <label for="image"><fmt:message key="ui.image"/></label><br/>
-            <input type="file" accept="image/jpeg" name="image" id="image" required>
+            <input type="file" accept=".someext,image/*" name="image" id="image" required>
             <br>
             <label for="cost"><fmt:message key="ui.cost"/></label><br/>
             <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" required>
@@ -41,6 +41,12 @@
             <label for="availability"><fmt:message key="ui.availability"/></label><br/>
             <input type="number" min="0" name="availability" id="availability" required>
             <br>
+            <label><fmt:message key="ui.active"/>
+                <input type="radio" name="active" value="true">
+                <fmt:message key="ui.yes"/>
+                <input type="radio" name="active" value="false">
+                <fmt:message key="ui.no"/>
+            </label><br>
             <input type="submit" value='<fmt:message key="ui.addProduct"/>' id="submit">
             <br><br>
         </form><br>
