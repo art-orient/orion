@@ -17,7 +17,7 @@
 
 <section class="section">
     <div class="container">
-        <h2 class="headline"><fmt:message key="ui.addProduct"/></h2><br>
+        <h2 class="headline"><fmt:message key="ui.addAccessory"/></h2><br>
         <form action="controller" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="save_product"/>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>

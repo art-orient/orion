@@ -25,6 +25,8 @@ public class ImageProcessor {
 
     public static String uploadImage(HttpServletRequest req, String brand, String modelName) {
         String filename = generateFilename(req, brand, modelName);
+        System.out.println("filename - " + filename);
+
         try {
             return uploadFile(req.getPart(IMAGE), filename);
         } catch (IOException | ServletException e) {
@@ -34,14 +36,6 @@ public class ImageProcessor {
     }
 
     private static String generateFilename(HttpServletRequest req, String brand, String modelName) {
-        try {
-            System.out.println("5555555555555555  " + req.getPart(IMAGE));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ServletException e) {
-            e.printStackTrace();
-        }
-
         String sourceName = null;
         try {
             sourceName = req.getPart(IMAGE).getSubmittedFileName();
@@ -50,10 +44,19 @@ public class ImageProcessor {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        System.out.println(sourceName +"__________________________");
+        System.out.println("sourceName - " + sourceName);
         int index = sourceName.lastIndexOf(EXTENSION_SEPARATOR);
         String extension = sourceName.substring(index);
-        String filename = new StringBuilder(brand).append("_").append(modelName).append(extension).toString();
+        String category = (String) req.getSession().getAttribute("category");
+        System.out.println("category "+ category);
+        String filename = new StringBuilder(category)
+                .append("/")
+                .append(brand)
+                .append("_")
+                .append(modelName)
+                .append(extension)
+                .toString();
+        System.out.println("filename result = " + filename);
         return filename;
     }
 

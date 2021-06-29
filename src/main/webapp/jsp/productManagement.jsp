@@ -17,7 +17,6 @@
 <section id="products" class="section">
     <div class="container">
         <h2><fmt:message key="ui.addProduct"/></h2><br>
-        Выберите категорию:<br>
         <form action="controller" method="get">
             <input type="hidden" name="command" value="add_product_page">
             <select name="category">

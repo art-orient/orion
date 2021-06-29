@@ -2,6 +2,7 @@ package com.art.orion.controller;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.CommandFactory;
+import jakarta.servlet.annotation.MultipartConfig;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,8 +17,14 @@ import java.io.IOException;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 
 @WebServlet("/controller")
+@MultipartConfig(fileSizeThreshold = Controller.MB1,
+                maxFileSize = Controller.MB10,
+                maxRequestSize = Controller.MB50)
 public class Controller extends HttpServlet {
-    static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
+    protected static final int MB1 = 1024 * 1024;
+    protected static final int MB10 = 1024 * 1024 * 10;
+    protected static final int MB50 = 1024 * 1024 * 50;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

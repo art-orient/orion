@@ -23,8 +23,8 @@ public class SaveProductCommand implements Command {
         String modelName = req.getParameter(MODEL_NAME);
         String descriptionRu = req.getParameter(DESCRIPTION_RU);
         String descriptionEn = req.getParameter(DESCRIPTION_EN);
-//        String filename = ImageProcessor.uploadImage(req, brand, modelName);
-//        String imagePath = req.getParameter(IMAGE);
+        String filename = ImageProcessor.uploadImage(req, brand, modelName);
+        String imagePath = ConfigManager.getProperty("dir.uploads") + filename;
         try {
             BigDecimal cost = BigDecimal.valueOf(Double.parseDouble(req.getParameter(COST)));
         } catch (NumberFormatException e) {
