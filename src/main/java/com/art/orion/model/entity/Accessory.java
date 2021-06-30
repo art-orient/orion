@@ -2,15 +2,14 @@ package com.art.orion.model.entity;
 
 public class Accessory {
     private int accessoryId;
-    private ProductDetails productInfo;
+    private ProductDetails productDetails;
     private int availability;
 
     public Accessory() {
     }
 
-    public Accessory(int accessoryId, ProductDetails productInfo, int availability) {
-        this.accessoryId = accessoryId;
-        this.productInfo = productInfo;
+    public Accessory(ProductDetails productDetails, int availability) {
+        this.productDetails = productDetails;
         this.availability = availability;
     }
 
@@ -22,12 +21,12 @@ public class Accessory {
         this.accessoryId = accessoryId;
     }
 
-    public ProductDetails getProductInfo() {
-        return productInfo;
+    public ProductDetails getProductDetails() {
+        return productDetails;
     }
 
-    public void setProductInfo(ProductDetails productInfo) {
-        this.productInfo = productInfo;
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
     }
 
     public int getAvailability() {
@@ -36,5 +35,13 @@ public class Accessory {
 
     public void setAvailability(int availability) {
         this.availability = availability;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Accessory {accessoryId = ").append(accessoryId)
+                .append(", productDetails = ").append(productDetails)
+                .append(", availability = ").append(availability)
+                .append('}').toString();
     }
 }

@@ -80,4 +80,16 @@ public class ProductDetails {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("ProductDetails {brand = ").append(brand)
+                .append(", modelName = ").append(modelName)
+                .append(", descriptionRu = ").append(descriptionRu)
+                .append(", descriptionEn = ").append(descriptionEn)
+                .append(", imgPath = ").append(imgPath)
+                .append(", cost = ").append(cost)
+                .append(", active=").append(active)
+                .append('}').toString();
+    }
 }

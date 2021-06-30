@@ -8,10 +8,20 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
-import static com.art.orion.util.Constant.*;
+import static com.art.orion.util.Constant.USERNAME;
+import static com.art.orion.util.Constant.PASSWORD;
+import static com.art.orion.util.Constant.FIRSTNAME;
+import static com.art.orion.util.Constant.LASTNAME;
+import static com.art.orion.util.Constant.EMAIL;
+import static com.art.orion.util.Constant.ROLE;
+import static com.art.orion.util.Constant.ACTIVE;
 
 public class UserDaoJdbc implements UserDao {
     private static final Logger logger = LogManager.getLogger();

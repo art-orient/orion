@@ -22,4 +22,5 @@ public class Constant {
     public static final String DESCRIPTION_EN = "descriptionEn";
     public static final String IMAGE = "image";
     public static final String COST = "cost";
+    public static final String AVAILABILITY = "availability";
 }

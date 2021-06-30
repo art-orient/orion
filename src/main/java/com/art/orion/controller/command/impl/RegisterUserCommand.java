@@ -14,7 +14,13 @@ import org.apache.logging.log4j.Logger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.art.orion.util.Constant.*;
+import static com.art.orion.util.Constant.USERNAME;
+import static com.art.orion.util.Constant.PASSWORD;
+import static com.art.orion.util.Constant.CONFIRM_PASSWORD;
+import static com.art.orion.util.Constant.FIRSTNAME;
+import static com.art.orion.util.Constant.LASTNAME;
+import static com.art.orion.util.Constant.EMAIL;
+import static com.art.orion.util.Constant.REGISTRATION_STATUS;
 
 public class RegisterUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();

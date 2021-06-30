@@ -1,6 +1,17 @@
 package com.art.orion.controller.command;
 
-import com.art.orion.controller.command.impl.*;
+import com.art.orion.controller.command.impl.AccessoriesCommand;
+import com.art.orion.controller.command.impl.AddProductPageCommand;
+import com.art.orion.controller.command.impl.CheckRegStatusCommand;
+import com.art.orion.controller.command.impl.HomeCommand;
+import com.art.orion.controller.command.impl.LanguageCommand;
+import com.art.orion.controller.command.impl.LoginCommand;
+import com.art.orion.controller.command.impl.LoginUserCommand;
+import com.art.orion.controller.command.impl.LogoutCommand;
+import com.art.orion.controller.command.impl.ProductManagementCommand;
+import com.art.orion.controller.command.impl.RegisterUserCommand;
+import com.art.orion.controller.command.impl.RegistrationCommand;
+import com.art.orion.controller.command.impl.SaveProductCommand;
 
 public enum TypeCommand {
     LANGUAGE(new LanguageCommand()),

@@ -42,7 +42,7 @@
             <input type="number" min="0" name="availability" id="availability" required>
             <br>
             <label><fmt:message key="ui.active"/>
-                <input type="radio" name="active" value="true">
+                <input type="radio" name="active" value="true" checked>
                 <fmt:message key="ui.yes"/>
                 <input type="radio" name="active" value="false">
                 <fmt:message key="ui.no"/>

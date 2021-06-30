@@ -24,7 +24,7 @@
                 <option value="shoes"><fmt:message key="ui.addShoes"/></option>
                 <option value="clothing"><fmt:message key="ui.addClothing"/></option>
                 <option value="accessories"><fmt:message key="ui.addAccessory"/></option>
-            </select>
+            </select><br>
             <button><fmt:message key="ui.addProduct"/></button>
         </form>
     </div>
