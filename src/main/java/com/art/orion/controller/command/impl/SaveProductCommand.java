@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.ImageProcessor;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductDetails;
+import com.art.orion.model.service.ProductService;
 import com.art.orion.model.validator.ProductValidator;
 import com.art.orion.util.ConfigManager;
 
@@ -56,7 +57,7 @@ public class SaveProductCommand implements Command {
             case "accessories" -> {
                 Accessory accessory = new Accessory(productDetails, availability);
                 logger.log(Level.DEBUG, "Created an accessory - " + accessory);
-
+                ProductService.createProduct(accessory);
             }
         }
         return ConfigManager.getProperty("page.productManagement");
