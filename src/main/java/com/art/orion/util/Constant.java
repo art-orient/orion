@@ -23,4 +23,6 @@ public class Constant {
     public static final String IMAGE = "image";
     public static final String COST = "cost";
     public static final String AVAILABILITY = "availability";
+    public static final String TYPE_RU = "typeRu";
+    public static final String TYPE_EN = "typeEn";
 }

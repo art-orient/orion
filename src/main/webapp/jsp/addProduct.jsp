@@ -20,6 +20,12 @@
         <h2 class="headline"><fmt:message key="ui.addAccessory"/></h2><br>
         <form action="controller" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="save_product"/>
+            <label for="typeRu"><fmt:message key="ui.type"/> <fmt:message key="ui.russian"/></label><br/>
+            <input type="text" minlength="2" maxlength="30" name="typeRu" id="typeRu">
+            <br>
+            <label for="brand"><fmt:message key="ui.type"/>  <fmt:message key="ui.english"/></label><br/>
+            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>
+            <br>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
             <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>
             <br>
@@ -27,10 +33,10 @@
             <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" required>
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
-            <textarea rows="5" cols="25" name="descriptionRu" id="descriptionRu"></textarea>
+            <textarea rows="7" cols="30" name="descriptionRu" id="descriptionRu"></textarea>
             <br>
             <label for="descriptionEn"><fmt:message key="ui.description"/> <fmt:message key="ui.english"/></label><br/>
-            <textarea rows="5" cols="25" name="descriptionEn" id="descriptionEn"></textarea>
+            <textarea rows="7" cols="30" name="descriptionEn" id="descriptionEn"></textarea>
             <br>
             <label for="image"><fmt:message key="ui.image"/></label><br/>
             <input type="file" accept=".someext,image/*" name="image" id="image" required>

@@ -23,12 +23,16 @@ import static com.art.orion.util.Constant.DESCRIPTION_EN;
 import static com.art.orion.util.Constant.COST;
 import static com.art.orion.util.Constant.AVAILABILITY;
 import static com.art.orion.util.Constant.ACTIVE;
+import static com.art.orion.util.Constant.TYPE_RU;
+import static com.art.orion.util.Constant.TYPE_EN;
 
 public class SaveProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
+        String typeRu = req.getParameter(TYPE_RU);
+        String typeEn = req.getParameter(TYPE_EN);
         String brand = req.getParameter(BRAND);
         String modelName = req.getParameter(MODEL_NAME);
         String descriptionRu = req.getParameter(DESCRIPTION_RU);
@@ -55,7 +59,7 @@ public class SaveProductCommand implements Command {
         }
         switch (category) {
             case "accessories" -> {
-                Accessory accessory = new Accessory(productDetails, availability);
+                Accessory accessory = new Accessory(productDetails, typeRu, typeEn, availability);
                 logger.log(Level.DEBUG, "Created an accessory - " + accessory);
                 ProductService.createProduct(accessory);
             }

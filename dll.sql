@@ -12,7 +12,7 @@ VALUES ('lesha', 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bf
 
 
 INSERT INTO accessories
-VALUES (1, 'Mizuno', '33GD0018-22', 'РЮКЗАК MIZUNO УНИСЕКС
+VALUES (1, 'Рюкзак', 'A backpack', 'Mizuno', 'Running Backpack 10L', 'РЮКЗАК MIZUNO УНИСЕКС
 100% полиэстер
 Легкий материал
 Мягкие регулируемые лямки
