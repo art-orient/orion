@@ -43,10 +43,10 @@ public class SaveProductCommand implements Command {
         try {
             cost = BigDecimal.valueOf(Double.parseDouble(req.getParameter(COST)));
         } catch (NumberFormatException e) {
-            logger.log(Level.ERROR, "This price is not BigDecimal - " + req.getParameter(COST));
+            logger.log(Level.ERROR, () -> "This price is not BigDecimal - " + req.getParameter(COST));
         }
         int availability = Integer.parseInt(req.getParameter(AVAILABILITY));
-        boolean active = Boolean.valueOf(req.getParameter(ACTIVE));
+        boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
         ProductDetails productDetails = new ProductDetails();
         if (ProductValidator.isProductValid(brand, modelName, cost)) {
             productDetails.setBrand(brand);
@@ -60,9 +60,12 @@ public class SaveProductCommand implements Command {
         switch (category) {
             case "accessories" -> {
                 Accessory accessory = new Accessory(productDetails, typeRu, typeEn, availability);
-                logger.log(Level.DEBUG, "Created an accessory - " + accessory);
+                logger.log(Level.DEBUG, () -> "Created an accessory - " + accessory);
                 ProductService.createProduct(accessory);
             }
+            case "clothing" -> logger.log(Level.DEBUG, () -> "Created clothing - ");
+            case "shoes" -> logger.log(Level.DEBUG, () -> "Created shoes - ");
+            default -> logger.log(Level.ERROR, "No category of product");
         }
         return ConfigManager.getProperty("page.productManagement");
     }

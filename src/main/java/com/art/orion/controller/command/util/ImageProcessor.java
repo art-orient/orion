@@ -25,7 +25,7 @@ public class ImageProcessor {
     public static String uploadImage(HttpServletRequest req, String brand, String modelName) {
         String newFilename = generateFilename(req, brand, modelName);
         String category = (String) req.getSession().getAttribute("category") + '/';
-        logger.log(Level.DEBUG, "image path = " + category + newFilename);
+        logger.log(Level.DEBUG, () -> String.format("image path = %s%s", category, newFilename));
         try {
             return uploadFile(req.getPart(IMAGE), category, newFilename);
         } catch (IOException | ServletException e) {
@@ -35,17 +35,16 @@ public class ImageProcessor {
     }
 
     private static String generateFilename(HttpServletRequest req, String brand, String modelName) {
-        String sourceName = null;
+        String sourceName;
+        String extension = "";
         try {
             sourceName = req.getPart(IMAGE).getSubmittedFileName();
+            int index = sourceName.lastIndexOf(EXTENSION_SEPARATOR);
+            extension = sourceName.substring(index);
         } catch (IOException | ServletException e) {
             logger.log(Level.ERROR, "file of image not found", e);
         }
-        int index = sourceName.lastIndexOf(EXTENSION_SEPARATOR);
-        String extension = sourceName.substring(index);
-        String filename = new StringBuilder(brand).append("_").append(modelName).append(extension)
-                .toString().replace(' ','_');
-        return filename;
+        return (brand + "_" + modelName + extension).replace(' ','_');
     }
 
     private static String uploadFile(Part part, String category, String fileName) {

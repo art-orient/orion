@@ -27,7 +27,10 @@ public class PasswordEncryptor {
         } catch (NoSuchAlgorithmException e) {
             logger.log(Level.ERROR, e.getMessage(), e);
         }
-        BigInteger bigInt = new BigInteger(POSITIVE_SIGN, bytesEncoded);
+        BigInteger bigInt = BigInteger.ZERO;
+        if (bytesEncoded != null) {
+            bigInt = new BigInteger(POSITIVE_SIGN, bytesEncoded);
+        }
         return bigInt.toString(HEX_RADIX);
     }
 }

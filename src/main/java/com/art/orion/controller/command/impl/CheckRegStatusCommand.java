@@ -20,7 +20,7 @@ public class CheckRegStatusCommand implements Command {
             registrationStatus = "";
         }
         req.getSession().setAttribute(REGISTRATION_STATUS, registrationStatus);
-        logger.log(Level.DEBUG, "Create regisration status");
+        logger.log(Level.DEBUG, "Create registration status");
         return ConfigManager.getProperty("page.registration");
     }
 }

@@ -4,6 +4,6 @@ import com.art.orion.model.entity.Accessory;
 
 public interface ProductDao {
 
-    public int createProduct(Accessory accessory);
+    int createProduct(Accessory accessory);
 
 }

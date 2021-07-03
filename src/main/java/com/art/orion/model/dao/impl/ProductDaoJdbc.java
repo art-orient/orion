@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
     private static final String INSERT_ACCESSORY = "INSERT INTO accessories " +
-            "(brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
+            "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final int TYPE_RU_INDEX = 1;
     private static final int TYPE_EN_INDEX = 2;

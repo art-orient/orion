@@ -23,8 +23,8 @@
             <label for="typeRu"><fmt:message key="ui.type"/> <fmt:message key="ui.russian"/></label><br/>
             <input type="text" minlength="2" maxlength="30" name="typeRu" id="typeRu">
             <br>
-            <label for="brand"><fmt:message key="ui.type"/>  <fmt:message key="ui.english"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>
+            <label for="typeEn"><fmt:message key="ui.type"/>  <fmt:message key="ui.english"/></label><br/>
+            <input type="text" minlength="2" maxlength="30" name="typeEn" id="typeEn" required>
             <br>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
             <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>

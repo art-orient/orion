@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.art.orion.util.Constant.USERNAME;
@@ -82,7 +83,7 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    user = createUserFromDatabase(resultSet, user);
+                    createUserFromDatabase(resultSet, user);
                 }
             }
         } catch (SQLException e) {
@@ -91,7 +92,7 @@ public class UserDaoJdbc implements UserDao {
         return user;
     }
 
-    private User createUserFromDatabase(ResultSet resultSet, User user) throws SQLException {
+    private void createUserFromDatabase(ResultSet resultSet, User user) throws SQLException {
         user.setUsername(resultSet.getString(USERNAME));
         user.setPassword(resultSet.getString(PASSWORD));
         user.setFirstName(resultSet.getString(FIRSTNAME));
@@ -99,7 +100,6 @@ public class UserDaoJdbc implements UserDao {
         user.setEmail(resultSet.getString(EMAIL));
         user.setRole(Role.values()[resultSet.getInt(ROLE)]);
         user.setActive(resultSet.getBoolean(ACTIVE));
-        return user;
     }
 
     @Override
@@ -124,8 +124,7 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public List<User> getUsers() {
-
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

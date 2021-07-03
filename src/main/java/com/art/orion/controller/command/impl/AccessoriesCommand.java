@@ -1,6 +1,8 @@
 package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
+import com.art.orion.util.ConfigManager;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +13,7 @@ public class AccessoriesCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        return null;
+        logger.log(Level.DEBUG,"Go to page accessories");
+        return ConfigManager.getProperty("page.accessories");
     }
 }
