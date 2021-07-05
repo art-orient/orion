@@ -4,13 +4,19 @@ import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.dao.impl.ProductDaoJdbc;
 import com.art.orion.model.entity.Accessory;
 
+import java.util.List;
+
 public class ProductService {
-    private static final ProductDao productDao = new ProductDaoJdbc();
+    private static final ProductDao PRODUCT_DAO = new ProductDaoJdbc();
 
     private ProductService() {
     }
 
     public static int createProduct(Accessory accessory) {
-        return productDao.createProduct(accessory);
+        return PRODUCT_DAO.createProduct(accessory);
+    }
+
+    public static List<Accessory> searchAccessories() {
+        return PRODUCT_DAO.searchAccessories();
     }
 }

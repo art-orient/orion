@@ -92,6 +92,11 @@
         <plugin>
           <artifactId>maven-war-plugin</artifactId>
           <version>3.2.2</version>
+          <configuration>
+            <warName>orion22</warName>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+            <outputDirectory>C:\apache-tomcat-10.0.6\webapps</outputDirectory>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>

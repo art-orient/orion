@@ -59,7 +59,7 @@ public class SaveProductCommand implements Command {
         }
         switch (category) {
             case "accessories" -> {
-                Accessory accessory = new Accessory(productDetails, typeRu, typeEn, availability);
+                Accessory accessory = new Accessory(typeRu, typeEn, productDetails, availability);
                 logger.log(Level.DEBUG, () -> "Created an accessory - " + accessory);
                 ProductService.createProduct(accessory);
             }

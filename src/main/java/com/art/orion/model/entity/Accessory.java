@@ -1,20 +1,27 @@
 package com.art.orion.model.entity;
 
 public class Accessory {
+    private int accessoryId;
     private String typeRu;
     private String typeEn;
-    private int accessoryId;
     private ProductDetails productDetails;
     private int availability;
 
     public Accessory() {
     }
 
-    public Accessory(ProductDetails productDetails, String typeRu, String typeEn, int availability) {
-        this.productDetails = productDetails;
+    public Accessory(String typeRu, String typeEn, ProductDetails productDetails,
+                     int availability) {
         this.typeRu = typeRu;
         this.typeEn = typeEn;
+        this.productDetails = productDetails;
         this.availability = availability;
+    }
+
+    public Accessory(int accessoryId,  String typeRu, String typeEn, ProductDetails productDetails,
+                     int availability) {
+        this(typeRu, typeEn, productDetails, availability);
+        this.accessoryId = accessoryId;
     }
 
     public int getAccessoryId() {

@@ -43,12 +43,12 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        logger.log(Level.DEBUG, "parameters value = " + req.getParameterNames());
+        logger.log(Level.DEBUG, () -> String.format("parameters value = %s", req.getParameterNames()));
         Command command = CommandFactory.defineCommand(req);
         String page = command.execute(req);
         req.getSession().setAttribute(CURRENT_PAGE, page);
         if (page != null) {
-            logger.log(Level.DEBUG, "forward on page = " + page);
+            logger.log(Level.DEBUG, () -> String.format("forward on page = %s", page));
             req.getRequestDispatcher(page).forward(req, resp);
         }
     }
