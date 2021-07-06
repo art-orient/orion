@@ -25,18 +25,19 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String action = request.getParameter("command");
-        if (isForbiddenPage(action) && isUnauthorizedUser(request)) {
+        if (isForbiddenAction(action) && isUnauthorizedUser(request)) {
             logger.log(Level.WARN, () -> String.format("Forbidden page for unauthorized user - %s", action));
             request.getRequestDispatcher(ConfigManager.getProperty("page.login")).forward(request, servletResponse);
         }
         filterChain.doFilter(request, servletResponse);
     }
 
+    private boolean isForbiddenAction(String action) {
+        return action != null && isForbiddenPage(action);
+    }
+
     private boolean isForbiddenPage(String action) {
         boolean isForbiddenPage = false;
-        if (action == null) {
-            return false;
-        }
         for (String page : ForbiddenPage.getAuthenticatedUserPages()) {
             if (action.equalsIgnoreCase(page)) {
                 isForbiddenPage = true;
