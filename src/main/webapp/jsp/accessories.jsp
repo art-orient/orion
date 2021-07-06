@@ -58,7 +58,7 @@
                         <input type="hidden" name="product" value="${product.accessoryId}">
                         <input type="hidden" name="category" value="accessories">
                         <input type="hidden" name="command" value="add_product">
-                        <button><fmt:message key="ui.addToCard"/></button>
+                        <button><fmt:message key="ui.addToCart"/></button>
                     </form>
                 </td>
             </tr>

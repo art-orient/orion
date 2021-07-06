@@ -1,5 +1,7 @@
 package com.art.orion.model.entity;
 
+import java.util.Objects;
+
 public class Accessory {
     private int accessoryId;
     private String typeRu;
@@ -72,5 +74,18 @@ public class Accessory {
                 .append(", productDetails = ").append(productDetails)
                 .append(", availability = ").append(availability)
                 .append('}').toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Accessory accessory = (Accessory) o;
+        return accessoryId == accessory.accessoryId;
+    }
+
+    @Override
+    public int hashCode() {
+        return accessoryId;
     }
 }

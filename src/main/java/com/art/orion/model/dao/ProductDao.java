@@ -10,4 +10,5 @@ public interface ProductDao {
 
     List<Accessory> searchAccessories();
 
+    Accessory getAccessoryById(int id);
 }

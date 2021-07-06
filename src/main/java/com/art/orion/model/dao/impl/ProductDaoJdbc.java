@@ -22,6 +22,7 @@ public class ProductDaoJdbc implements ProductDao {
     private static final String INSERT_ACCESSORY = "INSERT INTO accessories " +
             "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_ACCESSORY_BY_ID = "SELECT * FROM accessories WHERE accessories_id = ?";
     private static final int ACCESSORIES_ID_INDEX = 1;
     private static final int TYPE_RU_INDEX = 2;
     private static final int TYPE_EN_INDEX = 3;
@@ -88,7 +89,23 @@ public class ProductDaoJdbc implements ProductDao {
         ProductDetails productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
                 imagePath, cost, active);
         int availability = resultSet.getInt(AVAILABILITY_INDEX);
-        Accessory accessory = new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
+        return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
+    }
+
+    @Override
+    public Accessory getAccessoryById(int id) {
+        Accessory accessory = null;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(GET_ACCESSORY_BY_ID)) {
+            statement.setInt(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    accessory = createAccessory(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, e);
+        }
         return accessory;
     }
 }

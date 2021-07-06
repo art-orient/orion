@@ -27,6 +27,7 @@ public class LoginUserCommand implements Command {
         String encryptedPassword = PasswordEncryptor.encryptPassword(password);
         if (UserService.validateCredentials(username, encryptedPassword)) {
             User user = UserService.getUser(username);
+            req.getSession().invalidate();
             HttpSession session = req.getSession();
             session.setAttribute(USERNAME, username);
             session.setAttribute(ROLE, user.getRole().name());

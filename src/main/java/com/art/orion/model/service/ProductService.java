@@ -19,4 +19,8 @@ public class ProductService {
     public static List<Accessory> searchAccessories() {
         return PRODUCT_DAO.searchAccessories();
     }
+
+    public static Accessory getAccessoryById(int id) {
+        return PRODUCT_DAO.getAccessoryById(id);
+    }
 }

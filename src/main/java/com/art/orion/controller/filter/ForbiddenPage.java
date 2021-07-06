@@ -10,7 +10,8 @@ public class ForbiddenPage {
             "order_management",
             "add_product_page",
             "save_product"));
-    private static final List<String> AUTHENTICATED_USER_PAGES = new ArrayList<>(List.of("profile", "card"));
+    private static final List<String> AUTHENTICATED_USER_PAGES = new ArrayList<>(List.of("add_product",
+            "profile", "card"));
 
     private ForbiddenPage() {
     }
