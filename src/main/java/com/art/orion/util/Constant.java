@@ -31,4 +31,6 @@ public class Constant {
     public static final String CATEGORY = "category";
     public static final String ACCESSORIES = "accessories";
     public static final String GROUPED_CART = "groupedCart";
+    public static final String TOTAL_COST = "totalCost";
+    public static final String NUMBER = "number";
 }

@@ -5,15 +5,19 @@ import com.art.orion.controller.command.impl.AddProductCommand;
 import com.art.orion.controller.command.impl.AddProductPageCommand;
 import com.art.orion.controller.command.impl.CartCommand;
 import com.art.orion.controller.command.impl.CheckRegStatusCommand;
+import com.art.orion.controller.command.impl.ClothingCommand;
 import com.art.orion.controller.command.impl.HomeCommand;
 import com.art.orion.controller.command.impl.LanguageCommand;
 import com.art.orion.controller.command.impl.LoginCommand;
 import com.art.orion.controller.command.impl.LoginUserCommand;
 import com.art.orion.controller.command.impl.LogoutCommand;
+import com.art.orion.controller.command.impl.MakeOrderCommand;
 import com.art.orion.controller.command.impl.ProductManagementCommand;
 import com.art.orion.controller.command.impl.RegisterUserCommand;
 import com.art.orion.controller.command.impl.RegistrationCommand;
+import com.art.orion.controller.command.impl.RemoveProductCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
+import com.art.orion.controller.command.impl.ShoesCommand;
 
 public enum TypeCommand {
     LANGUAGE(new LanguageCommand()),
@@ -29,7 +33,11 @@ public enum TypeCommand {
     SAVE_PRODUCT(new SaveProductCommand()),
     ACCESSORIES(new AccessoriesCommand()),
     ADD_PRODUCT(new AddProductCommand()),
-    CART(new CartCommand());
+    CART(new CartCommand()),
+    REMOVE_PRODUCT(new RemoveProductCommand()),
+    MAKE_ORDER(new MakeOrderCommand()),
+    CLOTHING(new ClothingCommand()),
+    SHOES(new ShoesCommand());
 
     private final Command command;
 

@@ -63,8 +63,8 @@
                         <td></td>
                         <td></td>
                         <td><fmt:message key="ui.totalCost"/></td>
-                        <td>${cartTotalCost}</td>
-                        <td></td>
+                        <td>${totalCost}</td>
+                        <td>${number}</td>
                         <td>
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="make_order"/>

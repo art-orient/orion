@@ -44,7 +44,7 @@ public class AddProductCommand implements Command {
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> String.format("Add product in the cart from %s with id = %s",
                 category, productId));
-        return ConfigManager.getProperty("page." + category + "Redirect");
+        return ConfigManager.getProperty(String.format("page.%sRedirect", category));
     }
 
     private List<Object> getCart(HttpSession session) {
