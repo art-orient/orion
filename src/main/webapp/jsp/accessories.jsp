@@ -18,31 +18,46 @@
     <fmt:message key="ui.accessory"/><br>
     <table id="orderHistory">
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Photo</th>
-            <th id="columnToLimit">description</th>
-            <th>Cost</th>
+            <th><fmt:message key="ui.no"/></th>
+            <th><fmt:message key="ui.name"/></th>
+            <th><fmt:message key="ui.image"/></th>
+            <th id="columnToLimit"><fmt:message key="ui.description"/></th>
+            <th><fmt:message key="ui.cost"/></th>
             <th></th>
         </tr>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
                 <td>${counter.count + index}</td>
-                <td><c:out value="${product.typeRu}"/> <c:out value="${product.productDetails.brand}"/>
+                <td width="200px">
+                    <c:choose>
+                        <c:when test="${sessionScope.language == 'en'}">
+                            <c:out value="${product.typeEn} "/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${product.typeRu} "/>
+                        </c:otherwise>
+                    </c:choose>
+                    <c:out value="${product.productDetails.brand}"/>
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
-                <td>
-                    <img id="pic1" width="180px" src="images/accessories/${product.productDetails.imgPath}">
+                <td width="20%">
+                    <img src="${directory}${product.productDetails.imgPath}">
                 </td>
-                <td><c:out value="${product.productDetails.descriptionRu}"/></td>
-                <td>$<c:out value="${product.productDetails.cost}"/></td>
+                <td width="800px">
+                    <c:choose>
+                        <c:when test="${sessionScope.language == 'en'}">
+                            <c:out value="${product.productDetails.descriptionEn}"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <c:out value="${product.productDetails.descriptionRu}"/></td>
+                        </c:otherwise>
+                    </c:choose>
+                <td><c:out value="${product.productDetails.cost}"/></td>
                 <td>
                     <form method="get" action="controller">
                         <input type="hidden" name="product" value="${product.accessoryId}">
-                        <input type="hidden" name="page" value="${page}"/>
                         <input type="hidden" name="command" value="add_product">
-                        <button>Add to card</button>
-<%--                        <button><fmt:message key="ui.addToCart"/></button>--%>
+                        <button><fmt:message key="ui.addToCard"/></button>
                     </form>
                 </td>
             </tr>
