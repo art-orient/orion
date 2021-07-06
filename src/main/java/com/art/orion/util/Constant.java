@@ -26,4 +26,6 @@ public class Constant {
     public static final String TYPE_RU = "typeRu";
     public static final String TYPE_EN = "typeEn";
     public static final String PRODUCTS = "products";
+    public static final String CART = "cart";
+    public static final String CATEGORY = "category";
 }

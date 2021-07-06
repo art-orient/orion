@@ -1,6 +1,7 @@
 package com.art.orion.controller.command;
 
 import com.art.orion.controller.command.impl.AccessoriesCommand;
+import com.art.orion.controller.command.impl.AddProductCommand;
 import com.art.orion.controller.command.impl.AddProductPageCommand;
 import com.art.orion.controller.command.impl.CheckRegStatusCommand;
 import com.art.orion.controller.command.impl.HomeCommand;
@@ -25,7 +26,8 @@ public enum TypeCommand {
     PRODUCT_MANAGEMENT(new ProductManagementCommand()),
     ADD_PRODUCT_PAGE(new AddProductPageCommand()),
     SAVE_PRODUCT(new SaveProductCommand()),
-    ACCESSORIES(new AccessoriesCommand());
+    ACCESSORIES(new AccessoriesCommand()),
+    ADD_PRODUCT(new AddProductCommand());
 
     private final Command command;
 
