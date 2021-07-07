@@ -45,7 +45,7 @@
                                 <c:out value="${product.key.productDetails.modelName}"/><br>
                             </td>
                             <td width="20%">
-                                <img src="${directory}${product.key.productDetails.imgPath}">
+                                <img src="/images/${product.key.getCategory()}/${product.key.productDetails.imgPath}">
                             </td>
                             <td><c:out value="${product.key.productDetails.cost}"/></td>
                             <td><c:out value="${product.value}"/></td>

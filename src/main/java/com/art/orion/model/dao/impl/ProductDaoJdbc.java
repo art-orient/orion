@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +85,7 @@ public class ProductDaoJdbc implements ProductDao {
         String descriptionRu = resultSet.getString(DESCRIPTION_RU_INDEX);
         String descriptionEn = resultSet.getString(DESCRIPTION_EN_INDEX);
         String imagePath = resultSet.getString(IMAGE_PATH_INDEX);
-        BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST_INDEX));
+        BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST_INDEX)).setScale(2, RoundingMode.HALF_UP);
         boolean active = resultSet.getBoolean(ACTIVE_INDEX);
         ProductDetails productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
                 imagePath, cost, active);

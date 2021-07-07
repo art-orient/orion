@@ -18,7 +18,7 @@
     <fmt:message key="ui.accessory"/><br>
     <table id="orderHistory">
         <tr>
-            <th><fmt:message key="ui.no"/></th>
+            <th><fmt:message key="ui.numberSign"/></th>
             <th><fmt:message key="ui.name"/></th>
             <th><fmt:message key="ui.image"/></th>
             <th id="columnToLimit"><fmt:message key="ui.description"/></th>
@@ -27,7 +27,7 @@
         </tr>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
-                <td>${counter.count + index}</td>
+                <td>${counter.count}</td>
                 <td width="200px">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">

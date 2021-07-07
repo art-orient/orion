@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.USERNAME;
 import static com.art.orion.util.Constant.PASSWORD;
 import static com.art.orion.util.Constant.ROLE;
@@ -27,8 +28,11 @@ public class LoginUserCommand implements Command {
         String encryptedPassword = PasswordEncryptor.encryptPassword(password);
         if (UserService.validateCredentials(username, encryptedPassword)) {
             User user = UserService.getUser(username);
-            req.getSession().invalidate();
             HttpSession session = req.getSession();
+            String language = (String) session.getAttribute(LANGUAGE);
+            req.getSession().invalidate();
+            session = req.getSession();
+            session.setAttribute(LANGUAGE, language);
             session.setAttribute(USERNAME, username);
             session.setAttribute(ROLE, user.getRole().name());
             logger.log(Level.INFO, "User successfully logged in");

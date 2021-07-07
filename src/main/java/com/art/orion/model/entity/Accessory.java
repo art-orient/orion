@@ -1,8 +1,9 @@
 package com.art.orion.model.entity;
 
-import java.util.Objects;
+import static com.art.orion.util.Constant.ACCESSORIES;
 
 public class Accessory {
+    private static final String CATEGORY = ACCESSORIES;
     private int accessoryId;
     private String typeRu;
     private String typeEn;
@@ -64,6 +65,10 @@ public class Accessory {
 
     public void setTypeEn(String typeEn) {
         this.typeEn = typeEn;
+    }
+
+    public static String getCategory() {
+        return CATEGORY;
     }
 
     @Override

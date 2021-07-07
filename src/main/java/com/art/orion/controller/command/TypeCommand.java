@@ -16,6 +16,7 @@ import com.art.orion.controller.command.impl.ProductManagementCommand;
 import com.art.orion.controller.command.impl.RegisterUserCommand;
 import com.art.orion.controller.command.impl.RegistrationCommand;
 import com.art.orion.controller.command.impl.RemoveProductCommand;
+import com.art.orion.controller.command.impl.SaleCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
 import com.art.orion.controller.command.impl.ShoesCommand;
 
@@ -37,7 +38,8 @@ public enum TypeCommand {
     REMOVE_PRODUCT(new RemoveProductCommand()),
     MAKE_ORDER(new MakeOrderCommand()),
     CLOTHING(new ClothingCommand()),
-    SHOES(new ShoesCommand());
+    SHOES(new ShoesCommand()),
+    SALE(new SaleCommand());
 
     private final Command command;
 

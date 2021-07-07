@@ -9,13 +9,13 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title><fmt:message key="ui.clothing"/></title>
+    <title><fmt:message key="ui.sale"/></title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.clothing"/><br>
+    <fmt:message key="ui.sale"/><br>
     <table id="orderHistory">
         <tr>
             <th><fmt:message key="ui.numberSign"/></th>
@@ -56,7 +56,7 @@
                 <td>
                     <form method="get" action="controller">
                         <input type="hidden" name="product" value="${product.accessoryId}">
-                        <input type="hidden" name="category" value="clothing">
+                        <input type="hidden" name="category" value="sale">
                         <input type="hidden" name="command" value="add_product">
                         <button><fmt:message key="ui.addToCart"/></button>
                     </form>
