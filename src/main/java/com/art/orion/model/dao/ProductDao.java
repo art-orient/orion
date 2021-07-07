@@ -11,4 +11,6 @@ public interface ProductDao {
     List<Accessory> searchAccessories(int limit, int offset);
 
     Accessory getAccessoryById(int id);
+
+    int countNumberAccessories();
 }

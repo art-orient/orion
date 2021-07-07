@@ -10,23 +10,42 @@
         <c:if test="${page > 1}">
             <td>
             <form action="controller" method="get">
-                <input type="hidden" value="1">
+                <input type="hidden" name="command" value="${currentCommand}">
+                <input type="hidden" name="page" value="1">
                 <input type="submit" value='<c:out value="1"/>'>
             </form>
             </td>
+        </c:if>
+        <c:if test="${page > 2}">
             <td>
-                <c:out value="${page - 1}"/>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="${currentCommand}">
+                    <input type="hidden" name="page" value="${page - 1}">
+                    <input type="submit" value='<c:out value="${page - 1}"/>'>
+                </form>
             </td>
         </c:if>
-        <td>
-            <c:out value="${page} / ${numberPages}"/>
-        </td>
+        <c:if test="${numberPages > 1}">
+            <td>
+                <c:out value="${page} / ${numberPages}"/>
+            </td>
+        </c:if>
+        <c:if test="${page < numberPages - 1}">
+            <td>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="${currentCommand}">
+                    <input type="hidden" name="page" value="${page + 1}">
+                    <input type="submit" value='<c:out value="${page + 1}"/>'>
+                </form>
+            </td>
+        </c:if>
         <c:if test="${page < numberPages}">
             <td>
-                <c:out value="${page + 1}"/>
-            </td>
-            <td>
-                <c:out value="${numberPages}"/>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="${currentCommand}">
+                    <input type="hidden" name="page" value="${numberPages}">
+                    <input type="submit" value='<c:out value="${numberPages}"/>'>
+                </form>
             </td>
         </c:if>
     </tr>

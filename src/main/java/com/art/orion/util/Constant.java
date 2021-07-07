@@ -37,4 +37,5 @@ public class Constant {
     public static final String OFFSET = "offset";
     public static final String NUMBER_PAGES = "numberPages";
     public static final String NUMBER_PRODUCTS = "numberProducts";
+    public static final String CURRENT_COMMAND = "currentCommand";
 }

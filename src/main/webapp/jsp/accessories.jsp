@@ -15,8 +15,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.accessory"/><br>
-    ${numberProducts}
+    <fmt:message key="ui.accessory"/>     ${numberProducts}<br>
 <jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
         <tr>

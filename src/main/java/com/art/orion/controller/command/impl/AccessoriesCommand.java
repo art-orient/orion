@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import jakarta.servlet.http.HttpServletRequest;
 
 import static com.art.orion.controller.command.util.Paginator.LIMIT;
+import static com.art.orion.util.Constant.COMMAND;
+import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
 import static com.art.orion.util.Constant.PAGE;
@@ -32,10 +34,11 @@ public class AccessoriesCommand implements Command {
         int offset = Paginator.getOffset(pageNumber);
         List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset);
         session.setAttribute(PRODUCTS, accessories);
-        int numberProducts = accessories.size();
+        int numberProducts = ProductService.countNumberAccessories();
         req.setAttribute(NUMBER_PRODUCTS, numberProducts);
         int numberPages = Paginator.findNumberPages(numberProducts);
         req.setAttribute(NUMBER_PAGES, numberPages);
+        req.setAttribute(CURRENT_COMMAND, req.getParameter(COMMAND));
         return ConfigManager.getProperty("page.accessories");
     }
 }

@@ -23,4 +23,8 @@ public class ProductService {
     public static Accessory getAccessoryById(int id) {
         return PRODUCT_DAO.getAccessoryById(id);
     }
+
+    public static int countNumberAccessories() {
+        return PRODUCT_DAO.countNumberAccessories();
+    }
 }
