@@ -14,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class ProductDaoJdbc implements ProductDao {
     private static final int COST_INDEX = 9;
     private static final int AVAILABILITY_INDEX = 10;
     private static final int ACTIVE_INDEX = 11;
-    private static final String SELECT_ALL_ACCESSORIES = "SELECT * FROM accessories";
+    private static final String SELECT_ACCESSORIES = "SELECT * FROM accessories LIMIT ? OFFSET ?";
 
 
     @Override
@@ -61,11 +60,13 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Accessory> searchAccessories() {
+    public List<Accessory> searchAccessories(int limit, int offset) {
         List<Accessory> accessories = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement()) {
-            try (ResultSet resultSet = statement.executeQuery(SELECT_ALL_ACCESSORIES)) {
+             PreparedStatement statement = connection.prepareStatement(SELECT_ACCESSORIES)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     accessories.add(createAccessory(resultSet));
                 }

@@ -33,4 +33,8 @@ public class Constant {
     public static final String GROUPED_CART = "groupedCart";
     public static final String TOTAL_COST = "totalCost";
     public static final String NUMBER = "number";
+    public static final String PAGE = "page";
+    public static final String OFFSET = "offset";
+    public static final String NUMBER_PAGES = "numberPages";
+    public static final String NUMBER_PRODUCTS = "numberProducts";
 }

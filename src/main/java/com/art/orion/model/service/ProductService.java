@@ -16,8 +16,8 @@ public class ProductService {
         return PRODUCT_DAO.createProduct(accessory);
     }
 
-    public static List<Accessory> searchAccessories() {
-        return PRODUCT_DAO.searchAccessories();
+    public static List<Accessory> searchAccessories(int limit, int offset) {
+        return PRODUCT_DAO.searchAccessories(limit, offset);
     }
 
     public static Accessory getAccessoryById(int id) {

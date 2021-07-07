@@ -20,7 +20,7 @@ public class SaleCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page sale");
-        List<Accessory> accessories = ProductService.searchAccessories();
+        List<Accessory> accessories = ProductService.searchAccessories(5, 0);
         req.getSession().setAttribute(PRODUCTS, accessories);
         req.getSession().setAttribute("directory", DIRECTORY);
         return ConfigManager.getProperty("page.sale");

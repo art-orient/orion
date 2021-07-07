@@ -16,12 +16,14 @@
 <jsp:include page="header.jsp"/>
 <div class="products">
     <fmt:message key="ui.accessory"/><br>
+    ${numberProducts}
+<jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
         <tr>
             <th><fmt:message key="ui.numberSign"/></th>
             <th><fmt:message key="ui.name"/></th>
             <th><fmt:message key="ui.image"/></th>
-            <th id="columnToLimit"><fmt:message key="ui.description"/></th>
+            <th><fmt:message key="ui.description"/></th>
             <th><fmt:message key="ui.cost"/></th>
             <th></th>
         </tr>
@@ -41,7 +43,7 @@
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
                 <td width="20%">
-                    <img src="${directory}${product.productDetails.imgPath}">
+                    <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
                 </td>
                 <td width="800px">
                     <c:choose>
@@ -64,6 +66,7 @@
             </tr>
         </c:forEach>
     </table>
+<jsp:include page="paginator.jsp"/>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>

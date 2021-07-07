@@ -8,7 +8,7 @@ public interface ProductDao {
 
     int createProduct(Accessory accessory);
 
-    List<Accessory> searchAccessories();
+    List<Accessory> searchAccessories(int limit, int offset);
 
     Accessory getAccessoryById(int id);
 }
