@@ -22,7 +22,7 @@
                 <p>${orderStatus}</p>
                 <table id="orderHistory">
                     <tr>
-                        <th><fmt:message key="ui.no"/></th>
+                        <th><fmt:message key="ui.numberSign"/></th>
                         <th><fmt:message key="ui.name"/></th>
                         <th><fmt:message key="ui.image"/></th>
                         <th><fmt:message key="ui.cost"/></th>

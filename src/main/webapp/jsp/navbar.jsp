@@ -27,18 +27,21 @@
         <li>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="shoes"/>
+                <input type="hidden" name="page" value="1"/>
                 <input type="submit" value='<fmt:message key="ui.shoes"/>'/>
             </form>
         </li>
         <li>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="clothing"/>
+                <input type="hidden" name="page" value="1"/>
                 <input type="submit" value='<fmt:message key="ui.clothing"/>'/>
             </form>
         </li>
         <li>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="accessories"/>
+                <input type="hidden" name="page" value="1"/>
                 <input type="submit" value='<fmt:message key="ui.accessory"/>'/>
             </form>
         </li>

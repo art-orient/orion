@@ -16,6 +16,15 @@
             </form>
             </td>
         </c:if>
+        <c:if test="${page > 3}">
+            <td>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="${currentCommand}">
+                    <input type="hidden" name="page" value="${page - 2}">
+                    <input type="submit" value='<c:out value="${page - 2}"/>'>
+                </form>
+            </td>
+        </c:if>
         <c:if test="${page > 2}">
             <td>
                 <form action="controller" method="get">
@@ -36,6 +45,15 @@
                     <input type="hidden" name="command" value="${currentCommand}">
                     <input type="hidden" name="page" value="${page + 1}">
                     <input type="submit" value='<c:out value="${page + 1}"/>'>
+                </form>
+            </td>
+        </c:if>
+        <c:if test="${page < numberPages - 2}">
+            <td>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="${currentCommand}">
+                    <input type="hidden" name="page" value="${page + 2}">
+                    <input type="submit" value='<c:out value="${page + 2}"/>'>
                 </form>
             </td>
         </c:if>

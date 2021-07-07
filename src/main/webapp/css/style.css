@@ -664,6 +664,13 @@ section#login {
     padding: 4px;
 }
 
+#orderHistory #description {
+    font-size: 15px;
+    line-height: 130%;
+    font-weight: 600;
+    text-align: left;
+}
+
 #profile td{
     font-family: Raleway, Helvetica, Arial, sans-serif;
     color: black;
@@ -672,8 +679,6 @@ section#login {
     font-weight: bold;
     text-align: center;
     padding: 10px;
-
-
 }
 
 #profile table {

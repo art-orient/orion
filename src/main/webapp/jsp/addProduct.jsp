@@ -33,10 +33,10 @@
             <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" required>
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
-            <textarea rows="7" cols="30" name="descriptionRu" id="descriptionRu"></textarea>
+            <textarea rows="10" cols="50" name="descriptionRu" id="descriptionRu"></textarea>
             <br>
             <label for="descriptionEn"><fmt:message key="ui.description"/> <fmt:message key="ui.english"/></label><br/>
-            <textarea rows="7" cols="30" name="descriptionEn" id="descriptionEn"></textarea>
+            <textarea rows="10" cols="50" name="descriptionEn" id="descriptionEn"></textarea>
             <br>
             <label for="image"><fmt:message key="ui.image"/></label><br/>
             <input type="file" accept=".someext,image/*" name="image" id="image" required>

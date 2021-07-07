@@ -15,7 +15,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.accessory"/>     ${numberProducts}<br>
+    <fmt:message key="ui.accessory"/> <fmt:message key="ui.foundProducts"/> ${numberProducts}<br>
 <jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
         <tr>
@@ -44,10 +44,10 @@
                 <td width="20%">
                     <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
                 </td>
-                <td width="800px">
+                <td id="description" width="50%">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
-                            <c:out value="${product.productDetails.descriptionEn}"/></td>
+                        <c:out value="${product.productDetails.descriptionEn}"/></td>
                         </c:when>
                         <c:otherwise>
                             <c:out value="${product.productDetails.descriptionRu}"/></td>
@@ -58,6 +58,7 @@
                     <form method="get" action="controller">
                         <input type="hidden" name="product" value="${product.accessoryId}">
                         <input type="hidden" name="category" value="accessories">
+                        <input type="hidden" name="page" value="${page}"/>
                         <input type="hidden" name="command" value="add_product">
                         <button><fmt:message key="ui.addToCart"/></button>
                     </form>

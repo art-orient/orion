@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Objects;
+
 import static com.art.orion.util.Constant.PAGE;
 
 public class Paginator {
@@ -24,11 +26,7 @@ public class Paginator {
                 logger.log(Level.ERROR, e);
                 sessionPageNumber = 1;
             }
-            if (sessionPageNumber != null) {
-                requestPageNumber = sessionPageNumber;
-            } else {
-                requestPageNumber = 1;
-            }
+            requestPageNumber = Objects.requireNonNullElse(sessionPageNumber, 1);
         }
         return requestPageNumber;
     }
@@ -42,13 +40,10 @@ public class Paginator {
     }
 
     public static int findNumberPages(int numberProducts) {
-        System.out.println(numberProducts + " products");
         int numberPages = 0;
         if (numberProducts > 0) {
             numberPages = numberProducts / LIMIT;
         }
-        int a = numberProducts % LIMIT > 0 ? numberPages + 1: numberPages;
-        System.out.println(numberPages + " " + a);
         return numberProducts % LIMIT > 0 ? numberPages + 1: numberPages;
     }
 }

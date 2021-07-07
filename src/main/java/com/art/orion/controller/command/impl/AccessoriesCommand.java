@@ -30,7 +30,7 @@ public class AccessoriesCommand implements Command {
         logger.log(Level.DEBUG,"Go to page accessories");
         HttpSession session = req.getSession();
         int pageNumber = Paginator.getCurrentPage(req);
-        req.setAttribute(PAGE, pageNumber);
+        req.getSession().setAttribute(PAGE, pageNumber);
         int offset = Paginator.getOffset(pageNumber);
         List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset);
         session.setAttribute(PRODUCTS, accessories);
