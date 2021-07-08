@@ -1,5 +1,6 @@
 package com.art.orion.model.dao.impl;
 
+import com.art.orion.controller.command.util.TextHandler;
 import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductDetails;
@@ -40,7 +41,11 @@ public class ProductDaoJdbc implements ProductDao {
 
 
     @Override
-    public int createProduct(Accessory accessory) {
+    public int createProduct(Object product) {
+        Accessory accessory = null;
+        if (product instanceof Accessory) {
+            accessory = (Accessory) product;
+        }
         int numberOfRecords = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
                 PreparedStatement statement = connection.prepareStatement(INSERT_ACCESSORY)) {
@@ -48,8 +53,10 @@ public class ProductDaoJdbc implements ProductDao {
             statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());
             statement.setString(BRAND_INDEX - 1, accessory.getProductDetails().getBrand());
             statement.setString(MODEL_NAME_INDEX - 1, accessory.getProductDetails().getModelName());
-            statement.setString(DESCRIPTION_RU_INDEX - 1, accessory.getProductDetails().getDescriptionRu());
-            statement.setString(DESCRIPTION_EN_INDEX - 1, accessory.getProductDetails().getDescriptionEn());
+            statement.setString(DESCRIPTION_RU_INDEX - 1,
+                    TextHandler.createTextFromList(accessory.getProductDetails().getDescriptionRu()));
+            statement.setString(DESCRIPTION_EN_INDEX - 1,
+                    TextHandler.createTextFromList(accessory.getProductDetails().getDescriptionEn()));
             statement.setString(IMAGE_PATH_INDEX - 1, accessory.getProductDetails().getImgPath());
             statement.setBigDecimal(COST_INDEX - 1, accessory.getProductDetails().getCost());
             statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
@@ -85,8 +92,8 @@ public class ProductDaoJdbc implements ProductDao {
         String typeEn = resultSet.getString(TYPE_EN_INDEX);
         String brand = resultSet.getString(BRAND_INDEX);
         String modelName = resultSet.getString(MODEL_NAME_INDEX);
-        String descriptionRu = resultSet.getString(DESCRIPTION_RU_INDEX);
-        String descriptionEn = resultSet.getString(DESCRIPTION_EN_INDEX);
+        List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_RU_INDEX));
+        List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_EN_INDEX));
         String imagePath = resultSet.getString(IMAGE_PATH_INDEX);
         BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST_INDEX)).setScale(2, RoundingMode.HALF_UP);
         boolean active = resultSet.getBoolean(ACTIVE_INDEX);

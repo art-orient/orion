@@ -665,8 +665,8 @@ section#login {
 }
 
 #orderHistory #description {
-    font-size: 15px;
-    line-height: 130%;
+    font-size: 14px;
+    line-height: 100%;
     font-weight: 600;
     text-align: left;
 }

@@ -2,7 +2,9 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.ImageProcessor;
+import com.art.orion.controller.command.util.TextHandler;
 import com.art.orion.model.entity.Accessory;
+import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.model.validator.ProductValidator;
@@ -15,8 +17,12 @@ import org.apache.logging.log4j.Logger;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.art.orion.util.Constant.BRAND;
+import static com.art.orion.util.Constant.CATEGORY;
+import static com.art.orion.util.Constant.COLOR;
 import static com.art.orion.util.Constant.MODEL_NAME;
 import static com.art.orion.util.Constant.DESCRIPTION_RU;
 import static com.art.orion.util.Constant.DESCRIPTION_EN;
@@ -31,13 +37,13 @@ public class SaveProductCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        String category = (String) req.getSession().getAttribute(CATEGORY);
         String typeRu = req.getParameter(TYPE_RU);
         String typeEn = req.getParameter(TYPE_EN);
         String brand = req.getParameter(BRAND);
         String modelName = req.getParameter(MODEL_NAME);
-        String descriptionRu = req.getParameter(DESCRIPTION_RU);
-        String descriptionEn = req.getParameter(DESCRIPTION_EN);
-        String category = (String) req.getSession().getAttribute("category");
+        List<String> descriptionRu = TextHandler.createListFromText(req.getParameter(DESCRIPTION_RU));
+        List<String> descriptionEn = TextHandler.createListFromText(req.getParameter(DESCRIPTION_EN));
         String filename = ImageProcessor.uploadImage(req, brand, modelName);
         BigDecimal cost = BigDecimal.ZERO;
         try {
@@ -45,7 +51,6 @@ public class SaveProductCommand implements Command {
         } catch (NumberFormatException e) {
             logger.log(Level.ERROR, () -> "This price is not BigDecimal - " + req.getParameter(COST));
         }
-        int availability = Integer.parseInt(req.getParameter(AVAILABILITY));
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
         ProductDetails productDetails = new ProductDetails();
         if (ProductValidator.isProductValid(brand, modelName, cost)) {
@@ -59,11 +64,17 @@ public class SaveProductCommand implements Command {
         }
         switch (category) {
             case "accessories" -> {
+                int availability = Integer.parseInt(req.getParameter(AVAILABILITY));
                 Accessory accessory = new Accessory(typeRu, typeEn, productDetails, availability);
                 logger.log(Level.DEBUG, () -> "Created an accessory - " + accessory);
                 ProductService.createProduct(accessory);
             }
-            case "clothing" -> logger.log(Level.DEBUG, () -> "Created clothing - ");
+            case "clothing" -> {
+                String color = req.getParameter(COLOR);
+                Clothing clothing = new Clothing(typeRu, typeEn, productDetails, color);
+                logger.log(Level.DEBUG, () -> "Created clothing - " + clothing);
+                ProductService.createProduct(clothing);
+            }
             case "shoes" -> logger.log(Level.DEBUG, () -> "Created shoes - ");
             default -> logger.log(Level.ERROR, "No category of product");
         }

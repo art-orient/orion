@@ -4,18 +4,20 @@ import java.util.Map;
 
 public class Clothing {
     private int clothingId;
-    private ProductDetails productInfo;
+    private String typeRu;
+    private String typeEn;
+    private ProductDetails productDetails;
     private String color;
     private Map<Integer, Integer> sizes;
 
     public Clothing() {
     }
 
-    public Clothing(int clothingId, ProductDetails productInfo, String color, Map<Integer, Integer> sizes) {
-        this.clothingId = clothingId;
-        this.productInfo = productInfo;
+    public Clothing(String typeRu, String typeEn, ProductDetails productDetails, String color) {
+        this.typeRu = typeRu;
+        this.typeEn = typeEn;
+        this.productDetails = productDetails;
         this.color = color;
-        this.sizes = sizes;
     }
 
     public int getClothingId() {
@@ -26,12 +28,28 @@ public class Clothing {
         this.clothingId = clothingId;
     }
 
-    public ProductDetails getProductInfo() {
-        return productInfo;
+    public String getTypeRu() {
+        return typeRu;
     }
 
-    public void setProductInfo(ProductDetails productInfo) {
-        this.productInfo = productInfo;
+    public void setTypeRu(String typeRu) {
+        this.typeRu = typeRu;
+    }
+
+    public String getTypeEn() {
+        return typeEn;
+    }
+
+    public void setTypeEn(String typeEn) {
+        this.typeEn = typeEn;
+    }
+
+    public ProductDetails getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(ProductDetails productDetails) {
+        this.productDetails = productDetails;
     }
 
     public String getColor() {
@@ -48,5 +66,28 @@ public class Clothing {
 
     public void setSizes(Map<Integer, Integer> sizes) {
         this.sizes = sizes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Clothing clothing = (Clothing) o;
+        return clothingId == clothing.clothingId;
+    }
+
+    @Override
+    public int hashCode() {
+        return clothingId;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Clothing {clothingId = ").append(clothingId)
+                .append(", typeRu = ").append(typeRu)
+                .append(", typeEn = ").append(typeEn)
+                .append(", productDetails = ").append(productDetails)
+                .append(", color = ").append(color)
+                .append('}').toString();
     }
 }

@@ -17,7 +17,7 @@
 
 <section class="section">
     <div class="container">
-        <h2 class="headline"><fmt:message key="ui.addAccessory"/></h2><br>
+        <h2 class="headline"><fmt:message key="ui.addProduct"/></h2><br>
         <form action="controller" method="post" enctype="multipart/form-data">
             <input type="hidden" name="command" value="save_product"/>
             <label for="typeRu"><fmt:message key="ui.type"/> <fmt:message key="ui.russian"/></label><br/>
@@ -41,12 +41,19 @@
             <label for="image"><fmt:message key="ui.image"/></label><br/>
             <input type="file" accept=".someext,image/*" name="image" id="image" required>
             <br>
+            <c:if test="${category == 'clothing'}">
+                <label for="color"><fmt:message key="ui.color"/></label><br/>
+                <input type="text" name="color" id="color">
+                <br>
+            </c:if>
             <label for="cost"><fmt:message key="ui.cost"/></label><br/>
             <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" required>
             <br>
-            <label for="availability"><fmt:message key="ui.availability"/></label><br/>
-            <input type="number" min="0" name="availability" id="availability" required>
-            <br>
+            <c:if test="${category == 'accessories'}">
+                <label for="availability"><fmt:message key="ui.availability"/></label><br/>
+                <input type="number" min="0" name="availability" id="availability" required>
+                <br>
+            </c:if>
             <label><fmt:message key="ui.active"/>
                 <input type="radio" name="active" value="true" checked>
                 <fmt:message key="ui.yes"/>

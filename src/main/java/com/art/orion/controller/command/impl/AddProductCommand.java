@@ -14,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.art.orion.util.Constant.ACCESSORIES;
-import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCT;
-
 import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.CATEGORY;
 

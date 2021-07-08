@@ -14,6 +14,9 @@ public class AddProductPageCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String category = req.getParameter("category");
+        if (category.isEmpty()) {
+            return ConfigManager.getProperty("page.productManagement");
+        }
         req.getSession().setAttribute("category", category);
         logger.log(Level.DEBUG, "Go to add product page");
         return ConfigManager.getProperty("page.addProduct");

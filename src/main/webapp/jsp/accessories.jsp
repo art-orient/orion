@@ -28,7 +28,7 @@
         </tr>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
-                <td>${counter.count}</td>
+                <td>${counter.count + offset}</td>
                 <td width="200px">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
@@ -47,12 +47,17 @@
                 <td id="description" width="50%">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
-                        <c:out value="${product.productDetails.descriptionEn}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionEn}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <c:out value="${product.productDetails.descriptionRu}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionRu}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
+                </td>
                 <td><c:out value="${product.productDetails.cost}"/></td>
                 <td>
                     <form method="get" action="controller">

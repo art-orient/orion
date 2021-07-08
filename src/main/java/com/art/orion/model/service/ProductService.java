@@ -12,8 +12,8 @@ public class ProductService {
     private ProductService() {
     }
 
-    public static int createProduct(Accessory accessory) {
-        return PRODUCT_DAO.createProduct(accessory);
+    public static int createProduct(Object product) {
+        return PRODUCT_DAO.createProduct(product);
     }
 
     public static List<Accessory> searchAccessories(int limit, int offset) {

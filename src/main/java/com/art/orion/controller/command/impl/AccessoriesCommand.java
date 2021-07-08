@@ -17,6 +17,7 @@ import static com.art.orion.util.Constant.COMMAND;
 import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
+import static com.art.orion.util.Constant.OFFSET;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCTS;
 
@@ -36,6 +37,7 @@ public class AccessoriesCommand implements Command {
         session.setAttribute(PRODUCTS, accessories);
         int numberProducts = ProductService.countNumberAccessories();
         req.setAttribute(NUMBER_PRODUCTS, numberProducts);
+        req.setAttribute(OFFSET, offset);
         int numberPages = Paginator.findNumberPages(numberProducts);
         req.setAttribute(NUMBER_PAGES, numberPages);
         req.setAttribute(CURRENT_COMMAND, req.getParameter(COMMAND));

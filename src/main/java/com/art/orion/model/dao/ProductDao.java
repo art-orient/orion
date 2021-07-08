@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    int createProduct(Accessory accessory);
+    int createProduct(Object product);
 
     List<Accessory> searchAccessories(int limit, int offset);
 

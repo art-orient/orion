@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.art.orion.util.Constant.ACCESSORIES;
+import static com.art.orion.util.Constant.COMMAND;
+import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 
@@ -20,15 +23,16 @@ public class LanguageCommand implements Command {
     public String execute(HttpServletRequest req) {
         String selectedLanguage = req.getParameter(LANGUAGE);
         req.getSession().setAttribute(LANGUAGE, selectedLanguage);
+        logger.log(Level.INFO, "change of language");
         ErrorMessageManager.setLocale(selectedLanguage);
         String page = (String) req.getSession().getAttribute(CURRENT_PAGE);
-        if (page == null) {
+        String previousPage = page.substring(4, page.length() - 4);
+        if (page == null || previousPage.equals(ACCESSORIES)) {
             page = ConfigManager.getProperty("page.index");
         }
         if (ConfigManager.getProperty("page.error").equals(page)) {
             CommandFactory.sendPageNotFound(req);
         }
-        logger.log(Level.INFO, "change of language");
         return page;
     }
 }

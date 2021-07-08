@@ -1,12 +1,13 @@
 package com.art.orion.model.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProductDetails {
     private String brand;
     private String modelName;
-    private String descriptionRu;
-    private String descriptionEn;
+    private List<String> descriptionRu;
+    private List<String> descriptionEn;
     private String imgPath;
     private BigDecimal cost;
     private boolean active;
@@ -14,7 +15,7 @@ public class ProductDetails {
     public ProductDetails() {
     }
 
-    public ProductDetails(String brand, String modelName, String descriptionRu, String descriptionEn,
+    public ProductDetails(String brand, String modelName, List<String> descriptionRu, List<String> descriptionEn,
                           String imgPath, BigDecimal cost, boolean active) {
         this.brand = brand;
         this.modelName = modelName;
@@ -41,19 +42,19 @@ public class ProductDetails {
         this.modelName = modelName;
     }
 
-    public String getDescriptionRu() {
+    public List<String> getDescriptionRu() {
         return descriptionRu;
     }
 
-    public void setDescriptionRu(String descriptionRu) {
+    public void setDescriptionRu(List<String> descriptionRu) {
         this.descriptionRu = descriptionRu;
     }
 
-    public String getDescriptionEn() {
+    public List<String> getDescriptionEn() {
         return descriptionEn;
     }
 
-    public void setDescriptionEn(String descriptionEn) {
+    public void setDescriptionEn(List<String> descriptionEn) {
         this.descriptionEn = descriptionEn;
     }
 
