@@ -41,7 +41,7 @@
             <label for="image"><fmt:message key="ui.image"/></label><br/>
             <input type="file" accept=".someext,image/*" name="image" id="image" required>
             <br>
-            <c:if test="${category == 'clothing'}">
+            <c:if test="${category == 'clothing' || category == 'shoes'}">
                 <label for="color"><fmt:message key="ui.color"/></label><br/>
                 <input type="text" name="color" id="color">
                 <br>

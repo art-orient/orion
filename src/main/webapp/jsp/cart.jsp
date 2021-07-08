@@ -59,6 +59,10 @@
                                         <input type="hidden" name="product" value="${product.key.clothingId}">
                                         <input type="hidden" name="category" value="clothing">
                                     </c:if>
+                                    <c:if test="${product.key.getCategory() == 'shoes'}">
+                                        <input type="hidden" name="product" value="${product.key.shoesId}">
+                                        <input type="hidden" name="category" value="shoes">
+                                    </c:if>
                                     <input type="hidden" name="command" value="remove_product">
                                     <button><fmt:message key="ui.remove"/></button>
                                 </form>

@@ -48,7 +48,7 @@
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
                 <td>
-<%--                    <c:out value="${product.color}"/>--%>
+                    <c:out value="${product.color}"/>
                 </td>
                 <td width="15%">
                     <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
