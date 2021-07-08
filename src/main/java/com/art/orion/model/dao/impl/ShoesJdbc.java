@@ -3,6 +3,7 @@ package com.art.orion.model.dao.impl;
 import com.art.orion.controller.command.util.TextHandler;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
+import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -18,10 +19,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClothingJdbc {
+public class ShoesJdbc {
     private static final Logger logger = LogManager.getLogger();
-    private static final String SELECT_CLOTHING = "SELECT * FROM clothing WHERE active = 1 LIMIT ? OFFSET ?";
-    private static final int CLOTHING_ID_INDEX = 1;
+    private static final String SELECT_SHOES = "SELECT * FROM shoes WHERE active = 1 LIMIT ? OFFSET ?";
+    private static final int SHOES_ID_INDEX = 1;
     private static final int TYPE_RU_INDEX = 2;
     private static final int TYPE_EN_INDEX = 3;
     private static final int BRAND_INDEX = 4;
@@ -32,28 +33,32 @@ public class ClothingJdbc {
     private static final int COLOR_INDEX = 9;
     private static final int COST_INDEX = 10;
     private static final int ACTIVE_INDEX = 11;
-    private static final String COUNT_CLOTHING = "SELECT count(*) FROM clothing WHERE active = 1";
-    private static final String INSERT_CLOTHING = "INSERT INTO clothing " +
+    private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
+    private static final String INSERT_SHOES = "INSERT INTO shoes " +
             "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, color, cost, active)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_CLOSING_BY_ID = "SELECT * FROM clothing WHERE clothing_id = ?";
+    private static final String GET_SHOES_BY_ID = "SELECT * FROM shoes WHERE shoes_id = ?";
 
-    public int addClothingToDatabase(Clothing clothing) {
+    public int addShoesToDatabase(Shoes shoes) {
         int numberOfRecords = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_CLOTHING)) {
-            statement.setString(TYPE_RU_INDEX - 1, clothing.getTypeRu());
-            statement.setString(TYPE_EN_INDEX - 1, clothing.getTypeEn());
-            statement.setString(BRAND_INDEX - 1, clothing.getProductDetails().getBrand());
-            statement.setString(MODEL_NAME_INDEX - 1, clothing.getProductDetails().getModelName());
+             PreparedStatement statement = connection.prepareStatement(INSERT_SHOES)) {
+            statement.setString(TYPE_RU_INDEX - 1, shoes.getTypeRu());
+            statement.setString(TYPE_EN_INDEX - 1, shoes.getTypeEn());
+
+            statement.setString(BRAND_INDEX - 1,
+                    shoes
+                            .getProductDetails()
+                            .getBrand());
+            statement.setString(MODEL_NAME_INDEX - 1, shoes.getProductDetails().getModelName());
             statement.setString(DESCRIPTION_RU_INDEX - 1,
-                    TextHandler.createTextFromList(clothing.getProductDetails().getDescriptionRu()));
+                    TextHandler.createTextFromList(shoes.getProductDetails().getDescriptionRu()));
             statement.setString(DESCRIPTION_EN_INDEX - 1,
-                    TextHandler.createTextFromList(clothing.getProductDetails().getDescriptionEn()));
-            statement.setString(IMAGE_PATH_INDEX - 1, clothing.getProductDetails().getImgPath());
-            statement.setString(COLOR_INDEX - 1, clothing.getColor());
-            statement.setBigDecimal(COST_INDEX - 1, clothing.getProductDetails().getCost());
-            statement.setBoolean(ACTIVE_INDEX - 1, clothing.getProductDetails().isActive());
+                    TextHandler.createTextFromList(shoes.getProductDetails().getDescriptionEn()));
+            statement.setString(IMAGE_PATH_INDEX - 1, shoes.getProductDetails().getImgPath());
+            statement.setString(COLOR_INDEX - 1, shoes.getColor());
+            statement.setBigDecimal(COST_INDEX - 1, shoes.getProductDetails().getCost());
+            statement.setBoolean(ACTIVE_INDEX - 1, shoes.getProductDetails().isActive());
             numberOfRecords = statement.executeUpdate();
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Error writing to the database", e);
@@ -61,25 +66,25 @@ public class ClothingJdbc {
         return numberOfRecords;
     }
 
-    public List<Clothing> searchClothing(int limit, int offset) {
-        List<Clothing> clothing = new ArrayList<>();
+    public List<Shoes> searchShoes(int limit, int offset) {
+        List<Shoes> products = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_CLOTHING)) {
+             PreparedStatement statement = connection.prepareStatement(SELECT_SHOES)) {
             statement.setInt(1, limit);
             statement.setInt(2, offset);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    clothing.add(createClothing(resultSet));
+                    products.add(createShoes(resultSet));
                 }
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e);
         }
-        return clothing;
+        return products;
     }
 
-    private Clothing createClothing(ResultSet resultSet) throws SQLException {
-        int clothingId = resultSet.getInt(CLOTHING_ID_INDEX);
+    private Shoes createShoes(ResultSet resultSet) throws SQLException {
+        int shoesId = resultSet.getInt(SHOES_ID_INDEX);
         String typeRu = resultSet.getString(TYPE_RU_INDEX);
         String typeEn = resultSet.getString(TYPE_EN_INDEX);
         String brand = resultSet.getString(BRAND_INDEX);
@@ -92,30 +97,30 @@ public class ClothingJdbc {
         boolean active = resultSet.getBoolean(ACTIVE_INDEX);
         ProductDetails productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
                 imagePath, cost, active);
-        return new Clothing(clothingId, typeRu, typeEn, productDetails, color);
+        return new Shoes(shoesId, typeRu, typeEn, productDetails, color);
     }
 
-    public Clothing getClothingById(int id) {
-        Clothing clothing = null;
+    public Shoes getShoesById(int id) {
+        Shoes shoes = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_CLOSING_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(GET_SHOES_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    clothing = createClothing(resultSet);
+                    shoes = createShoes(resultSet);
                 }
             }
         } catch (SQLException e) {
             logger.log(Level.ERROR, e);
         }
-        return clothing;
+        return shoes;
     }
 
-    public int countNumberClothing() {
+    public int countNumberShoes() {
         int number = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(COUNT_CLOTHING)) {
+             ResultSet resultSet = statement.executeQuery(COUNT_SHOES)) {
             while (resultSet.next()) {
                 number = resultSet.getInt(1);
             }

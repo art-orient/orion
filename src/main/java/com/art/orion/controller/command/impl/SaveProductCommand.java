@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.art.orion.util.Constant.BRAND;
@@ -77,9 +76,9 @@ public class SaveProductCommand implements Command {
                 ProductService.addProductToDatabase(clothing);
             }
             case "shoes" -> {
-
-                Shoes shoes = new Shoes();
-                logger.log(Level.DEBUG, () -> "Created shoes - ");
+                String color = req.getParameter(COLOR);
+                Shoes shoes = new Shoes(typeRu, typeEn, productDetails, color);
+                logger.log(Level.DEBUG, () -> "Created shoes - " + shoes);
                 ProductService.addProductToDatabase(shoes);
             }
             default -> logger.log(Level.ERROR, "No category of product");

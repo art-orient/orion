@@ -15,19 +15,26 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.shoes"/><br>
+    <fmt:message key="ui.shoes"/> <fmt:message key="ui.foundProducts"/> <c:out value="${numberProducts}"/><br>
+    <fmt:message key="ui.itemsInCart"/>
+    <c:if test="${cart == null}"><c:out value="0"/></c:if>
+    <c:out value="${cart.size()}"/><br>
+<jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
-        <tr>
+        <c:if test="${sessionScope.products.size() > 0}">
+            <tr>
             <th><fmt:message key="ui.numberSign"/></th>
             <th><fmt:message key="ui.name"/></th>
+            <th><fmt:message key="ui.color"/></th>
             <th><fmt:message key="ui.image"/></th>
-            <th id="columnToLimit"><fmt:message key="ui.description"/></th>
+            <th><fmt:message key="ui.description"/></th>
             <th><fmt:message key="ui.cost"/></th>
             <th></th>
-        </tr>
+            </tr>
+        </c:if>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
-                <td>${counter.count + index}</td>
+                <td>${counter.count + offset}</td>
                 <td width="200px">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
@@ -40,23 +47,32 @@
                     <c:out value="${product.productDetails.brand}"/>
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
-                <td width="20%">
-                    <img src="${directory}${product.productDetails.imgPath}">
+                <td>
+<%--                    <c:out value="${product.color}"/>--%>
                 </td>
-                <td width="800px">
+                <td width="15%">
+                    <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
+                </td>
+                <td id="description" width="40%">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
-                            <c:out value="${product.productDetails.descriptionEn}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionEn}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <c:out value="${product.productDetails.descriptionRu}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionRu}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
+                </td>
                 <td><c:out value="${product.productDetails.cost}"/></td>
-                <td>
+                <td width="10%">
                     <form method="get" action="controller">
-                        <input type="hidden" name="product" value="${product.accessoryId}">
+                        <input type="hidden" name="product" value="${product.shoesId}">
                         <input type="hidden" name="category" value="shoes">
+                        <input type="hidden" name="page" value="${page}"/>
                         <input type="hidden" name="command" value="add_product">
                         <button><fmt:message key="ui.addToCart"/></button>
                     </form>
@@ -64,6 +80,7 @@
             </tr>
         </c:forEach>
     </table>
+<jsp:include page="paginator.jsp"/>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>

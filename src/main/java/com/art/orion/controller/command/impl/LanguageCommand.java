@@ -26,8 +26,7 @@ public class LanguageCommand implements Command {
         logger.log(Level.INFO, "change of language");
         ErrorMessageManager.setLocale(selectedLanguage);
         String page = (String) req.getSession().getAttribute(CURRENT_PAGE);
-        String previousPage = page.substring(4, page.length() - 4);
-        if (page == null || previousPage.equals(ACCESSORIES)) {
+        if (page == null || ACCESSORIES.equals(page.substring(4, page.length() - 4))) {
             page = ConfigManager.getProperty("page.index");
         }
         if (ConfigManager.getProperty("page.error").equals(page)) {

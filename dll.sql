@@ -263,3 +263,294 @@ Frame Material: Grilamid TR90
 All KV + glasses are CE certified
 The KV + Vertical goggles come with a soft microfiber case (no hard case).',
  'KV+_Vertical_glasses.jpg', 79.00, 6, 1);
+
+
+INSERT INTO clothing
+VALUES (1, 'Брюки', 'Pants', 'Noname', 'Running pants unisex', 'Брюки Noname Running подойдут для беговых тренировок. Брюки анатомического кроя, идеально сидят по фигуре и обеспечивают полную свободу движений за счет лайкры на задней части брюк.
+
+Описание товара:
+
+Беговые брюки
+Анатомический крой
+1 карман
+Лайкра полностью на задней части брюк
+Светоотражающие элементы
+Молния до колена',
+ 'The Noname Running trousers are perfect for running workouts. Anatomically cut trousers, fit perfectly on the figure and provide complete freedom of movement due to the lycra on the back of the trousers.
+
+Product description:
+
+Jogging Trousers
+Anatomical cut
+1 pocket
+Lycra completely on the back of the pants
+Reflective elements
+Knee zipper',
+ 'Noname_Running_pants_unisex_blue.jpg', 'blue', 179.00, 1);
+
+INSERT INTO clothing
+VALUES (2, 'Тайтсы женские', 'Women`s tights', 'Mizuno', 'Premium Jpn Short Tight black', 'ЖЕНСКИЕ БЕГОВЫЕ ТАЙТСЫ MIZUNO
+
+88% полиэстер / 12% спандекс
+
+Легкий материал с влаговыводящими свойствами
+
+Легкая компрессия для дополнительной поддержки основных групп мышц
+
+Эластичный пояс
+
+Задний карман на молнии
+
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток
+',
+ 'WOMEN`S RUNNING TIGHTS MIZUNO
+
+88% polyester / 12% elastane
+
+Lightweight material with moisture wicking properties
+
+Light compression for added support for major muscle groups
+
+Elastic waist
+
+Back pocket with zip
+
+Reflective elements for increased driving safety at night
+',
+ 'Mizuno_Premium_Jpn_Short_Tight_black.jpg', 'black', 79.00, 1);
+
+INSERT INTO clothing
+VALUES (3, 'Куртка мужская', 'Men`s jackets', 'Mizuno', 'Lightweight Jacket Blue', 'Спортивная куртка Mizuno.
+
+100% полиэстер
+Технология управления влажностью DryLite сохранит тело сухим
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток',
+ 'Sports jacket Mizuno.
+
+100% Polyester
+DryLite moisture management technology keeps body dry
+Reflective elements for increased driving safety at night',
+ 'Mizuno_Lightweight_Jacket_Blue.jpg', 'blue', 134.00, 1);
+
+INSERT INTO clothing
+VALUES (4, 'Куртка женская', 'Female jacket', 'Noname', 'Running Jacket Pro Talwind', 'Спортивная куртка элитной серии Noname Pro Tail Wind для професиональных спортсменов и любителей спорта. Куртка анатомического кроя не сковывает движения за счет вставок из лайкры на боковых частях.
+
+Куртка
+
+Анатомический крой
+Вставки из лайкры на боковых частях
+Манжеты-перчатки
+Светоотражающие элементы
+1 карман на груди
+Способ нанесения рисунка - лазерная печать',
+ 'Sports jacket of the elite Noname Pro Tail Wind series for professional athletes and sports fans. The anatomically cut jacket does not hinder movement due to Lycra inserts on the side parts.
+
+Jacket
+
+Anatomical cut
+Lycra side panels
+Gloves cuffs
+Reflective elements
+1 chest pocket
+Method of drawing a picture - laser printing',
+ 'Noname_Running_Jacket_Pro_Talwind.jpeg', 'green', 124.00, 1);
+
+INSERT INTO clothing
+VALUES (5, 'Олимпийка', 'Olympian', 'Asics', 'Tokyo Warm Up Jacket', 'МУЖСКАЯ ОЛИМПИЙКА ASICS
+
+100% полиэстер
+
+Легкий материал с влаговыводящими свойствами
+
+Боковые карманы',
+ 'MEN`S OLYMPIC ASICS
+
+100% Polyester
+
+Lightweight material with moisture wicking properties
+
+Side pockets',
+ 'Asics_Tokyo_Warm_Up_Jacket.jpg', 'white', 144.00, 1);
+
+INSERT INTO clothing
+VALUES (6, 'Шорты мужские', 'Men`s Shorts', 'Asics', 'Silver Split Short grey', 'МУЖСКИЕ БЕГОВЫЕ ШОРТЫ ASICS
+
+100% полиэстер
+
+Легкий материал с влаговыводящими свойствами
+
+Эластичный пояс со шнурком для регулировки размера',
+ 'MEN`S ASICS RUNNING SHORTS
+
+100% Polyester
+
+Lightweight material with moisture wicking properties
+
+Elastic waist with drawcord for size adjustment',
+ 'Asics_Silver_Split_Short_grey.jpg', 'grey', 74.00, 1);
+
+INSERT INTO clothing
+VALUES (7, 'Шорты мужские', 'Men`s Shorts', 'Mizuno', 'Premium Jpn Split Short blue', 'МУЖСКИЕ БЕГОВЫЕ ШОРТЫ MIZUNO
+
+100% полиэстер
+
+Технология управления влажностью DryLite сохранит тело сухим
+
+Эластичный пояс со шнурком для регулировки размера
+
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток
+',
+ 'MEN`S MIZUNO RUNNING SHORTS
+
+100% Polyester
+
+DryLite moisture management technology keeps body dry
+
+Elastic waist with drawcord for size adjustment
+
+Reflective elements for increased driving safety at night
+',
+ 'Mizuno_Premium_Jpn_Split_Short_blue.jpg', 'blue', 89.00, 1);
+
+INSERT INTO clothing
+VALUES (8, 'Шорты мужские', 'Men`s Shorts', 'Mizuno', 'Premium Jpn Split Short black', 'МУЖСКИЕ БЕГОВЫЕ ШОРТЫ MIZUNO
+
+100% полиэстер
+
+Технология управления влажностью DryLite сохранит тело сухим
+
+Эластичный пояс со шнурком для регулировки размера
+
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток
+',
+ 'MEN`S MIZUNO RUNNING SHORTS
+
+100% Polyester
+
+DryLite moisture management technology keeps body dry
+
+Elastic waist with drawcord for size adjustment
+
+Reflective elements for increased driving safety at night
+',
+ 'Mizuno_Premium_Jpn_Split_Short_black.jpg', 'black', 89.00, 1);
+
+INSERT INTO clothing
+VALUES (9, 'Костюм мужской', 'Men`s suit', 'Noname', 'Robigo Running Suit Blue', 'Спортивный костюм элитной серии Noname Robigo для професиональных спортсменов и любителей спорта. Костюм анатомического кроя не сковывает движения за счет вставок из лайкры на боковых частях куртки, задняя часть брюк так же полностью сделана из лайкры.
+
+
+
+Куртка
+
+
+
+Анатомический крой
+
+Вставки из лайкры на боковых частях
+
+Манжеты-перчатки
+
+Светоотражающие элементы
+
+1 карман на груди
+
+Брюки
+
+
+
+Анатомический крой
+
+1 карман
+
+Задняя часть брюк из лайкры
+
+Молния до колена
+
+Силиконовая внутренняя окантовка на манжете
+
+Манжеты на резинке
+
+Светоотражающие элементы',
+ 'Sports suit of the elite Noname Robigo series for professional athletes and sports fans. The anatomically cut suit does not hinder movement due to Lycra inserts on the sides of the jacket, the back of the trousers is also completely made of Lycra.
+
+
+
+Jacket
+
+
+
+Anatomical cut
+
+Lycra side panels
+
+Gloves cuffs
+
+Reflective elements
+
+1 chest pocket
+
+Pants
+
+
+
+Anatomical cut
+
+1 pocket
+
+Lycra back of trousers
+
+Knee zipper
+
+Silicone inner cuff
+
+Elasticated cuffs
+
+Reflective elements',
+ 'Noname_Robigo_Running_Suit_Blue.jpeg', 'blue', 314.00, 1);
+
+INSERT INTO clothing
+VALUES (10, 'Тайтсы женские', 'Women`s tights', 'DARE2B', 'Curvate Tight', 'ЖЕНСКИЕ БЕГОВЫЕ ТАЙТСЫ
+
+84% полиэстер / 16% эластан
+
+Легкий материал с влаговыводящими свойствами
+
+Эластичный пояс со шнурком для регулировки размера
+
+Задний карман
+
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток',
+ 'WOMEN`S RUNNING TIGHTS
+
+84% polyester / 16% elastane
+
+Lightweight material with moisture wicking properties
+
+Elastic waist with drawcord for size adjustment
+
+Back pocket
+
+Reflective elements for increased driving safety at night',
+ 'DARE2B_Curvate_Tight.jpg', 'blue', 69.00, 1);
+
+INSERT INTO clothing
+VALUES (11, 'Шорты женские', 'Women`s shorts', 'Asics', 'Silver Split Short', 'Женские беговые шорты Asics Silver Split Short
+
+
+
+100% полиэстер
+
+Легкий материал с влаговыводящими свойствами
+
+Эластичный пояс со шнурком для регулировки размера',
+ 'Women`s Running Shorts Asics Silver Split Short
+
+
+
+100% Polyester
+
+Lightweight material with moisture wicking properties
+
+Elastic waist with drawcord for size adjustment
+',
+ 'Asics_Silver_Split_Short.jpg', 'black', 64.00, 1);

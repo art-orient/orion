@@ -77,16 +77,16 @@ public class Clothing {
         this.sizes = sizes;
     }
 
+    public static String getCategory() {
+        return CATEGORY;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Clothing clothing = (Clothing) o;
         return clothingId == clothing.clothingId;
-    }
-
-    public static String getCategory() {
-        return CATEGORY;
     }
 
     @Override

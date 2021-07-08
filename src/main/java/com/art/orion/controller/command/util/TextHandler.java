@@ -7,15 +7,16 @@ public class TextHandler {
 
     private TextHandler() {
     }
+
     public static String createTextFromList(List<String> description) {
         StringBuilder text = new StringBuilder();
         for (String s : description) {
-            text.append(s);
+            text.append(s).append("\n");
         }
         return text.toString();
     }
 
     public static List<String> createListFromText(String text) {
-        return Arrays.asList(text.split("\n"));
+        return Arrays.asList(text.split("[\r?\n]"));
     }
 }

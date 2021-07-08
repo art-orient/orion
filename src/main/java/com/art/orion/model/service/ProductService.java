@@ -4,6 +4,7 @@ import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.dao.impl.ProductDaoJdbc;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
+import com.art.orion.model.entity.Shoes;
 
 import java.util.List;
 
@@ -25,8 +26,20 @@ public class ProductService {
         return PRODUCT_DAO.searchClothing(limit, offset);
     }
 
+    public static List<Shoes> searchShoes(int limit, int offset) {
+        return PRODUCT_DAO.searchShoes(limit, offset);
+    }
+
     public static Accessory getAccessoryById(int id) {
         return PRODUCT_DAO.getAccessoryById(id);
+    }
+
+    public static Clothing getClothingById(int id) {
+        return PRODUCT_DAO.getClothingById(id);
+    }
+
+    public static Shoes getShoesById(int id) {
+        return PRODUCT_DAO.getShoesById(id);
     }
 
     public static int countNumberAccessories() {
@@ -37,7 +50,7 @@ public class ProductService {
         return PRODUCT_DAO.countNumberClothing();
     }
 
-    public static Clothing getClothingById(int id) {
-        return PRODUCT_DAO.getClothingById(id);
+    public static int countNumberShoes() {
+        return PRODUCT_DAO.countNumberShoes();
     }
 }

@@ -14,12 +14,14 @@ active boolean
 
 CREATE table shoes (
 shoes_id int primary key auto_increment,
+type_Ru varchar(30),
+type_En varchar(30),
 brand varchar(30),
 model_name varchar(30),
-color varchar(30),
-descrition text,
+description_RU text,
+description_EN text,
 image_path varchar(100),
-weight int,
+color varchar(30),
 cost decimal(6, 2),
 active boolean
 );
