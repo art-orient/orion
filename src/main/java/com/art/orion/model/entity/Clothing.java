@@ -2,7 +2,10 @@ package com.art.orion.model.entity;
 
 import java.util.Map;
 
+import static com.art.orion.util.Constant.CLOTHING;
+
 public class Clothing {
+    private static final String CATEGORY = CLOTHING;
     private int clothingId;
     private String typeRu;
     private String typeEn;
@@ -80,6 +83,10 @@ public class Clothing {
         if (o == null || getClass() != o.getClass()) return false;
         Clothing clothing = (Clothing) o;
         return clothingId == clothing.clothingId;
+    }
+
+    public static String getCategory() {
+        return CATEGORY;
     }
 
     @Override

@@ -15,11 +15,13 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public int addProductToDatabase(Object product) {
-        Accessory accessory = null;
         int numberOfRecords = 0;
         if (product instanceof Accessory) {
-            accessory = (Accessory) product;
+            Accessory accessory = (Accessory) product;
             numberOfRecords = accessoryJdbc.addAccessoryToDatabase(accessory);
+        } else if (product instanceof Clothing) {
+            Clothing clothing = (Clothing) product;
+            numberOfRecords = clothingJdbc.addClothingToDatabase(clothing);
         }
         return numberOfRecords;
     }
@@ -47,5 +49,10 @@ public class ProductDaoJdbc implements ProductDao {
     @Override
     public int countNumberClothing() {
         return clothingJdbc.countNumberClothing();
+    }
+
+    @Override
+    public Clothing getClothingById(int id) {
+        return clothingJdbc.getClothingById(id);
     }
 }

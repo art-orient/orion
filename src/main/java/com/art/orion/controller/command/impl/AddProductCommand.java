@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.model.entity.Accessory;
+import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.art.orion.util.Constant.ACCESSORIES;
+import static com.art.orion.util.Constant.CLOTHING;
 import static com.art.orion.util.Constant.PRODUCT;
 import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.CATEGORY;
@@ -38,6 +40,11 @@ public class AddProductCommand implements Command {
             Accessory accessory = ProductService.getAccessoryById(id);
             if (accessory != null) {
                 cart.add(accessory);
+            }
+        } else if (category.equals(CLOTHING)) {
+            Clothing clothing = ProductService.getClothingById(id);
+            if (clothing != null) {
+                cart.add(clothing);
             }
         }
         session.setAttribute(CART, cart);

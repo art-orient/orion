@@ -36,4 +36,8 @@ public class ProductService {
     public static int countNumberClothing() {
         return PRODUCT_DAO.countNumberClothing();
     }
+
+    public static Clothing getClothingById(int id) {
+        return PRODUCT_DAO.getClothingById(id);
+    }
 }

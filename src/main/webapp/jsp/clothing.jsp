@@ -45,7 +45,7 @@
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
                 <td>
-<%--                    <c:out value="${product.color}"/>--%>
+                    <c:out value="${product.color}"/>
                 </td>
                 <td width="20%">
                     <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
@@ -67,7 +67,7 @@
                 <td><c:out value="${product.productDetails.cost}"/></td>
                 <td>
                     <form method="get" action="controller">
-                        <input type="hidden" name="product" value="${product.accessoryId}">
+                        <input type="hidden" name="product" value="${product.clothingId}">
                         <input type="hidden" name="category" value="clothing">
                         <input type="hidden" name="page" value="${page}"/>
                         <input type="hidden" name="command" value="add_product">

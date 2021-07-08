@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.model.entity.Accessory;
+import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import java.util.List;
 import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.CATEGORY;
+import static com.art.orion.util.Constant.CLOTHING;
 import static com.art.orion.util.Constant.PRODUCT;
 
 public class RemoveProductCommand implements Command {
@@ -32,9 +34,14 @@ public class RemoveProductCommand implements Command {
             logger.log(Level.ERROR, e);
         }
         String category = req.getParameter(CATEGORY);
+        logger.log(Level.DEBUG, () -> String.format("Category of product is %s", category));
+        logger.log(Level.DEBUG, String.format("ID of product is %d", productId));
         if (category.equals(ACCESSORIES)) {
             Accessory accessory = ProductService.getAccessoryById(productId);
             cart.remove(accessory);
+        } else if (category.equals(CLOTHING)) {
+            Clothing clothing = ProductService.getClothingById(productId);
+            cart.remove(clothing);
         }
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> "A product removed from the cart");

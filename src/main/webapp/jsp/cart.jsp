@@ -51,8 +51,14 @@
                             <td><c:out value="${product.value}"/></td>
                             <td>
                                 <form action="controller" method="post">
-                                    <input type="hidden" name="product" value="${product.key.accessoryId}">
-                                    <input type="hidden" name="category" value="accessories">
+                                    <c:if test="${product.key.getCategory() == 'accessories'}">
+                                        <input type="hidden" name="product" value="${product.key.accessoryId}">
+                                        <input type="hidden" name="category" value="${product.key.getCategory()}">
+                                    </c:if>
+                                    <c:if test="${product.key.getCategory() == 'clothing'}">
+                                        <input type="hidden" name="product" value="${product.key.clothingId}">
+                                        <input type="hidden" name="category" value="clothing">
+                                    </c:if>
                                     <input type="hidden" name="command" value="remove_product">
                                     <button><fmt:message key="ui.remove"/></button>
                                 </form>

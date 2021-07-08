@@ -15,6 +15,8 @@ public interface ProductDao {
 
     Accessory getAccessoryById(int id);
 
+    Clothing getClothingById(int id);
+
     int countNumberAccessories();
 
     int countNumberClothing();

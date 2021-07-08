@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
+import static com.art.orion.util.Constant.COMMAND;
 import static com.art.orion.util.Constant.USERNAME;
 
 @WebFilter(urlPatterns = "/*")
@@ -24,7 +25,7 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        String action = request.getParameter("command");
+        String action = request.getParameter(COMMAND);
         if (action != null && isForbiddenPage(action) && isUnauthorizedUser(request)) {
             logger.log(Level.WARN, () -> String.format("Forbidden page for unauthorized user - %s", action));
             request.getRequestDispatcher(ConfigManager.getProperty("page.login")).forward(request, servletResponse);

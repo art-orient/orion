@@ -1,6 +1,8 @@
 package com.art.orion.model.service;
 
 import com.art.orion.model.entity.Accessory;
+import com.art.orion.model.entity.Clothing;
+import com.art.orion.model.entity.Shoes;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,11 +20,16 @@ public class CartService {
 
     public static BigDecimal findTotalCost(List<Object> products) {
         BigDecimal totalCost = BigDecimal.ZERO;
+        BigDecimal cost = BigDecimal.ZERO;
         for (Object o : products) {
             if (o instanceof Accessory) {
-                BigDecimal cost = ((Accessory) o).getProductDetails().getCost();
-                totalCost = totalCost.add(cost);
+                cost = ((Accessory) o).getProductDetails().getCost();
+            } else if (o instanceof Clothing) {
+                cost = ((Clothing) o).getProductDetails().getCost();
+            } else if (o instanceof Shoes) {
+                cost = ((Shoes) o).getProductDetails().getCost();
             }
+            totalCost = totalCost.add(cost);
         }
         return totalCost;
     }

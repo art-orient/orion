@@ -39,4 +39,6 @@ public class Constant {
     public static final String NUMBER_PRODUCTS = "numberProducts";
     public static final String CURRENT_COMMAND = "currentCommand";
     public static final String COLOR = "color";
+    public static final String CLOTHING = "clothing";
+    public static final String SHOES = "shoes";
 }
