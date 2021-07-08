@@ -38,23 +38,26 @@ shoes_id int,
 FOREIGN KEY (shoes_id) REFERENCES shoes (shoes_id)
 );
 
-CREATE table clothes (
-clothes_id int primary key auto_increment,
+CREATE table clothing (
+clothing_id int primary key auto_increment,
+type_Ru varchar(30),
+type_En varchar(30),
 brand varchar(30),
 model_name varchar(30),
-color varchar(30),
-descrition text,
+description_RU text,
+description_EN text,
 image_path varchar(100),
+color varchar(30),
 cost decimal(6, 2),
 active boolean
 );
 
-CREATE table clothes_sizes (
-clothes_id int,
+CREATE table clothing_sizes (
+clothing_id int,
 size int,
 availability int,
-PRIMARY KEY (clothes_id, size),
-FOREIGN KEY (clothes_id) REFERENCES clothes (clothes_id)
+PRIMARY KEY (clothing_id, size),
+FOREIGN KEY (clothing_id) REFERENCES clothing (clothing_id)
 );
 
 CREATE table accessories (
@@ -83,13 +86,13 @@ FOREIGN KEY (username) REFERENCES users (username)
 CREATE table order_details (
 order_id int,
 shoes_id int,
-clothes_id int,
+clothing_id int,
 accessories_id int,
 number_of_products int not null,
 products_cost decimal(6, 2) not null,
-PRIMARY KEY (order_id, shoes_id, clothes_id, accessories_id),
+PRIMARY KEY (order_id, shoes_id, clothing_id, accessories_id),
 FOREIGN KEY (order_id) REFERENCES orders (order_id),
 FOREIGN KEY (shoes_id) REFERENCES shoes (shoes_id),
-FOREIGN KEY (clothes_id) REFERENCES clothes (clothes_id),
+FOREIGN KEY (clothing_id) REFERENCES clothing (clothing_id),
 FOREIGN KEY (accessories_id) REFERENCES accessories (accessories_id)
 );

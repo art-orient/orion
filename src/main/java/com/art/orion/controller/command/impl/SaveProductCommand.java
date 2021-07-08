@@ -6,6 +6,7 @@ import com.art.orion.controller.command.util.TextHandler;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
+import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.model.validator.ProductValidator;
 import com.art.orion.util.ConfigManager;
@@ -67,15 +68,20 @@ public class SaveProductCommand implements Command {
                 int availability = Integer.parseInt(req.getParameter(AVAILABILITY));
                 Accessory accessory = new Accessory(typeRu, typeEn, productDetails, availability);
                 logger.log(Level.DEBUG, () -> "Created an accessory - " + accessory);
-                ProductService.createProduct(accessory);
+                ProductService.addProductToDatabase(accessory);
             }
             case "clothing" -> {
                 String color = req.getParameter(COLOR);
                 Clothing clothing = new Clothing(typeRu, typeEn, productDetails, color);
                 logger.log(Level.DEBUG, () -> "Created clothing - " + clothing);
-                ProductService.createProduct(clothing);
+                ProductService.addProductToDatabase(clothing);
             }
-            case "shoes" -> logger.log(Level.DEBUG, () -> "Created shoes - ");
+            case "shoes" -> {
+
+                Shoes shoes = new Shoes();
+                logger.log(Level.DEBUG, () -> "Created shoes - ");
+                ProductService.addProductToDatabase(shoes);
+            }
             default -> logger.log(Level.ERROR, "No category of product");
         }
         return ConfigManager.getProperty("page.productManagement");

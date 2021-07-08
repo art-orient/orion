@@ -18,14 +18,16 @@
     <fmt:message key="ui.accessory"/> <fmt:message key="ui.foundProducts"/> ${numberProducts}<br>
 <jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
-        <tr>
-            <th><fmt:message key="ui.numberSign"/></th>
-            <th><fmt:message key="ui.name"/></th>
-            <th><fmt:message key="ui.image"/></th>
-            <th><fmt:message key="ui.description"/></th>
-            <th><fmt:message key="ui.cost"/></th>
-            <th></th>
-        </tr>
+        <c:if test="${sessionScope.products.size() > 0}">
+            <tr>
+                <th><fmt:message key="ui.numberSign"/></th>
+                <th><fmt:message key="ui.name"/></th>
+                <th><fmt:message key="ui.image"/></th>
+                <th><fmt:message key="ui.description"/></th>
+                <th><fmt:message key="ui.cost"/></th>
+                <th></th>
+            </tr>
+        </c:if>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
                 <td>${counter.count + offset}</td>

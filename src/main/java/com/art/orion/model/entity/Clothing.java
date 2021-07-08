@@ -20,6 +20,12 @@ public class Clothing {
         this.color = color;
     }
 
+    public Clothing(int clothingId,  String typeRu, String typeEn, ProductDetails productDetails,
+                     String color) {
+        this(typeRu, typeEn, productDetails, color);
+        this.clothingId = clothingId;
+    }
+
     public int getClothingId() {
         return clothingId;
     }

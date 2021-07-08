@@ -15,19 +15,23 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.clothing"/><br>
+    <fmt:message key="ui.clothing"/> <fmt:message key="ui.foundProducts"/> ${numberProducts}<br>
+<jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
-        <tr>
+        <c:if test="${sessionScope.products.size() > 0}">
+            <tr>
             <th><fmt:message key="ui.numberSign"/></th>
             <th><fmt:message key="ui.name"/></th>
+            <th><fmt:message key="ui.color"/></th>
             <th><fmt:message key="ui.image"/></th>
-            <th id="columnToLimit"><fmt:message key="ui.description"/></th>
+            <th><fmt:message key="ui.description"/></th>
             <th><fmt:message key="ui.cost"/></th>
             <th></th>
-        </tr>
+            </tr>
+        </c:if>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
-                <td>${counter.count + index}</td>
+                <td>${counter.count + offset}</td>
                 <td width="200px">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
@@ -40,23 +44,32 @@
                     <c:out value="${product.productDetails.brand}"/>
                     <c:out value="${product.productDetails.modelName}"/><br>
                 </td>
-                <td width="20%">
-                    <img src="${directory}${product.productDetails.imgPath}">
+                <td>
+<%--                    <c:out value="${product.color}"/>--%>
                 </td>
-                <td width="800px">
+                <td width="20%">
+                    <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
+                </td>
+                <td id="description" width="50%">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
-                            <c:out value="${product.productDetails.descriptionEn}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionEn}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <c:out value="${product.productDetails.descriptionRu}"/></td>
+                            <c:forEach items="${product.productDetails.descriptionRu}" var="str">
+                                <p><c:out value="${str}"/></p>
+                            </c:forEach>
                         </c:otherwise>
                     </c:choose>
+                </td>
                 <td><c:out value="${product.productDetails.cost}"/></td>
                 <td>
                     <form method="get" action="controller">
                         <input type="hidden" name="product" value="${product.accessoryId}">
                         <input type="hidden" name="category" value="clothing">
+                        <input type="hidden" name="page" value="${page}"/>
                         <input type="hidden" name="command" value="add_product">
                         <button><fmt:message key="ui.addToCart"/></button>
                     </form>
@@ -64,6 +77,7 @@
             </tr>
         </c:forEach>
     </table>
+<jsp:include page="paginator.jsp"/>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
