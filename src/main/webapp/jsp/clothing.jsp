@@ -15,7 +15,10 @@
 <body>
 <jsp:include page="header.jsp"/>
 <div class="products">
-    <fmt:message key="ui.clothing"/> <fmt:message key="ui.foundProducts"/> ${numberProducts}<br>
+    <fmt:message key="ui.clothing"/> <fmt:message key="ui.foundProducts"/> <c:out value="${numberProducts}"/><br>
+    <fmt:message key="ui.itemsInCart"/>
+    <c:if test="${cart == null}"><c:out value="0"/></c:if>
+    <c:out value="${cart.size()}"/><br>
 <jsp:include page="paginator.jsp"/>
     <table id="orderHistory">
         <c:if test="${sessionScope.products.size() > 0}">
@@ -47,10 +50,10 @@
                 <td>
                     <c:out value="${product.color}"/>
                 </td>
-                <td width="20%">
+                <td width="15%">
                     <img src="/images/${product.getCategory()}/${product.productDetails.imgPath}">
                 </td>
-                <td id="description" width="50%">
+                <td id="description" width="40%">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
                             <c:forEach items="${product.productDetails.descriptionEn}" var="str">
@@ -65,7 +68,7 @@
                     </c:choose>
                 </td>
                 <td><c:out value="${product.productDetails.cost}"/></td>
-                <td>
+                <td width="10%">
                     <form method="get" action="controller">
                         <input type="hidden" name="product" value="${product.clothingId}">
                         <input type="hidden" name="category" value="clothing">
