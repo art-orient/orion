@@ -13,6 +13,7 @@ import com.art.orion.controller.command.impl.LoginUserCommand;
 import com.art.orion.controller.command.impl.LogoutCommand;
 import com.art.orion.controller.command.impl.MakeOrderCommand;
 import com.art.orion.controller.command.impl.ProductManagementCommand;
+import com.art.orion.controller.command.impl.ProfileCommand;
 import com.art.orion.controller.command.impl.RegisterUserCommand;
 import com.art.orion.controller.command.impl.RegistrationCommand;
 import com.art.orion.controller.command.impl.RemoveProductCommand;
@@ -39,7 +40,8 @@ public enum TypeCommand {
     MAKE_ORDER(new MakeOrderCommand()),
     CLOTHING(new ClothingCommand()),
     SHOES(new ShoesCommand()),
-    SALE(new SaleCommand());
+    SALE(new SaleCommand()),
+    PROFILE(new ProfileCommand());
 
     private final Command command;
 

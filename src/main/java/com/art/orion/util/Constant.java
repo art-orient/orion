@@ -41,4 +41,5 @@ public class Constant {
     public static final String COLOR = "color";
     public static final String CLOTHING = "clothing";
     public static final String SHOES = "shoes";
+    public static final String USER = "user";
 }
