@@ -1,6 +1,6 @@
 WEB project
 
-# Site of store of the sports club "Orion"
+# "Orion" sports club shop site.
 
 ### Author: Aliaksandr Artsikhovich
 

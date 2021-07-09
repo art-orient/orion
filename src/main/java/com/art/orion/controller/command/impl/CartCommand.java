@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.art.orion.util.Constant.CART;
+import static com.art.orion.util.Constant.ERROR;
 import static com.art.orion.util.Constant.GROUPED_CART;
 import static com.art.orion.util.Constant.NUMBER;
 import static com.art.orion.util.Constant.TOTAL_COST;
@@ -29,6 +30,7 @@ public class CartCommand implements Command {
             BigDecimal totalCost = CartService.findTotalCost(products);
             req.setAttribute(TOTAL_COST, totalCost);
             req.setAttribute(NUMBER, products.size());
+            req.setAttribute(ERROR, req.getParameter(ERROR));
         }
         return ConfigManager.getProperty("page.cart");
     }

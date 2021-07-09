@@ -1,5 +1,6 @@
 package com.art.orion.model.dao.impl;
 
+import com.art.orion.model.dao.OrionDatabaseException;
 import com.art.orion.model.dao.UserDao;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
@@ -13,9 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.USERNAME;
 import static com.art.orion.util.Constant.PASSWORD;
 import static com.art.orion.util.Constant.FIRSTNAME;
@@ -40,10 +41,14 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public boolean createUser(User user) {
-        boolean isAddUser = false;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+    public boolean createUser(User user) throws SQLException, OrionDatabaseException {
+        boolean isAddUser;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = ConnectionPool.INSTANCE.getConnection();
+            connection.setAutoCommit(false);
+            preparedStatement = connection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getFirstName());
@@ -52,14 +57,24 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.setInt(6, user.getRole().ordinal());
             preparedStatement.setBoolean(7, user.isActive());
             isAddUser = (preparedStatement.executeUpdate() == 1);
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
+            connection.rollback();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
         return isAddUser;
     }
 
     @Override
-    public boolean checkIsUsernameBusy(String username) {
+    public boolean checkIsUsernameBusy(String username) throws OrionDatabaseException {
         boolean isUsernameBusy = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
@@ -70,13 +85,13 @@ public class UserDaoJdbc implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return isUsernameBusy;
     }
 
     @Override
-    public User getUser(String username) {
+    public User getUser(String username) throws OrionDatabaseException {
         User user = new User();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
@@ -87,7 +102,7 @@ public class UserDaoJdbc implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return user;
     }
@@ -104,11 +119,11 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+        throw new UnsupportedOperationException("operation not supported");
     }
 
     @Override
-    public int countUsers() {
+    public int countUsers() throws OrionDatabaseException {
         int numberUsers = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
@@ -117,18 +132,18 @@ public class UserDaoJdbc implements UserDao {
                 numberUsers = resultSet.getInt(1);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return numberUsers;
     }
 
     @Override
     public List<User> getUsers() {
-        return new ArrayList<>();
+        throw new UnsupportedOperationException("operation not supported");
     }
 
     @Override
-    public boolean validateCredentials(String username, String password) {
+    public boolean validateCredentials(String username, String password) throws OrionDatabaseException {
         boolean isValid = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_CREDENTIALS)) {
@@ -140,7 +155,7 @@ public class UserDaoJdbc implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e.getMessage(), e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return isValid;
     }

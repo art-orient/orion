@@ -8,5 +8,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <c:redirect url="controller?command=cart">
+    <c:param name="error" value="${error}"/>
 </c:redirect>
 </html>

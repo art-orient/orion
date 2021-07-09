@@ -17,6 +17,10 @@
 <section id="orders" class="section">
     <div class="container">
         <h2 class="headline"><fmt:message key="ui.cart"/></h2>
+        <c:if test="${error != null}">
+            <c:out value="${error}"/>
+            <br><br>
+        </c:if>
         <c:choose>
             <c:when test="${cart.size() > 0}">
                 <p>${orderStatus}</p>

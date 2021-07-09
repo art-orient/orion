@@ -1,9 +1,14 @@
 package com.art.orion.model.validator;
 
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.util.ErrorMessageManager;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UserValidator {
+    private static final Logger logger = LogManager.getLogger();
     private static final String USERNAME_REGEX = "[a-zA-Z\\d_\\-.]{3,30}";
     private static final String PASSWORD_REGEX = "[a-zA-ZА-я\\d\\p{Punct}]{5,40}";
     private static final String NAME_REGEX = "[a-zA-ZА-я-]{2,30}";
@@ -11,9 +16,14 @@ public class UserValidator {
     public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
                                 String lastname, String email, StringBuilder validationStatus) {
         boolean isValidUser = true;
-        if (UserService.checkIsUsernameBusy(username)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.nameExists")).append("\n");
-            isValidUser = false;
+        try {
+            if (UserService.checkIsUsernameBusy(username)) {
+                validationStatus.append(ErrorMessageManager.getMessage("msg.nameExists")).append("\n");
+                isValidUser = false;
+            }
+        } catch (ServiceException e) {
+            validationStatus.append(e.getMessage());
+            logger.log(Level.ERROR, e.getMessage(), e);
         }
         if (isNotValidUsername(username)) {
             validationStatus.append(ErrorMessageManager.getMessage("msg.notValidUsername")).append("\n");

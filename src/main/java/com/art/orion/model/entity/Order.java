@@ -23,12 +23,11 @@ public class Order {
     }
 
     public Order(String username, Date orderDate, Map<Object, Long> productsAndAmount,
-                 BigDecimal orderCost, boolean confirmationStatus) {
+                 BigDecimal orderCost) {
         this.username = username;
         this.orderDate = orderDate;
         this.productsAndAmount = productsAndAmount;
         this.orderCost = orderCost;
-        this.confirmationStatus = confirmationStatus;
     }
 
     public Order() {

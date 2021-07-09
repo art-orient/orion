@@ -42,4 +42,8 @@ public class Constant {
     public static final String CLOTHING = "clothing";
     public static final String SHOES = "shoes";
     public static final String USER = "user";
+    public static final String DATABASE_EXCEPTION = "database exception";
+
+    private Constant() {
+    }
 }

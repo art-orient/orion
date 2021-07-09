@@ -28,7 +28,6 @@ public class CommandFactory {
         }
         try {
             command = TypeCommand.valueOf(action.toUpperCase()).getCommand();
-            logger.log(Level.DEBUG, command);
         } catch (IllegalArgumentException e) {
             logger.log(Level.ERROR, action);
             sendPageNotFound(req);

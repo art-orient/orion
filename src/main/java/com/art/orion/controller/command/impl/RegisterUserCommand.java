@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.PasswordEncryptor;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.model.validator.UserValidator;
 import com.art.orion.util.ConfigManager;
@@ -41,23 +42,35 @@ public class RegisterUserCommand implements Command {
             User user = new User(username, firstname, lastname, email);
             String encryptedPassword = PasswordEncryptor.encryptPassword(password);
             user.setPassword(encryptedPassword);
-            if (UserService.isFirstUser()) {
-                user.setRole(Role.ADMIN);
-            } else{
-                user.setRole(Role.CUSTOMER);
-            }
+            setRoleForClient(user);
             user.setActive(true);
-            if (UserService.registerUser(user)) {
-                registrationStatus = ErrorMessageManager.getMessage("msg.registrationSuccess");
-                logger.log(Level.INFO, "User registered successfully");
-            } else {
-                registrationStatus = ErrorMessageManager.getMessage("msg.invalidData");
-                logger.log(Level.INFO, "Incorrect data entered, user was not registered");
+            try {
+                if (UserService.registerUser(user)) {
+                    registrationStatus = ErrorMessageManager.getMessage("msg.registrationSuccess");
+                    logger.log(Level.INFO, "User registered successfully");
+                } else {
+                    registrationStatus = ErrorMessageManager.getMessage("msg.invalidData");
+                    logger.log(Level.INFO, "Incorrect data entered, user was not registered");
+                }
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, e.getMessage(), e);
+                registrationStatus = ErrorMessageManager.getMessage("msg.registrationError");
             }
         } else {
             registrationStatus = validationStatus.toString();
         }
         req.setAttribute(REGISTRATION_STATUS, registrationStatus);
         return ConfigManager.getProperty("page.checkRegStatus");
+    }
+
+    private void setRoleForClient(User user) {
+        user.setRole(Role.CUSTOMER);
+        try {
+            if (UserService.isFirstUser()) {
+                user.setRole(Role.ADMIN);
+            }
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, e.getMessage(), e);
+        }
     }
 }

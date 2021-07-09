@@ -9,7 +9,15 @@ VALUES ('natarti', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc
 INSERT INTO users
 VALUES ('lesha', 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2',
         'Lesha', 'Artsikhovich', 'art22@tut.by', 2, 1);  -- password=11111
-
+INSERT INTO users
+VALUES ('andrei', 'b9352494463399aa6a44ed5e39425b8a0bc39b2fc3d0184ba2583ce9bc4e4c1d',
+        'Андрей', 'Андреев', 'andrei@and.com', 2, 1);  -- password=andrei
+INSERT INTO users
+VALUES ('alexei', '3c4c0aec843b3d5164285a367f92794eee300bafdd1ee56407bd680f0898bb44',
+        'Алексей', 'Алексеев', 'alekseev@al.com', 2, 1);  -- password=alexei
+INSERT INTO users
+VALUES ('pavel', 'b4b6e5deeec1253972cd0ec230e2951c5b2518c19cf9aa4198ee8731fee58795',
+        'Pavel', 'Pavlonus', 'pablo@eu.lt', 2, 1);  -- password=pavel
 
 INSERT INTO accessories
 VALUES (1, 'Рюкзак', 'A backpack', 'Mizuno', 'Running Backpack 10L', 'РЮКЗАК MIZUNO УНИСЕКС
