@@ -164,7 +164,8 @@ em {
     text-decoration: none;
     padding: 0 1rem;
     -webkit-transition: 1s ease-out;
-    transition: 1s ease-out
+    transition: 1s ease-out;
+    font-size: 23px;
 }
 
 .nav .nav-elements .navbar a:after,

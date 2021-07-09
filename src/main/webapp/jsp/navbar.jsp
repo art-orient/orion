@@ -74,6 +74,12 @@
             </li>
             <li>
                 <form action="controller" method="get">
+                    <input type="hidden" name="command" value="profile"/>
+                    <input type="submit" value='<fmt:message key="ui.profile"/>'/>
+                </form>
+            </li>
+            <li>
+                <form action="controller" method="get">
                     <input type="hidden" name="command" value="logout"/>
                     <input type="submit" value='<fmt:message key="ui.logout"/>'/>
                 </form>
@@ -88,29 +94,32 @@
         </li>
     </ul>
     </div>
+</nav>
+<br><br>
 <c:if test="${sessionScope.role == 'ADMIN'}">
-    <br><br>
-    <ul class="navbar" id="admin">
-        <li>
+    <table>
+    <tr>
+        <td>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="product_management"/>
                 <input type="submit" value='<fmt:message key="ui.productManagement"/>'/>
             </form>
-        </li><br>
-        <li>
+        </td>
+        <td>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="product_management"/>
                 <input type="submit" value='<fmt:message key="ui.userManagement"/>'/>
             </form>
-        </li><br>
-        <li>
+        </td>
+        <td>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="product_management"/>
                 <input type="submit" value='<fmt:message key="ui.orderManagement"/>'/>
             </form>
-        </li>
-    </div>
+        </td>
+    </tr>
+    </table>
 </c:if>
-</nav>
+<br>
 </body>
 </html>

@@ -17,6 +17,10 @@
 <section id="products" class="section">
     <div class="container">
         <h2><fmt:message key="ui.addProduct"/></h2><br>
+        <c:if test="${error != null}">
+            <c:out value="${error}"/>
+            <br>
+        </c:if>
         <form action="controller" method="get">
             <input type="hidden" name="command" value="add_product_page">
             <select name="category">

@@ -5,6 +5,7 @@ import com.art.orion.controller.command.util.PasswordEncryptor;
 import com.art.orion.model.entity.User;
 import com.art.orion.model.service.UserService;
 import com.art.orion.util.ConfigManager;
+import com.art.orion.util.ErrorMessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +40,7 @@ public class LoginUserCommand implements Command {
             return ConfigManager.getProperty("page.index");
         } else {
             if (username != null) {
-                req.setAttribute(ERROR, "msg.invalidCredentials");
+                req.setAttribute(ERROR, ErrorMessageManager.getMessage("msg.invalidCredentials"));
                 logger.log(Level.WARN, "Invalid credentials");
             }
         }

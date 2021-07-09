@@ -19,9 +19,9 @@
         <br>
         <h1><fmt:message key="ui.login"/></h1>
         <br>
-        <c:if test="${errorCredentials != null}">
-            <em>${errorCredentials}</em>
-            <br/>
+        <c:if test="${error != null}">
+            <c:out value="${error}"/>
+            <br><br>
         </c:if>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="login_user"/>
