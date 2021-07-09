@@ -554,3 +554,206 @@ Lightweight material with moisture wicking properties
 Elastic waist with drawcord for size adjustment
 ',
  'Asics_Silver_Split_Short.jpg', 'black', 64.00, 1);
+
+INSERT INTO shoes
+VALUES (1, 'Кроссовки для бега женские', 'Running shoes for women', 'Asics', 'Gel Excite 8 Digital Aqua', 'Беговые кроссовки Asics Gel Excite 8 обладают легкостью, улучшенной посадкой в передней части стопы и обеспечивают длительный комфорт при беге на любые дистанции. Верх выполнен из сетки, что обеспечивает превосходную вентиляцию во время бега. Подошва эффективно поглощает удары за счет вставок из геля, что значительно снижает напряжение во время беговых тренировок. Данная обувь обладает превосходным комфортом и пружинистостью, и является универсальной моделью для бегунов, ищущих простоту в обуви.
+
+Верх выполнен из сетки для воздухопроницаемости
+Стелька Ortholite обеспечивает сухость, легкость и комфорт
+Промежуточная подошва с технологией AmpliFoam обеспечивает легкость и хороший уровень поглощения ударов при беге
+Asics Гель в пятке снижает нагрузку на позвоночник, пятки и колени спортсмена
+Гибкая резиновая подошва обеспечивает надежное сцепление с поверхностью',
+ 'The Asics Gel Excite 8 Running Shoe is lightweight, with an improved forefoot fit and long-lasting comfort on any distance run. The upper is made of mesh for superior ventilation while you run. The outsole effectively absorbs impact with gel inserts, which significantly reduces stress during running workouts. This shoe offers superior comfort and springiness, and is a versatile shoe for runners looking for simplicity in a shoe.
+
+Mesh upper for breathability
+Ortholite footbed keeps you dry, lightweight and comfortable
+AmpliFoam midsole for lightweight and good shock absorption while running
+Asics Heel Gel reduces stress on the athlete`s spine, heels and knees
+Flexible rubber outsole provides reliable traction',
+ 'Asics_Gel_Excite_8_Digital_Aqua.jpg', 'aqwa/white', 244.00, 1);
+
+INSERT INTO shoes
+VALUES (2, 'Кроссовки для бега мужские', 'Running shoes for men', 'Asics', 'Gel-Contend 6 grey', 'Кроссовки для бега Asics Gel Contend 6
+
+Беговые кроссовки Asics Gel Contend 6 обеспечивают длительную поддержку и превосходный комфорт. Более мягкий задник для создания ощущения шелковистости при соприкосновении к коже. Верх обуви выполнен из легкой сетки с синтетическими накладками для дополнительной прочности. Съемная стелька Ortholite ComforDry X-40обеспечивает отличную амортизацию, эффективно отводит излишки тепла и влаги, а также обладает бактерицидными свойствами, обеспечивая здоровый микроклимат внутри обуви.
+
+Верх выполнен из легкой воздухопроницаемой сетки
+
+Симметричная система шнуровки обеспечивает комфортную посадку
+
+Внутренний задник для дополнительной поддержки
+
+Технология AmpliFoam обеспечивает комфорт на каждом этапе пути
+
+Система амортизации Rearfoot GEL Cushioning System расположена в задней части подошвы для амортизации
+
+Износостойкая резиновая подошва отличается великолепной гибкостью и обеспечивает отличное сцепление на различных типах поверхности
+
+Пронация: нейтральная.
+
+Перепад: 10мм.',
+ 'The Asics Gel Contend 6 running shoe provides long-lasting support and superior comfort. A softer heel counter for a silky feel when in contact with skin. The shoe upper is made of lightweight mesh with synthetic overlays for added durability. The removable Ortholite ComforDry X-40 insole provides excellent cushioning, effectively removes excess heat and moisture, and also has antibacterial properties, providing a healthy microclimate inside the shoe.
+
+- Upper made from lightweight breathable mesh
+
+Symmetrical lacing system provides a comfortable fit
+
+Internal heel counter for added support
+
+AmpliFoam technology provides comfort every step of the way
+
+Rearfoot GEL Cushioning System is located in the rear of the outsole for cushioning
+
+Durable rubber outsole offers great flexibility and traction on a variety of terrains
+
+Pronation: neutral.
+
+Drop: 10mm.',
+ 'Asics_Gel-Contend_6_grey.jpg', 'grey', 119.00, 1);
+
+INSERT INTO shoes
+VALUES (3, 'Кроссовки для бега мужские', 'Running shoes for men', 'Asics', 'GlideRide 2', 'Кроссовки беговые ASICS GLIDERIDE 2
+
+Кроссовки GLIDERIDE™ 2 позволяют экономить энергию во время долгих забегов. В этих кроссовках снижается расход энергии во всех фазах цикла бега от приземления до отталкивания, что поможет вам преодолеть большие расстояния, чем когда-либо раньше. В этом сезоне сохранилась экономия энергии в этих кроссовках и движения в них стали более плавными, а также улучшена посадка верха. Они предназначены для тех бегунов, которые хотят чувствовать себя бодрее после долгих забегов, и идеально подойдут для восстановительного бега.
+
+В этой модели применяется функциональная сетка, улучшающая посадку верха и обеспечивающая превосходную вентиляцию, при этом адаптирующаяся к естественной форме стопы при движении. Бесшовные элементы, выполненные методом 3D печати, создают поддержку там, где она нужна, при этом не добавляя кроссовкам веса.
+
+Технология GUIDESOLE™ – это жесткая передняя часть обуви и изогнутая подошва, повышающая эффективность бега за счет снижения нагрузки на ноги. Амортизирующая технология FLYTEFOAM™ располагается в верхнем слое промежуточной подошвы, а нижний слой по технологии FLYTEFOAM™ Propel обеспечивает более адаптивный отскок.
+
+Между этими двумя слоями в передней части находится жесткая пластина, которая обеспечивает целостность промежуточной подошвы. Движение переката стопы вперед подталкивает ногу и обеспечивает более плавные и эффективные переходы между шагами. Кроме того, резиновая вставка AHARPLUS™ в подошве в области пятки повышает износостойкость и продлевает срок службы кроссовок.
+
+Технологии, использованные в модели ASICS GLIDERIDE 2:
+
+• AHAR+. Это наиболее тонкая облегченная модификация АХАР. Обеспечивает продление срока службы обуви. AHAR+ расположена в участках подошвы, подверженных повышенному износу.
+
+• Dynamic DuoMax. Двойная плотность. Промежуточная подошва, состоящая из двух материалов, различающихся уровнем плотности, вместе с увеличенным экзоскелетным зажимом пятки предназначена для деликатной корректировки положения стопы при избыточном уровне пронации.
+
+• FlyteFoam. Flytefoam обеспечивает необходимую амортизацию, удобство, сниженный вес и отсутствие изгибов при становлении на ровную поверхность.
+
+• Rearfoot and Forefoot GEL. Гель в носочной и пяточной части. Вставки ASICS GEL на основе силикона в промежуточной подошве обеспечивает поглощение удара.
+
+• GUIDESOLE. Новая геометрия подошвы, созданная ASICS. В ней сочетаются основные элементы, обеспечивающие снижение потери энергии в области голеностопного сустава. Мягкая изогнутая конструкция, двухслойная подошва, сохраняющая жесткость и объемная направляющая линия, которая смещает центр тяжести кроссовок к пятке (3D GUIDANCE LINE)
+
+Беговые кроссовки Asics GlideRide 2 отлично подойдут для ежедневных и длительных пробежек. Верх из функциональной сетки обеспечивает превосходную вентиляцию и адаптируется к естественной форме стопы при движении. Уникальная подошва с технологией Guidesole обеспечивает динамичный перекат с пятки на носок и повышает эффективность бегуна, благодаря снижению потери энергии в голеностопном суставе.',
+ 'ASICS GLIDERIDE 2 running shoes
+
+The GLIDERIDE ™ 2 Running Shoes help you save energy on long runs. This shoe reduces energy expenditure in all phases of the running cycle from landing to take off, helping you cover greater distances than ever before. This season, the shoe`s energy savings are maintained and the movement is smoother and the fit of the upper is improved. Designed for runners looking to feel more energized after long runs, they are ideal for recovery running.
+
+This model features a functional mesh that improves the fit of the upper and provides superior ventilation while adapting to the natural shape of the foot as you move. 3D printed seamless elements create support where you need it without adding weight to your sneaker.
+
+GUIDESOLE ™ technology features a stiff forefoot and a curved outsole that enhances running performance by reducing foot strain. The cushioning FLYTEFOAM ™ technology is located in the upper midsole layer, while the FLYTEFOAM ™ Propel technology lower layer provides more adaptive rebound.
+
+Between these two layers, a rigid plate sits in the forefoot, which ensures the integrity of the midsole. The forward roll motion of the foot pushes the foot and provides smoother, more efficient transitions between strides. In addition, an AHARPLUS ™ rubber insert in the heel of the outsole improves durability and extends the shoe`s lifespan.
+
+Technologies used in the ASICS GLIDERIDE 2 model:
+
+• AHAR +. This is the thinnest lightweight modification of the AHAR. Provides extended shoe life. AHAR + is located in the areas of the outsole that are prone to increased wear.
+
+• Dynamic DuoMax. Double density. The midsole, composed of two materials with different levels of density, together with an enlarged exoskeletal heel clamp, is designed to delicately correct the position of the foot in case of excessive pronation.
+
+• FlyteFoam. Flytefoam provides the cushioning, comfort, reduced weight and no flex when standing on a level surface.
+
+• Rearfoot and Forefoot GEL. Gel in the forefoot and heel. Silicone-based ASICS GEL midsole for shock absorption.
+
+• GUIDESOLE. New outsole geometry created by ASICS. It combines key elements to reduce energy loss in the ankle area. Soft, curved construction, dual-layer outsole that retains rigidity and a voluminous guidance line that shifts the shoe`s center of gravity towards the heel (3D GUIDANCE LINE)
+
+The Asics GlideRide 2 running shoe is perfect for daily and long runs. The functional mesh upper provides superior breathability and adapts to the natural shape of the foot as you move. Unique outsole with Guidesole technology provides dynamic heel-to-toe rolling and improves runner performance by reducing energy loss in the ankle.',
+ 'Asics_GlideRide_2.png', 'black/green', 389.00, 1);
+
+INSERT INTO shoes
+VALUES (4, 'Триатлонки мужские', 'Men`s triathlon', 'Asics', 'Gel-Noosa Tri 12 Blue', 'Беговые кроссовки Asics Gel Noosa Tri 12 выполнены из сочетания сетчатого текстиля и искусственной кожи, и предназначены для быстрых тренировок и соревнований. Вставка Propulsion Trusstic помогает в перекате ноги по поверхности. Данная обувь отлично подойдет для триатлона.
+
+Верх выполнен из сетки Openmesh для максимальной воздухопроницаемости
+
+Эластичные шнурки Caterpy обеспечивают комфортную фиксацию
+
+Усиленный задник для дополнительной поддержки
+
+Промежуточная подошва из вспененного материала FlyteFoam для дополнительной амортизации
+
+Asics Гель в пятке снижает нагрузку на позвоночник, пятки и колени спортсмена
+
+Резиновая подошва с протектором для надежного сцепления с поверхностью',
+ 'The Asics Gel Noosa Tri 12 running shoe is crafted from a mix of mesh and faux leather for fast workouts and competition. The Propulsion Trusstic insert helps the foot roll over the surface. This shoe is perfect for triathlon.
+
+Openmesh upper for maximum breathability
+
+Caterpy elastic laces provide a comfortable fit
+
+Reinforced heel counter for added support
+
+FlyteFoam midsole for extra cushioning
+
+Asics Heel Gel reduces stress on the athlete`s spine, heels and knees
+
+Rubber outsole with tread for secure traction',
+ 'Asics_Gel-Noosa_Tri_12_Blue.jpg', 'blue', 274.00, 1);
+
+INSERT INTO shoes
+VALUES (5, 'Кроссовки для бега мужские', 'Running shoes for men', 'Asics', 'GT-2000 9 black/blue', 'Беговые кроссовки Asics Gt 2000 9 - легкая, стабилизирующая и с отличной амортизацией обувь для бегунов всех уровней, от любителей до профессионалов. Облегченная средняя часть подошвы с технологией FlyteFoam обеспечивает мягкое приземление после каждого шага. Обновленная технология Asics Gel и более мягкая секция в области пятки для повышения комфорта и амортизации.
+
+Верх кроссовок обновлен и теперь выполнен цельной конструкцией из сетки для лучшей посадки на стопе. Новый материал верха укреплен в основных зонах для усиленной поддержки на каждом этапе всего цикла бега, что обеспечивает более эффективную фазу отрыва.
+
+Верхняя часть выполнена из легкой функциональной сетки для улучшенной воздухопроницаемости
+
+Технология промежуточной подошвы из легкой пены дарит легкое и отзывчивое движение во время бега. Благодаря низкой плотности материала технология FLYTEFOAM помогает достичь максимальной скорости
+
+Сочетание технологий Dynamic Duomax и Trusstic System в средней части подошвы для стабильности и поддержки
+
+Гелевые вставки в пятке и передней части стопы обеспечивают плавное погашение ударных нагрузок на твердой поверхности',
+ 'The Asics Gt 2000 9 Running Shoe is lightweight, stabilized and cushioned for all levels of runner, from amateur to professional. A lightweight midsole with FlyteFoam technology ensures a soft landing after every stride. Updated Asics Gel technology and a softer heel section for increased comfort and cushioning.
+
+The upper has been updated with a one-piece mesh construction for a better fit on the foot. The new upper material is reinforced in the core zones for increased support at every stage of the entire run for a more efficient lift-off phase.
+
+- Upper made of lightweight functional mesh for improved breathability
+
+Lightweight foam midsole technology delivers lightweight, responsive movement as you run. Thanks to its low material density, FLYTEFOAM technology helps to achieve maximum speed
+
+Combination of Dynamic Duomax and Trusstic System technologies in the midsole for stability and support
+
+Gel inserts in the heel and forefoot provide smooth shock absorption on a hard surface',
+ 'Asics_GT-2000_9_black-blue.jpg', 'black-blue', 269.00, 1);
+
+INSERT INTO shoes
+VALUES (6, 'Кроссовки для бега мужские', 'Running shoes for men', 'Saucony', 'Omni 19 Fog/Citrus', 'Беговые кроссовки Saucony Omni 19 предлагает умеренную поддержку. Модель разработана для ежедневных пробежек или для прогулок. Благодаря особой технологии изготовления верха и классической шнуровке, обувь стабильно ведет себя во время бега. Подошва выполнена по технологии Formfit: три слоя адаптивных амортизирующих пен, работают как единый инструмент амортизации и поддержки. Промежуточная подошва выполнена из специального материала Everun, который качественно гасит ударные нагрузки и при этом сохраняет энергию для отталкивания. Верх кроссовок из легкой и хорошо вентелируемой сетки соответствует контуру стопы.
+
+Особенности:
+
+Подошва выполнена по трёхслойной технологии Formfit: стелька + слой Everun + слой отформованный под форму ноги.
+
+Подошва TRI-FLEX со специально разработанным узором для лучшей гибкости и сцепления с поверхностью. Обеспечивает плотное прилегание к твердому и ровному покрытию.
+
+Специальная сетка обеспечивает структуру или эластичность там, где это необходимо, и сохраняет при этом достаточную воздухопроницаемость.
+
+Высота пятка-носок до 8 мм - такое конструктивное исполнение способствует приземлению с акцентом на всю стопу вместо пятки, и, при должной подготовке и технике бега, к эффективному использованию естественных механизмов амортизации и энергетики мышц и связок ноги.
+
+Специальная вставка TPU на внутренней поверхности подошвы плавно выводит стопу на правильное отталкивание в начале каждого очередного шага.',
+ 'The Saucony Omni 19 running shoe offers moderate support. Designed for daily jogging or walking. Thanks to the special technology of the upper and the classic lacing, the shoes behave stably while running. The outsole is made with Formfit technology: three layers of adaptive cushioning foam that work as a single tool for cushioning and support. The midsole is made of special Everun material, which absorbs shock loads and retains energy for repulsion. Made from lightweight, well-ventilated mesh, the upper conforms to the contour of the foot.
+
+Features:
+
+The sole is made using three-layer Formfit technology: insole + Everun layer + molded layer to fit the shape of the foot.
+
+TRI-FLEX outsole with a specially designed pattern for better flexibility and traction. Provides a snug fit on a hard and even surface.
+
+The special mesh provides structure or elasticity where needed while maintaining adequate breathability.
+
+Heel-toe height up to 8 mm - this design contributes to landing with an emphasis on the entire foot instead of the heel, and, with proper preparation and running technique, to the effective use of the natural mechanisms of shock absorption and energy of the muscles and ligaments of the leg.
+
+A special TPU insert on the inner surface of the sole smoothly guides the foot into the correct take-off at the beginning of each next step. ',
+ 'Saucony_Omni_19_Fog-Citrus.jpg', 'grey', 324.00, 1);
+
+INSERT INTO shoes
+VALUES (7, 'Кроссовки для бега мужские', 'Running shoes for men', 'Saucony', 'Kinvara 12 Future/Black', 'Saucony Kinvara 12 переработан, и в нем все, что вам нужно для комфортного бега. Благодаря плавному ходу, легкому дизайну и мягкой, но отзывчивой амортизации бегуны могут взять эту обувь независимо от того, какую тренировку они запланировали.
+
+Мягкие кроссовки.
+Амортизация PWRRUN поддерживает легкую отзывчивость, что делает эту обувь фаворитом для ежедневных тренировок на много миль или бега на длинные дистанции.
+Дополнительный контакт с землей добавляет мощности гибкой езде, делая переход от приземления к взлету еще быстрее.
+Легкая печать придает дышащему адаптируемому сетчатому верху достаточную структуру, чтобы чувствовать себя в безопасности, не отягощая вас.',
+ 'The Saucony Kinvara 12 is redesigned with everything you need for a comfortable run. With a smooth ride, lightweight design, and soft yet responsive cushioning, runners can take this shoe no matter what kind of workout they`ve planned.
+
+Soft sneakers.
+PWRRUN cushioning maintains lightweight responsiveness, making this shoe a favorite for daily long distance workouts or long distance running.
+The extra ground contact adds power to the agile ride, making the transition from touchdown to takeoff even faster.
+Lightweight printing gives the breathable, adaptable mesh upper enough structure to feel secure without weighing you down.',
+ 'Saucony_Kinvara_12_Future-Black.jpg', 'black', 324.00, 1);

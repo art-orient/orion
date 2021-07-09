@@ -13,6 +13,7 @@ public class TextHandler {
         for (String s : description) {
             text.append(s).append("\n");
         }
+        text.setLength(text.length() - 1);
         return text.toString();
     }
 

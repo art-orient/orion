@@ -45,11 +45,7 @@ public class ShoesJdbc {
              PreparedStatement statement = connection.prepareStatement(INSERT_SHOES)) {
             statement.setString(TYPE_RU_INDEX - 1, shoes.getTypeRu());
             statement.setString(TYPE_EN_INDEX - 1, shoes.getTypeEn());
-
-            statement.setString(BRAND_INDEX - 1,
-                    shoes
-                            .getProductDetails()
-                            .getBrand());
+            statement.setString(BRAND_INDEX - 1, shoes.getProductDetails().getBrand());
             statement.setString(MODEL_NAME_INDEX - 1, shoes.getProductDetails().getModelName());
             statement.setString(DESCRIPTION_RU_INDEX - 1,
                     TextHandler.createTextFromList(shoes.getProductDetails().getDescriptionRu()));

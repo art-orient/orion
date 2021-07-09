@@ -44,6 +44,7 @@ public class ImageProcessor {
         } catch (IOException | ServletException e) {
             logger.log(Level.ERROR, "file of image not found", e);
         }
+        modelName = modelName.replace('/', '-');
         return (brand + "_" + modelName + extension).replace(' ','_');
     }
 
