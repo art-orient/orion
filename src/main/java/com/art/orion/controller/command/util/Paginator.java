@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Objects;
 
 import static com.art.orion.util.Constant.PAGE;
+import static com.art.orion.util.Constant.OFFSET;
 
 public class Paginator {
     private static final Logger logger = LogManager.getLogger();
@@ -29,6 +30,14 @@ public class Paginator {
             requestPageNumber = Objects.requireNonNullElse(sessionPageNumber, 1);
         }
         return requestPageNumber;
+    }
+
+    public static int  preparePagination(HttpServletRequest req) {
+        int pageNumber = getCurrentPage(req);
+        req.getSession().setAttribute(PAGE, pageNumber);
+        int offset = getOffset(pageNumber);
+        req.setAttribute(OFFSET, offset);
+        return offset;
     }
 
     public static int getOffset(int pageNumber) {

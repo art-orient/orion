@@ -17,8 +17,6 @@ import static com.art.orion.util.Constant.COMMAND;
 import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
-import static com.art.orion.util.Constant.OFFSET;
-import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCTS;
 
 import java.util.List;
@@ -30,14 +28,11 @@ public class AccessoriesCommand implements Command {
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page accessories");
         HttpSession session = req.getSession();
-        int pageNumber = Paginator.getCurrentPage(req);
-        req.getSession().setAttribute(PAGE, pageNumber);
-        int offset = Paginator.getOffset(pageNumber);
+        int offset = Paginator.preparePagination(req);
         List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset);
         session.setAttribute(PRODUCTS, accessories);
         int numberProducts = ProductService.countNumberAccessories();
         req.setAttribute(NUMBER_PRODUCTS, numberProducts);
-        req.setAttribute(OFFSET, offset);
         int numberPages = Paginator.findNumberPages(numberProducts);
         req.setAttribute(NUMBER_PAGES, numberPages);
         req.setAttribute(CURRENT_COMMAND, req.getParameter(COMMAND));

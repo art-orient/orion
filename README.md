@@ -49,8 +49,7 @@ not approved.
 
     * Visit the main page
     * Browse catalogs
-    * Register
-    * Login
+    * Logout
     * Change website language
 
 ### Manager
@@ -73,8 +72,7 @@ and delete orders. Also has all privileges of a customer and a guest.
     * View profile information
     * Visit the main page
     * Browse catalogs
-    * Register
-    * Login
+    * Logout
     * Change website language
 
 ### Administrator
@@ -109,7 +107,7 @@ but don't have privileges of a manager, but can register a user with a manager's
     * Visit the main page
     * Browse catalogs
     * Register
-    * Login
+    * Logout
     * Change website language
 
 
@@ -130,7 +128,6 @@ is set to the client and removed by the administrator.
     * View profile information
     * Visit the main page
     * Browse catalogs
-    * Register
-    * Login
+    * Logout
     * Change website language
 
