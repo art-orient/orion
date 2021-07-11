@@ -17,18 +17,20 @@ import org.apache.logging.log4j.Logger;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.COST;
-import static com.art.orion.util.Constant.DESCRIPTION_EN;
-import static com.art.orion.util.Constant.DESCRIPTION_RU;
-import static com.art.orion.util.Constant.IMAGE;
-import static com.art.orion.util.Constant.MODEL_NAME;
+import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
+import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
+import static com.art.orion.util.Constant.DB_IMAGE_PATH;
+import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
@@ -104,14 +106,14 @@ public class ProductDaoJdbc implements ProductDao {
         return number;
     }
 
-    public static ProductDetails createProductDetails (ResultSet resultSet) throws OrionDatabaseException {
+    protected static ProductDetails createProductDetails (ResultSet resultSet) throws OrionDatabaseException {
         ProductDetails productDetails;
         try {
             String brand = resultSet.getString(BRAND);
-            String modelName = resultSet.getString(MODEL_NAME);
-            List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_RU));
-            List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_EN));
-            String imagePath = resultSet.getString(IMAGE);
+            String modelName = resultSet.getString(DB_MODEL_NAME);
+            List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DB_DESCRIPTION_RU));
+            List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DB_DESCRIPTION_EN));
+            String imagePath = resultSet.getString(DB_IMAGE_PATH);
             BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST)).setScale(2, RoundingMode.HALF_UP);
             boolean active = resultSet.getBoolean(ACTIVE);
             productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
@@ -120,5 +122,26 @@ public class ProductDaoJdbc implements ProductDao {
             throw new OrionDatabaseException();
         }
         return productDetails;
+    }
+
+    protected static void setProductDetailsInStatement (PreparedStatement statement,
+                            ProductDetails productDetails, Map<String, Integer> indices)
+                            throws SQLException {
+        int brandIndex = indices.get(BRAND);
+        int modelNameIndex = indices.get(DB_MODEL_NAME);
+        int descriptionRuIndex = indices.get(DB_DESCRIPTION_RU);
+        int descriptionEnIndex = indices.get(DB_DESCRIPTION_EN);
+        int imagePathIndex = indices.get(DB_IMAGE_PATH);
+        int costIndex = indices.get(COST);
+        int activeIndex = indices.get(ACTIVE);
+        statement.setString(brandIndex - 1, productDetails.getBrand());
+        statement.setString(modelNameIndex - 1, productDetails.getModelName());
+        statement.setString(descriptionRuIndex- 1,
+                TextHandler.createTextFromList(productDetails.getDescriptionRu()));
+        statement.setString(descriptionEnIndex - 1,
+                TextHandler.createTextFromList(productDetails.getDescriptionEn()));
+        statement.setString(imagePathIndex - 1, productDetails.getImgPath());
+        statement.setBigDecimal(costIndex - 1, productDetails.getCost());
+        statement.setBoolean(activeIndex - 1, productDetails.isActive());
     }
 }
