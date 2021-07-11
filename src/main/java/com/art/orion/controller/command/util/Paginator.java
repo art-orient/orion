@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
+import static com.art.orion.util.Constant.COMMAND;
+import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.OFFSET;
 
@@ -37,6 +39,8 @@ public class Paginator {
         req.getSession().setAttribute(PAGE, pageNumber);
         int offset = getOffset(pageNumber);
         req.setAttribute(OFFSET, offset);
+        String currentCommand = req.getParameter(COMMAND);
+        req.setAttribute(CURRENT_COMMAND, currentCommand);
         return offset;
     }
 

@@ -1,7 +1,7 @@
 package com.art.orion.model.dao.impl;
 
 import com.art.orion.controller.command.util.TextHandler;
-import com.art.orion.model.entity.Clothing;
+import com.art.orion.model.dao.OrionDatabaseException;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
@@ -9,13 +9,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +30,6 @@ public class ShoesJdbc {
     private static final int COLOR_INDEX = 9;
     private static final int COST_INDEX = 10;
     private static final int ACTIVE_INDEX = 11;
-    private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
     private static final String INSERT_SHOES = "INSERT INTO shoes " +
             "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, color, cost, active)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -73,26 +69,18 @@ public class ShoesJdbc {
                     products.add(createShoes(resultSet));
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | OrionDatabaseException e) {
             logger.log(Level.ERROR, e);
         }
         return products;
     }
 
-    private Shoes createShoes(ResultSet resultSet) throws SQLException {
+    private Shoes createShoes(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int shoesId = resultSet.getInt(SHOES_ID_INDEX);
         String typeRu = resultSet.getString(TYPE_RU_INDEX);
         String typeEn = resultSet.getString(TYPE_EN_INDEX);
-        String brand = resultSet.getString(BRAND_INDEX);
-        String modelName = resultSet.getString(MODEL_NAME_INDEX);
-        List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_RU_INDEX));
-        List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_EN_INDEX));
-        String imagePath = resultSet.getString(IMAGE_PATH_INDEX);
+        ProductDetails productDetails = ProductDaoJdbc.createProductDetails(resultSet);
         String color = resultSet.getString(COLOR_INDEX);
-        BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST_INDEX)).setScale(2, RoundingMode.HALF_UP);
-        boolean active = resultSet.getBoolean(ACTIVE_INDEX);
-        ProductDetails productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
-                imagePath, cost, active);
         return new Shoes(shoesId, typeRu, typeEn, productDetails, color);
     }
 
@@ -106,23 +94,9 @@ public class ShoesJdbc {
                     shoes = createShoes(resultSet);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | OrionDatabaseException e) {
             logger.log(Level.ERROR, e);
         }
         return shoes;
-    }
-
-    public int countNumberShoes() {
-        int number = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(COUNT_SHOES)) {
-            while (resultSet.next()) {
-                number = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, e);
-        }
-        return number;
     }
 }

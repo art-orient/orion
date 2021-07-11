@@ -4,11 +4,16 @@ import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.dao.impl.ProductDaoJdbc;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
+import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class ProductService {
+    private static final Logger logger = LogManager.getLogger();
     private static final ProductDao PRODUCT_DAO = new ProductDaoJdbc();
 
     private ProductService() {
@@ -42,15 +47,13 @@ public class ProductService {
         return PRODUCT_DAO.getShoesById(id);
     }
 
-    public static int countNumberAccessories() {
-        return PRODUCT_DAO.countNumberAccessories();
-    }
-
-    public static int countNumberClothing() {
-        return PRODUCT_DAO.countNumberClothing();
-    }
-
-    public static int countNumberShoes() {
-        return PRODUCT_DAO.countNumberShoes();
+    public static int countNumberProducts(ProductCategory productCategory) {
+        int numberProducts = 0;
+        try {
+            numberProducts = PRODUCT_DAO.countNumberProducts(productCategory);
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, e);
+        }
+        return numberProducts;
     }
 }

@@ -1,6 +1,7 @@
 package com.art.orion.model.dao.impl;
 
 import com.art.orion.controller.command.util.TextHandler;
+import com.art.orion.model.dao.OrionDatabaseException;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.pool.ConnectionPool;
@@ -8,13 +9,10 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class AccessoryJdbc {
     private static final int AVAILABILITY_INDEX = 10;
     private static final int ACTIVE_INDEX = 11;
     private static final String SELECT_ACCESSORIES = "SELECT * FROM accessories WHERE active = 1 LIMIT ? OFFSET ?";
-    private static final String COUNT_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
+
 
     public int addAccessoryToDatabase(Accessory accessory) {
         int numberOfRecords = 0;
@@ -72,25 +70,17 @@ public class AccessoryJdbc {
                     accessories.add(createAccessory(resultSet));
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | OrionDatabaseException e) {
             logger.log(Level.ERROR, e);
         }
         return accessories;
     }
 
-    private Accessory createAccessory(ResultSet resultSet) throws SQLException {
+    private Accessory createAccessory(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int accessoryId = resultSet.getInt(ACCESSORIES_ID_INDEX);
         String typeRu = resultSet.getString(TYPE_RU_INDEX);
         String typeEn = resultSet.getString(TYPE_EN_INDEX);
-        String brand = resultSet.getString(BRAND_INDEX);
-        String modelName = resultSet.getString(MODEL_NAME_INDEX);
-        List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_RU_INDEX));
-        List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_EN_INDEX));
-        String imagePath = resultSet.getString(IMAGE_PATH_INDEX);
-        BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST_INDEX)).setScale(2, RoundingMode.HALF_UP);
-        boolean active = resultSet.getBoolean(ACTIVE_INDEX);
-        ProductDetails productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
-                imagePath, cost, active);
+        ProductDetails productDetails = ProductDaoJdbc.createProductDetails(resultSet);
         int availability = resultSet.getInt(AVAILABILITY_INDEX);
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
@@ -105,23 +95,9 @@ public class AccessoryJdbc {
                     accessory = createAccessory(resultSet);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | OrionDatabaseException e) {
             logger.log(Level.ERROR, e);
         }
         return accessory;
-    }
-
-    public int countNumberAccessories() {
-        int number = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(COUNT_ACCESSORIES)) {
-            while (resultSet.next()) {
-                number = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, e);
-        }
-        return number;
     }
 }
