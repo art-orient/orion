@@ -5,6 +5,7 @@ import com.art.orion.controller.command.util.Paginator;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.service.ProductService;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -25,8 +26,12 @@ public class ClothingCommand implements Command {
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page clothing");
         int offset = Paginator.preparePagination(req);
-        List<Clothing> clothing = ProductService.searchClothing(LIMIT, offset);
-        req.getSession().setAttribute(PRODUCTS, clothing);
+        try {
+            List<Clothing> clothing = ProductService.searchClothing(LIMIT, offset);
+            req.getSession().setAttribute(PRODUCTS, clothing);
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "Database access error when searching for clothing", e);
+        }
         int numberProducts = ProductService.countNumberProducts(ProductCategory.CLOTHING);
         req.setAttribute(NUMBER_PRODUCTS, numberProducts);
         int numberPages = Paginator.findNumberPages(numberProducts);

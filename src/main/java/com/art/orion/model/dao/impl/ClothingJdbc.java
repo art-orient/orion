@@ -4,6 +4,7 @@ import com.art.orion.model.dao.OrionDatabaseException;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.pool.ConnectionPool;
+import com.art.orion.model.service.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +21,7 @@ import java.util.Map;
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.COST;
+import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
 import static com.art.orion.util.Constant.DB_IMAGE_PATH;
@@ -27,6 +29,7 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class ClothingJdbc {
     private static final Logger logger = LogManager.getLogger();
+    private static final ClothingJdbc INSTANCE = new ClothingJdbc();
     private static final String SELECT_CLOTHING = "SELECT * FROM clothing WHERE active = 1 LIMIT ? OFFSET ?";
     private static final int CLOTHING_ID_INDEX = 1;
     private static final int TYPE_RU_INDEX = 2;
@@ -49,23 +52,43 @@ public class ClothingJdbc {
         indices.put(ACTIVE, 11);
     }
 
-    public int addClothingToDatabase(Clothing clothing) {
-        int numberOfRecords = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_CLOTHING)) {
+    private ClothingJdbc() {
+    }
+
+    public static ClothingJdbc getInstance() {
+        return INSTANCE;
+    }
+
+    public void addClothingToDatabase(Clothing clothing) throws SQLException, OrionDatabaseException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.INSTANCE.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(INSERT_CLOTHING);
             statement.setString(TYPE_RU_INDEX - 1, clothing.getTypeRu());
             statement.setString(TYPE_EN_INDEX - 1, clothing.getTypeEn());
             statement.setString(COLOR_INDEX - 1, clothing.getColor());
             ProductDetails productDetails = clothing.getProductDetails();
             ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
-            numberOfRecords = statement.executeUpdate();
+            statement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.log(Level.INFO, () -> "The clothing is saved in the database");
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error writing to the database", e);
+            connection.rollback();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
-        return numberOfRecords;
     }
 
-    public List<Clothing> searchClothing(int limit, int offset) {
+    public List<Clothing> searchClothing(int limit, int offset) throws OrionDatabaseException {
         List<Clothing> clothing = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_CLOTHING)) {
@@ -76,8 +99,9 @@ public class ClothingJdbc {
                     clothing.add(createClothing(resultSet));
                 }
             }
-        } catch (SQLException | OrionDatabaseException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.INFO, () -> "Clothing search completed successfully");
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return clothing;
     }
@@ -91,18 +115,21 @@ public class ClothingJdbc {
         return new Clothing(clothingId, typeRu, typeEn, productDetails, color);
     }
 
-    public Clothing getClothingById(int id) {
-        Clothing clothing = null;
+    public Clothing getClothingById(int id) throws ServiceException, OrionDatabaseException {
+        Clothing clothing;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CLOSING_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     clothing = createClothing(resultSet);
+                } else {
+                    throw new ServiceException(String.format("Clothing with id = %s is not found", id));
                 }
             }
-        } catch (SQLException |OrionDatabaseException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.DEBUG, () -> String.format("Clothing with id = %s got from the database", id));
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return clothing;
     }

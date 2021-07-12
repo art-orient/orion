@@ -15,15 +15,15 @@ public interface ProductDao {
 
     List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException;
 
-    List<Clothing> searchClothing(int limit, int offset);
+    List<Clothing> searchClothing(int limit, int offset) throws OrionDatabaseException;
 
-    List<Shoes> searchShoes(int limit, int offset);
+    List<Shoes> searchShoes(int limit, int offset) throws OrionDatabaseException;
 
     Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException;
 
-    Clothing getClothingById(int id);
+    Clothing getClothingById(int id) throws ServiceException, OrionDatabaseException;
 
-    Shoes getShoesById(int id);
+    Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException;
 
     int countNumberProducts(ProductCategory productCategory) throws ServiceException;
 }

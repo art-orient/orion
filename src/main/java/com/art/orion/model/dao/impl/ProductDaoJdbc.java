@@ -35,8 +35,8 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
     private static final AccessoryJdbc ACCESSORY_JDBC = AccessoryJdbc.getInstance();
-    private static final ClothingJdbc CLOTHING_JDBC = new ClothingJdbc();
-    private static final ShoesJdbc SHOES_JDBC = new ShoesJdbc();
+    private static final ClothingJdbc CLOTHING_JDBC = ClothingJdbc.getInstance();
+    private static final ShoesJdbc SHOES_JDBC = ShoesJdbc.getInstance();
     private static final String COUNT_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
     private static final String COUNT_CLOTHING = "SELECT count(*) FROM clothing WHERE active = 1";
     private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
@@ -64,22 +64,22 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Clothing> searchClothing(int limit, int offset) {
+    public List<Clothing> searchClothing(int limit, int offset) throws OrionDatabaseException {
         return CLOTHING_JDBC.searchClothing(limit, offset);
     }
 
     @Override
-    public Clothing getClothingById(int id) {
+    public Clothing getClothingById(int id) throws ServiceException, OrionDatabaseException {
         return CLOTHING_JDBC.getClothingById(id);
     }
 
     @Override
-    public List<Shoes> searchShoes(int limit, int offset) {
+    public List<Shoes> searchShoes(int limit, int offset) throws OrionDatabaseException {
         return SHOES_JDBC.searchShoes(limit, offset);
     }
 
     @Override
-    public Shoes getShoesById(int id) {
+    public Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException {
         return SHOES_JDBC.getShoesById(id);
     }
 

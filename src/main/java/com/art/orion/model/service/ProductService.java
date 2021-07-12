@@ -37,12 +37,20 @@ public class ProductService {
         }
     }
 
-    public static List<Clothing> searchClothing(int limit, int offset) {
-        return PRODUCT_DAO.searchClothing(limit, offset);
+    public static List<Clothing> searchClothing(int limit, int offset) throws ServiceException {
+        try {
+            return PRODUCT_DAO.searchClothing(limit, offset);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while searching for clothing", e);
+        }
     }
 
-    public static List<Shoes> searchShoes(int limit, int offset) {
-        return PRODUCT_DAO.searchShoes(limit, offset);
+    public static List<Shoes> searchShoes(int limit, int offset) throws ServiceException {
+        try {
+            return PRODUCT_DAO.searchShoes(limit, offset);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while searching for shoes", e);
+        }
     }
 
     public static Accessory getAccessoryById(int id) throws ServiceException {
@@ -53,12 +61,20 @@ public class ProductService {
         }
     }
 
-    public static Clothing getClothingById(int id) {
-        return PRODUCT_DAO.getClothingById(id);
+    public static Clothing getClothingById(int id) throws ServiceException {
+        try {
+            return PRODUCT_DAO.getClothingById(id);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while retrieving clothing by id", e);
+        }
     }
 
-    public static Shoes getShoesById(int id) {
-        return PRODUCT_DAO.getShoesById(id);
+    public static Shoes getShoesById(int id) throws ServiceException {
+        try {
+            return PRODUCT_DAO.getShoesById(id);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while retrieving clothing by id", e);
+        }
     }
 
     public static int countNumberProducts(ProductCategory productCategory) {

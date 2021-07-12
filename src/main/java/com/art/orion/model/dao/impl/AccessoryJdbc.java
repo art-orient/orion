@@ -101,7 +101,7 @@ public class AccessoryJdbc {
                 }
             }
             logger.log(Level.INFO, () -> "Accessory search completed successfully");
-        } catch (SQLException | OrionDatabaseException e) {
+        } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return accessories;
@@ -130,7 +130,7 @@ public class AccessoryJdbc {
                 }
             }
             logger.log(Level.DEBUG, () -> String.format("Accessory with id = %s got from the database", id));
-        } catch (SQLException | OrionDatabaseException e) {
+        } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return accessory;
