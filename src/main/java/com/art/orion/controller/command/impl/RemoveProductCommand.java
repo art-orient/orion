@@ -5,6 +5,7 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class RemoveProductCommand implements Command {
     public String execute(HttpServletRequest req) {
         HttpSession session = req.getSession();
         List<Object> cart = (ArrayList<Object>) session.getAttribute(CART);
-        int productId = 0;
+        int productId = -1;
         try {
             productId = Integer.parseInt(req.getParameter(PRODUCT));
         } catch (NumberFormatException e) {
@@ -38,15 +39,24 @@ public class RemoveProductCommand implements Command {
         String category = req.getParameter(CATEGORY);
         logger.log(Level.DEBUG, () -> String.format("Category of product is %s", category));
         logger.log(Level.DEBUG, String.format("ID of product is %d", productId));
-        if (category.equals(ACCESSORIES)) {
-            Accessory accessory = ProductService.getAccessoryById(productId);
-            cart.remove(accessory);
-        } else if (category.equals(CLOTHING)) {
-            Clothing clothing = ProductService.getClothingById(productId);
-            cart.remove(clothing);
-        } else if (category.equals(SHOES)) {
-            Shoes shoes = ProductService.getShoesById(productId);
-            cart.remove(shoes);
+        try {
+            switch (category) {
+                case ACCESSORIES -> {
+                    Accessory accessory = ProductService.getAccessoryById(productId);
+                    cart.remove(accessory);
+                }
+                case CLOTHING -> {
+                    Clothing clothing = ProductService.getClothingById(productId);
+                    cart.remove(clothing);
+                }
+                case SHOES -> {
+                    Shoes shoes = ProductService.getShoesById(productId);
+                    cart.remove(shoes);
+                }
+                default -> logger.log(Level.WARN, () -> String.format("Invalid category - %s", category));
+            }
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, () -> "Database access error when retrieving product by id");
         }
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> "A product removed from the cart");

@@ -34,7 +34,7 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
-    private static final AccessoryJdbc ACCESSORY_JDBC = new AccessoryJdbc();
+    private static final AccessoryJdbc ACCESSORY_JDBC = AccessoryJdbc.getInstance();
     private static final ClothingJdbc CLOTHING_JDBC = new ClothingJdbc();
     private static final ShoesJdbc SHOES_JDBC = new ShoesJdbc();
     private static final String COUNT_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
@@ -42,26 +42,24 @@ public class ProductDaoJdbc implements ProductDao {
     private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
 
     @Override
-    public int addProductToDatabase(Object product) {
-        int numberOfRecords = 0;
+    public void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException {
         if (product instanceof Accessory) {
-            numberOfRecords = ACCESSORY_JDBC.addAccessoryToDatabase((Accessory) product);
+            ACCESSORY_JDBC.addAccessoryToDatabase((Accessory) product);
         } else if (product instanceof Clothing) {
-            numberOfRecords = CLOTHING_JDBC.addClothingToDatabase((Clothing) product);
+            CLOTHING_JDBC.addClothingToDatabase((Clothing) product);
         } else if (product instanceof Shoes) {
-            numberOfRecords = SHOES_JDBC.addShoesToDatabase((Shoes) product);
+            SHOES_JDBC.addShoesToDatabase((Shoes) product);
         }
         logger.log(Level.DEBUG, "Add product in the database");
-        return numberOfRecords;
     }
 
     @Override
-    public List<Accessory> searchAccessories(int limit, int offset) {
+    public List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException {
         return ACCESSORY_JDBC.searchAccessories(limit, offset);
     }
 
     @Override
-    public Accessory getAccessoryById(int id) {
+    public Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException {
         return ACCESSORY_JDBC.getAccessoryById(id);
     }
 

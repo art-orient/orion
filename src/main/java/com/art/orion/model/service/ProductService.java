@@ -1,5 +1,6 @@
 package com.art.orion.model.service;
 
+import com.art.orion.model.dao.OrionDatabaseException;
 import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.dao.impl.ProductDaoJdbc;
 import com.art.orion.model.entity.Accessory;
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductService {
@@ -19,12 +21,20 @@ public class ProductService {
     private ProductService() {
     }
 
-    public static int addProductToDatabase(Object product) {
-        return PRODUCT_DAO.addProductToDatabase(product);
+    public static void addProductToDatabase(Object product) throws ServiceException {
+        try {
+            PRODUCT_DAO.addProductToDatabase(product);
+        } catch (SQLException | OrionDatabaseException e) {
+            throw new ServiceException("Product is not added in the database", e);
+        }
     }
 
-    public static List<Accessory> searchAccessories(int limit, int offset) {
-        return PRODUCT_DAO.searchAccessories(limit, offset);
+    public static List<Accessory> searchAccessories(int limit, int offset) throws ServiceException {
+        try {
+            return PRODUCT_DAO.searchAccessories(limit, offset);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while searching for accessories", e);
+        }
     }
 
     public static List<Clothing> searchClothing(int limit, int offset) {
@@ -35,8 +45,12 @@ public class ProductService {
         return PRODUCT_DAO.searchShoes(limit, offset);
     }
 
-    public static Accessory getAccessoryById(int id) {
-        return PRODUCT_DAO.getAccessoryById(id);
+    public static Accessory getAccessoryById(int id) throws ServiceException {
+        try {
+            return PRODUCT_DAO.getAccessoryById(id);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while retrieving accessory by id", e);
+        }
     }
 
     public static Clothing getClothingById(int id) {

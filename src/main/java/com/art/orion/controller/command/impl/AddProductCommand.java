@@ -5,6 +5,7 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -38,21 +39,30 @@ public class AddProductCommand implements Command {
             logger.log(Level.ERROR, () -> String.format("Bad product id from %s = %s",
                     category, productId));
         }
-        if (category.equals(ACCESSORIES)) {
-            Accessory accessory = ProductService.getAccessoryById(id);
-            if (accessory != null) {
-                cart.add(accessory);
+        try {
+            switch (category) {
+                case ACCESSORIES -> {
+                        Accessory accessory = ProductService.getAccessoryById(id);
+                        if (accessory != null) {
+                            cart.add(accessory);
+                        }
+                }
+                case CLOTHING -> {
+                    Clothing clothing = ProductService.getClothingById(id);
+                    if (clothing != null) {
+                        cart.add(clothing);
+                    }
+                }
+                case SHOES -> {
+                    Shoes shoes = ProductService.getShoesById(id);
+                    if (shoes != null) {
+                        cart.add(shoes);
+                    }
+                }
+                default -> logger.log(Level.WARN, () -> String.format("Category %s is not exist", category));
             }
-        } else if (category.equals(CLOTHING)) {
-            Clothing clothing = ProductService.getClothingById(id);
-            if (clothing != null) {
-                cart.add(clothing);
-            }
-        } else if (category.equals(SHOES)) {
-            Shoes shoes = ProductService.getShoesById(id);
-            if (shoes != null) {
-                cart.add(shoes);
-            }
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "Database access error when retrieving product by id");
         }
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> String.format("Add product in the cart from %s with id = %s",

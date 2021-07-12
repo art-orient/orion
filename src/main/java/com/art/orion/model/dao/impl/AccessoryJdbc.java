@@ -5,6 +5,7 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.pool.ConnectionPool;
 
+import com.art.orion.model.service.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +22,7 @@ import java.util.Map;
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.COST;
+import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
 import static com.art.orion.util.Constant.DB_IMAGE_PATH;
@@ -58,23 +60,36 @@ public class AccessoryJdbc {
         return INSTANCE;
     }
 
-    public int addAccessoryToDatabase(Accessory accessory) {
-        int numberOfRecords = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_ACCESSORY)) {
+    public void addAccessoryToDatabase(Accessory accessory) throws SQLException, OrionDatabaseException {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = ConnectionPool.INSTANCE.getConnection();
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(INSERT_ACCESSORY);
             statement.setString(TYPE_RU_INDEX - 1, accessory.getTypeRu());
             statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());
             ProductDetails productDetails = accessory.getProductDetails();
             ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
             statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
-            numberOfRecords = statement.executeUpdate();
+            statement.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+            logger.log(Level.INFO, () -> "The accessory is saved in the database");
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error writing to the database", e);
+            connection.rollback();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
-        return numberOfRecords;
     }
 
-    public List<Accessory> searchAccessories(int limit, int offset) {
+    public List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException {
         List<Accessory> accessories = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ACCESSORIES)) {
@@ -85,8 +100,9 @@ public class AccessoryJdbc {
                     accessories.add(createAccessory(resultSet));
                 }
             }
+            logger.log(Level.INFO, () -> "Accessory search completed successfully");
         } catch (SQLException | OrionDatabaseException e) {
-            logger.log(Level.ERROR, e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return accessories;
     }
@@ -97,21 +113,25 @@ public class AccessoryJdbc {
         String typeEn = resultSet.getString(TYPE_EN_INDEX);
         ProductDetails productDetails = ProductDaoJdbc.createProductDetails(resultSet);
         int availability = resultSet.getInt(AVAILABILITY_INDEX);
+        logger.log(Level.DEBUG, () -> "Accessory creation completed successfully");
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
 
-    public Accessory getAccessoryById(int id) {
-        Accessory accessory = null;
+    public Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException {
+        Accessory accessory;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ACCESSORY_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     accessory = createAccessory(resultSet);
+                } else {
+                    throw new ServiceException(String.format("Accessory with id = %s is not found", id));
                 }
             }
+            logger.log(Level.DEBUG, () -> String.format("Accessory with id = %s got from the database", id));
         } catch (SQLException | OrionDatabaseException e) {
-            logger.log(Level.ERROR, e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return accessory;
     }

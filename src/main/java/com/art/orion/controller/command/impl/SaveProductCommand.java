@@ -8,6 +8,7 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.model.validator.ProductValidator;
 import com.art.orion.util.ConfigManager;
 
@@ -20,8 +21,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.CATEGORY;
+import static com.art.orion.util.Constant.CLOTHING;
 import static com.art.orion.util.Constant.COLOR;
 import static com.art.orion.util.Constant.MODEL_NAME;
 import static com.art.orion.util.Constant.DESCRIPTION_RU;
@@ -29,6 +32,7 @@ import static com.art.orion.util.Constant.DESCRIPTION_EN;
 import static com.art.orion.util.Constant.COST;
 import static com.art.orion.util.Constant.AVAILABILITY;
 import static com.art.orion.util.Constant.ACTIVE;
+import static com.art.orion.util.Constant.SHOES;
 import static com.art.orion.util.Constant.TYPE_RU;
 import static com.art.orion.util.Constant.TYPE_EN;
 
@@ -62,26 +66,34 @@ public class SaveProductCommand implements Command {
             productDetails.setCost(cost);
             productDetails.setActive(active);
         }
+        Object product = null;
         switch (category) {
-            case "accessories" -> {
+            case ACCESSORIES -> {
                 int availability = Integer.parseInt(req.getParameter(AVAILABILITY));
                 Accessory accessory = new Accessory(typeRu, typeEn, productDetails, availability);
                 logger.log(Level.DEBUG, () -> "Created an accessory - " + accessory);
-                ProductService.addProductToDatabase(accessory);
+                product = accessory;
             }
-            case "clothing" -> {
+            case CLOTHING -> {
                 String color = req.getParameter(COLOR);
                 Clothing clothing = new Clothing(typeRu, typeEn, productDetails, color);
                 logger.log(Level.DEBUG, () -> "Created clothing - " + clothing);
-                ProductService.addProductToDatabase(clothing);
+                product = clothing;
             }
-            case "shoes" -> {
+            case SHOES -> {
                 String color = req.getParameter(COLOR);
                 Shoes shoes = new Shoes(typeRu, typeEn, productDetails, color);
                 logger.log(Level.DEBUG, () -> "Created shoes - " + shoes);
-                ProductService.addProductToDatabase(shoes);
+                product = shoes;
             }
             default -> logger.log(Level.ERROR, "No category of product");
+        }
+        if (product != null) {
+            try {
+                ProductService.addProductToDatabase(product);
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, e);
+            }
         }
         return ConfigManager.getProperty("page.productManagement");
     }

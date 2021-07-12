@@ -6,19 +6,20 @@ import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ServiceException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ProductDao {
 
-    int addProductToDatabase(Object product);
+    void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException;
 
-    List<Accessory> searchAccessories(int limit, int offset);
+    List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException;
 
     List<Clothing> searchClothing(int limit, int offset);
 
     List<Shoes> searchShoes(int limit, int offset);
 
-    Accessory getAccessoryById(int id);
+    Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException;
 
     Clothing getClothingById(int id);
 
