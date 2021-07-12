@@ -27,6 +27,7 @@ import java.util.Map;
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.COST;
+import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
 import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
 import static com.art.orion.util.Constant.DB_IMAGE_PATH;
@@ -50,7 +51,7 @@ public class ProductDaoJdbc implements ProductDao {
         } else if (product instanceof Shoes) {
             SHOES_JDBC.addShoesToDatabase((Shoes) product);
         }
-        logger.log(Level.DEBUG, "Add product in the database");
+        logger.log(Level.DEBUG, "Product is added in the database");
     }
 
     @Override
@@ -83,7 +84,8 @@ public class ProductDaoJdbc implements ProductDao {
         return SHOES_JDBC.getShoesById(id);
     }
 
-    public int countNumberProducts(ProductCategory productCategory) throws ServiceException {
+    public int countNumberProducts(ProductCategory productCategory)
+                                    throws ServiceException, OrionDatabaseException {
         int number = 0;
         String query;
         switch (productCategory) {
@@ -98,8 +100,9 @@ public class ProductDaoJdbc implements ProductDao {
             while (resultSet.next()) {
                 number = resultSet.getInt(1);
             }
+            logger.log(Level.DEBUG, () -> "Counting the quantity of products");
         } catch (SQLException e) {
-            logger.log(Level.ERROR, e);
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return number;
     }
@@ -116,8 +119,9 @@ public class ProductDaoJdbc implements ProductDao {
             boolean active = resultSet.getBoolean(ACTIVE);
             productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
                     imagePath, cost, active);
+            logger.log(Level.DEBUG, () -> "Creating details of product");
         } catch (SQLException e) {
-            throw new OrionDatabaseException();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return productDetails;
     }

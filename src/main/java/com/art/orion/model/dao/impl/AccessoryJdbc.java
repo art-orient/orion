@@ -32,14 +32,18 @@ public class AccessoryJdbc {
     private static final Logger logger = LogManager.getLogger();
     private static final AccessoryJdbc INSTANCE = new AccessoryJdbc();
     private static final String INSERT_ACCESSORY = "INSERT INTO accessories " +
-            "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_ACCESSORY_BY_ID = "SELECT * FROM accessories WHERE accessories_id = ?";
+        "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_ACCESSORY_BY_ID = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, cost, availability, active " +
+            "FROM accessories WHERE accessories_id = ?";
     private static final int ACCESSORIES_ID_INDEX = 1;
     private static final int TYPE_RU_INDEX = 2;
     private static final int TYPE_EN_INDEX = 3;
     private static final int AVAILABILITY_INDEX = 10;
-    private static final String SELECT_ACCESSORIES = "SELECT * FROM accessories WHERE active = 1 LIMIT ? OFFSET ?";
+    private static final String SELECT_ACCESSORIES = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, cost, availability, active " +
+            "FROM accessories WHERE active = 1 LIMIT ? OFFSET ?";
     private static final Map<String, Integer> indices;
 
     static {

@@ -130,4 +130,7 @@ is set to the client and removed by the administrator.
     * Browse catalogs
     * Logout
     * Change website language
+  
+![Screenshot](images/schema.png)
+
 

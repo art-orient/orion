@@ -24,13 +24,13 @@ public class CommandFactory {
         Command command = new EmptyCommand();
         if (action == null || action.isEmpty()) {
             sendPageNotFound(req);
-            return command;
-        }
-        try {
-            command = TypeCommand.valueOf(action.toUpperCase()).getCommand();
-        } catch (IllegalArgumentException e) {
-            logger.log(Level.ERROR, action);
-            sendPageNotFound(req);
+        } else {
+            try {
+                command = TypeCommand.valueOf(action.toUpperCase()).getCommand();
+            } catch (IllegalArgumentException e) {
+                logger.log(Level.ERROR, () -> String.format("Invalid action = %s", action));
+                sendPageNotFound(req);
+            }
         }
         return command;
     }
@@ -38,6 +38,6 @@ public class CommandFactory {
     public static void sendPageNotFound(HttpServletRequest req) {
         req.setAttribute(ERROR_CODE, ErrorMessageManager.getMessage("msg.errorCode404"));
         req.setAttribute(ERROR_MESSAGE, ErrorMessageManager.getMessage("msg.errorMessage404"));
-        logger.log(Level.DEBUG, "set of attributes for error404");
+        logger.log(Level.DEBUG, () -> "set of attributes for error404");
     }
 }

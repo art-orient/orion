@@ -12,7 +12,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${pattern_console}"/>
         </Console>
-        <RollingFile name="TxtFile" fileName="logs/orion.log" append="true"
+        <RollingFile name="TxtFile" fileName="C:/apache-tomcat-10.0.6/logs/orion.log" append="true"
                      filePattern="logs\${date:yyyy-MM-dd}\%d{yyyy-MM-dd_HH-mm}_%i.log">
             <PatternLayout pattern="${pattern_file}"/>
             <Policies>

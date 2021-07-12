@@ -30,13 +30,13 @@ public class AccessoriesCommand implements Command {
         try {
             List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset);
             req.getSession().setAttribute(PRODUCTS, accessories);
+            int numberProducts = ProductService.countNumberProducts(ProductCategory.ACCESSORIES);
+            req.setAttribute(NUMBER_PRODUCTS, numberProducts);
+            int numberPages = Paginator.findNumberPages(numberProducts);
+            req.setAttribute(NUMBER_PAGES, numberPages);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Database access error when searching for accessories", e);
         }
-        int numberProducts = ProductService.countNumberProducts(ProductCategory.ACCESSORIES);
-        req.setAttribute(NUMBER_PRODUCTS, numberProducts);
-        int numberPages = Paginator.findNumberPages(numberProducts);
-        req.setAttribute(NUMBER_PAGES, numberPages);
         return ConfigManager.getProperty("page.accessories");
     }
 }

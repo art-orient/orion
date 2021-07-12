@@ -24,6 +24,7 @@ public class ProductService {
     public static void addProductToDatabase(Object product) throws ServiceException {
         try {
             PRODUCT_DAO.addProductToDatabase(product);
+            logger.log(Level.DEBUG, () -> "ProductService - product added to the database");
         } catch (SQLException | OrionDatabaseException e) {
             throw new ServiceException("Product is not added in the database", e);
         }
@@ -31,6 +32,7 @@ public class ProductService {
 
     public static List<Accessory> searchAccessories(int limit, int offset) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - searching for accessories");
             return PRODUCT_DAO.searchAccessories(limit, offset);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for accessories", e);
@@ -39,6 +41,7 @@ public class ProductService {
 
     public static List<Clothing> searchClothing(int limit, int offset) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - searching for clothing");
             return PRODUCT_DAO.searchClothing(limit, offset);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for clothing", e);
@@ -47,6 +50,7 @@ public class ProductService {
 
     public static List<Shoes> searchShoes(int limit, int offset) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - searching for shoes");
             return PRODUCT_DAO.searchShoes(limit, offset);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for shoes", e);
@@ -55,6 +59,7 @@ public class ProductService {
 
     public static Accessory getAccessoryById(int id) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - getting an accessory by id");
             return PRODUCT_DAO.getAccessoryById(id);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while retrieving accessory by id", e);
@@ -63,6 +68,7 @@ public class ProductService {
 
     public static Clothing getClothingById(int id) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - getting clothing by id");
             return PRODUCT_DAO.getClothingById(id);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while retrieving clothing by id", e);
@@ -71,18 +77,20 @@ public class ProductService {
 
     public static Shoes getShoesById(int id) throws ServiceException {
         try {
+            logger.log(Level.DEBUG, () -> "ProductService - getting shoes by id");
             return PRODUCT_DAO.getShoesById(id);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while retrieving clothing by id", e);
         }
     }
 
-    public static int countNumberProducts(ProductCategory productCategory) {
-        int numberProducts = 0;
+    public static int countNumberProducts(ProductCategory productCategory) throws ServiceException {
+        int numberProducts;
         try {
             numberProducts = PRODUCT_DAO.countNumberProducts(productCategory);
-        } catch (ServiceException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.DEBUG, () -> "ProductService - counting the quantity of products");
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while counting the quantity of product", e);
         }
         return numberProducts;
     }

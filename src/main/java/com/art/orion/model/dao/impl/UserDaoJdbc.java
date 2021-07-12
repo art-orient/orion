@@ -30,8 +30,11 @@ public class UserDaoJdbc implements UserDao {
     private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
     private static final String INSERT_USER = "INSERT INTO users VALUE (?, ?, ?, ?, ?, ?, ?)";
     private static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
-    private static final String GET_USER = "SELECT * FROM users WHERE username = ?";
-    private static final String GET_USER_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ? AND password = ?";
+    private static final String GET_USERNAME = "SELECT username FROM users WHERE username = ?";
+    private static final String GET_USER_BY_USERNAME = "SELECT username, password, firstname, lastname, email," +
+            " role, active FROM users WHERE username = ?";
+    private static final String GET_USER_BY_CREDENTIALS = "SELECT username FROM users" +
+            " WHERE username = ? AND password = ?";
     private static final int USERNAME_INDEX = 1;
     private static final int PASSWORD_INDEX = 2;
     private static final int FIRSTNAME_INDEX = 3;
@@ -85,7 +88,7 @@ public class UserDaoJdbc implements UserDao {
     public boolean checkIsUsernameBusy(String username) throws OrionDatabaseException {
         boolean isUsernameBusy = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USERNAME)) {
             preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -103,7 +106,7 @@ public class UserDaoJdbc implements UserDao {
     public User getUser(String username) throws OrionDatabaseException {
         User user = new User();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_USERNAME)) {
             preparedStatement.setString(1, username);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {

@@ -25,5 +25,5 @@ public interface ProductDao {
 
     Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException;
 
-    int countNumberProducts(ProductCategory productCategory) throws ServiceException;
+    int countNumberProducts(ProductCategory productCategory) throws ServiceException, OrionDatabaseException;
 }

@@ -29,13 +29,13 @@ public class ShoesCommand implements Command {
         try {
             List<Shoes> products = ProductService.searchShoes(LIMIT, offset);
             req.getSession().setAttribute(PRODUCTS, products);
+            int numberProducts = ProductService.countNumberProducts(ProductCategory.SHOES);
+            req.setAttribute(NUMBER_PRODUCTS, numberProducts);
+            int numberPages = Paginator.findNumberPages(numberProducts);
+            req.setAttribute(NUMBER_PAGES, numberPages);
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Database access error when searching for shoes", e);
         }
-        int numberProducts = ProductService.countNumberProducts(ProductCategory.SHOES);
-        req.setAttribute(NUMBER_PRODUCTS, numberProducts);
-        int numberPages = Paginator.findNumberPages(numberProducts);
-        req.setAttribute(NUMBER_PAGES, numberPages);
         return ConfigManager.getProperty("page.shoes");
     }
 }

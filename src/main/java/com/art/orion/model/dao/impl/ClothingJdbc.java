@@ -30,7 +30,9 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 public class ClothingJdbc {
     private static final Logger logger = LogManager.getLogger();
     private static final ClothingJdbc INSTANCE = new ClothingJdbc();
-    private static final String SELECT_CLOTHING = "SELECT * FROM clothing WHERE active = 1 LIMIT ? OFFSET ?";
+    private static final String SELECT_CLOTHING = "SELECT clothing_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, color, cost, active " +
+            "FROM clothing WHERE active = 1 LIMIT ? OFFSET ?";
     private static final int CLOTHING_ID_INDEX = 1;
     private static final int TYPE_RU_INDEX = 2;
     private static final int TYPE_EN_INDEX = 3;
@@ -38,7 +40,8 @@ public class ClothingJdbc {
     private static final String INSERT_CLOTHING = "INSERT INTO clothing " +
             "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, color, cost, active)" +
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_CLOSING_BY_ID = "SELECT * FROM clothing WHERE clothing_id = ?";
+    private static final String GET_CLOSING_BY_ID = "SELECT clothing_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, color, cost, active FROM clothing WHERE clothing_id = ?";
     private static final Map<String, Integer> indices;
 
     static {

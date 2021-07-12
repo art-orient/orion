@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.model.entity.Order;
 import com.art.orion.model.service.CartService;
 import com.art.orion.model.service.OrderService;
+import com.art.orion.model.service.ServiceException;
 import com.art.orion.util.ConfigManager;
 import com.art.orion.util.ErrorMessageManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,15 +30,18 @@ public class MakeOrderCommand implements Command {
     public String execute(HttpServletRequest req) {
         HttpSession session = req.getSession();
         Order order = createOrder(session);
-        String page;
-        if (OrderService.addOrderToDatabase(order)) {
-            session.setAttribute(CART, new ArrayList<>());
-            page = ConfigManager.getProperty("page.historyOrders");
-        } else {
-            String orderStatus = ErrorMessageManager.getMessage("msg.orderError");
-            req.setAttribute(ERROR, orderStatus);
-            logger.log(Level.WARN, orderStatus);
-            page = ConfigManager.getProperty("page.cartRedirect");
+        String page = ConfigManager.getProperty("page.cartRedirect");
+        try {
+            if (OrderService.addOrderToDatabase(order)) {
+                session.setAttribute(CART, new ArrayList<>());
+                page = ConfigManager.getProperty("page.historyOrders");
+            } else {
+                String orderStatus = ErrorMessageManager.getMessage("msg.orderError");
+                req.setAttribute(ERROR, orderStatus);
+                logger.log(Level.WARN, orderStatus);
+            }
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, "Database access error", e);
         }
         return page;
     }

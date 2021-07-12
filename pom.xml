@@ -9,13 +9,15 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>Orion Webapp</name>
+  <name>Orion</name>
   <url>https://github.com/art-orient/orion</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
+    <war.output.dir>C:\apache-tomcat-10.0.6\webapps</war.output.dir>
+    <war.name>orion</war.name>
   </properties>
 
   <dependencies>
@@ -62,11 +64,6 @@
       <artifactId>log4j-core</artifactId>
       <version>2.14.1</version>
     </dependency>
-      <dependency>
-          <groupId>jakarta.servlet</groupId>
-          <artifactId>jakarta.servlet-api</artifactId>
-          <version>5.0.0</version>
-      </dependency>
   </dependencies>
 
   <build>
@@ -93,9 +90,9 @@
           <artifactId>maven-war-plugin</artifactId>
           <version>3.2.2</version>
           <configuration>
-            <warName>orion22</warName>
+            <warName>${war.name}</warName>
             <failOnMissingWebXml>false</failOnMissingWebXml>
-            <outputDirectory>C:\apache-tomcat-10.0.6\webapps</outputDirectory>
+            <outputDirectory>${war.output.dir}</outputDirectory>
           </configuration>
         </plugin>
         <plugin>
