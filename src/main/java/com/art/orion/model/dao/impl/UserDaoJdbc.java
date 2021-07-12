@@ -32,6 +32,13 @@ public class UserDaoJdbc implements UserDao {
     private static final String COUNT_USERS = "SELECT COUNT(*) FROM users";
     private static final String GET_USER = "SELECT * FROM users WHERE username = ?";
     private static final String GET_USER_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ? AND password = ?";
+    private static final int USERNAME_INDEX = 1;
+    private static final int PASSWORD_INDEX = 2;
+    private static final int FIRSTNAME_INDEX = 3;
+    private static final int LASTNAME_INDEX = 4;
+    private static final int EMAIL_INDEX = 5;
+    private static final int ROLE_INDEX = 6;
+    private static final int ACTIVE_INDEX = 7;
 
     private UserDaoJdbc() {
     }
@@ -49,16 +56,17 @@ public class UserDaoJdbc implements UserDao {
             connection = ConnectionPool.INSTANCE.getConnection();
             connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(INSERT_USER);
-            preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getFirstName());
-            preparedStatement.setString(4, user.getLastName());
-            preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setInt(6, user.getRole().ordinal());
-            preparedStatement.setBoolean(7, user.isActive());
+            preparedStatement.setString(USERNAME_INDEX, user.getUsername());
+            preparedStatement.setString(PASSWORD_INDEX, user.getPassword());
+            preparedStatement.setString(FIRSTNAME_INDEX, user.getFirstName());
+            preparedStatement.setString(LASTNAME_INDEX, user.getLastName());
+            preparedStatement.setString(EMAIL_INDEX, user.getEmail());
+            preparedStatement.setInt(ROLE_INDEX, user.getRole().ordinal());
+            preparedStatement.setBoolean(ACTIVE_INDEX, user.isActive());
             isAddUser = (preparedStatement.executeUpdate() == 1);
             connection.commit();
             connection.setAutoCommit(true);
+            logger.log(Level.INFO, () -> "The user is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
@@ -84,6 +92,7 @@ public class UserDaoJdbc implements UserDao {
                     isUsernameBusy = true;
                 }
             }
+            logger.log(Level.DEBUG, () -> String.format("The user %s is already present in the database", username));
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
@@ -101,6 +110,7 @@ public class UserDaoJdbc implements UserDao {
                     createUserFromDatabase(resultSet, user);
                 }
             }
+            logger.log(Level.DEBUG, () -> String.format("The user %s got from the database", username));
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
@@ -131,6 +141,7 @@ public class UserDaoJdbc implements UserDao {
             if (resultSet.next()) {
                 numberUsers = resultSet.getInt(1);
             }
+            logger.log(Level.DEBUG, () -> "The number of users retrieved from the database");
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
@@ -154,6 +165,7 @@ public class UserDaoJdbc implements UserDao {
                     isValid = true;
                 }
             }
+            logger.log(Level.DEBUG, () -> "Username and password are valid");
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }

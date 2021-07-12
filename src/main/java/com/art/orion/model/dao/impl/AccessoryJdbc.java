@@ -28,6 +28,7 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class AccessoryJdbc {
     private static final Logger logger = LogManager.getLogger();
+    private static final AccessoryJdbc INSTANCE = new AccessoryJdbc();
     private static final String INSERT_ACCESSORY = "INSERT INTO accessories " +
             "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -48,6 +49,13 @@ public class AccessoryJdbc {
         indices.put(DB_IMAGE_PATH, 8);
         indices.put(COST, 9);
         indices.put(ACTIVE, 11);
+    }
+
+    private AccessoryJdbc() {
+    }
+
+    public static AccessoryJdbc getInstance() {
+        return INSTANCE;
     }
 
     public int addAccessoryToDatabase(Accessory accessory) {
