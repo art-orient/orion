@@ -87,14 +87,10 @@ FOREIGN KEY (username) REFERENCES users (username)
 
 CREATE table order_details (
 order_id int,
-shoes_id int,
-clothing_id int,
-accessories_id int,
+product_category int,
+product_id int,
 number_of_products int not null,
 products_cost decimal(6, 2) not null,
-PRIMARY KEY (order_id, shoes_id, clothing_id, accessories_id),
-FOREIGN KEY (order_id) REFERENCES orders (order_id),
-FOREIGN KEY (shoes_id) REFERENCES shoes (shoes_id),
-FOREIGN KEY (clothing_id) REFERENCES clothing (clothing_id),
-FOREIGN KEY (accessories_id) REFERENCES accessories (accessories_id)
+PRIMARY KEY (order_id, product_category, product_id),
+FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );

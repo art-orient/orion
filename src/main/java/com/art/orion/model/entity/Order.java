@@ -8,16 +8,16 @@ public class Order {
     private long orderId;
     private String username;
     private Date orderDate;
-    private Map<Object, Long> productsAndAmount;
+    private Map<Object, Long> productsAndQuantity;
     private BigDecimal orderCost;
     private boolean confirmationStatus;
 
-    public Order(long orderId, String username, Date orderDate, Map<Object, Long> productsAndAmount,
+    public Order(long orderId, String username, Date orderDate, Map<Object, Long> productsAndQuantity,
                  BigDecimal orderCost, boolean confirmationStatus) {
         this.orderId = orderId;
         this.username = username;
         this.orderDate = orderDate;
-        this.productsAndAmount = productsAndAmount;
+        this.productsAndQuantity = productsAndQuantity;
         this.orderCost = orderCost;
         this.confirmationStatus = confirmationStatus;
     }
@@ -26,7 +26,7 @@ public class Order {
                  BigDecimal orderCost) {
         this.username = username;
         this.orderDate = orderDate;
-        this.productsAndAmount = productsAndAmount;
+        this.productsAndQuantity = productsAndAmount;
         this.orderCost = orderCost;
     }
 
@@ -57,12 +57,12 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Map<Object, Long> getProductsAndAmount() {
-        return productsAndAmount;
+    public Map<Object, Long> getProductsAndQuantity() {
+        return productsAndQuantity;
     }
 
-    public void setProductsAndAmount(Map<Object, Long> productsAndAmount) {
-        this.productsAndAmount = productsAndAmount;
+    public void setProductsAndQuantity(Map<Object, Long> productsAndQuantity) {
+        this.productsAndQuantity = productsAndQuantity;
     }
 
     public BigDecimal getOrderCost() {
