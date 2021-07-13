@@ -11,18 +11,24 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
+import static com.art.orion.util.Constant.USERNAME;
 
 public class OrderDaoJdbc implements OrderDao {
     private static final Logger logger = LogManager.getLogger();
+    private static final OrderDaoJdbc INSTANCE = new OrderDaoJdbc();
     private static final int INVALID_ID = -1;
     private static final String INSERT_ORDER = "INSERT INTO orders " +
             "(username, order_date, order_cost, confirmation_status) VALUES (?, ?, ?, ?)";
@@ -39,6 +45,25 @@ public class OrderDaoJdbc implements OrderDao {
     private static final int SHOES_CATEGORY_NUMBER = 1;
     private static final int CLOTHING_CATEGORY_NUMBER = 2;
     private static final int ACCESSORIES_CATEGORY_NUMBER = 3;
+    private static final String SELECT_USER_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
+            "confirmation_status FROM orders WHERE username = ? LIMIT ? OFFSET ?";
+    private static final int SELECT_USER_ORDER_USERNAME_INDEX = 1;
+    private static final int SELECT_USER_ORDER_LIMIT_INDEX = 2;
+    private static final int SELECT_USER_ORDER_OFFSET_INDEX = 3;
+    private static final int ORDER_ORDER_ID_INDEX = 1;
+    private static final String SELECT_ORDER_DETAILS = "SELECT order_id, product_category, product_id, " +
+            "number_of_products, products_cost FROM order_details WHERE order_id = ?";
+    private static final String ORDER_DATE = "order_date";
+    private static final String ORDER_COST = "order_cost";
+    private static final String ORDER_STATUS = "confirmation_status";
+    private static final String COUNT_ORDERS = "SELECT count(*) FROM orders WHERE username = ?";
+
+    private OrderDaoJdbc() {
+    }
+
+    public static OrderDaoJdbc getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public int addOrderToDatabase(Order order) throws SQLException, OrionDatabaseException {
@@ -67,7 +92,7 @@ public class OrderDaoJdbc implements OrderDao {
         int orderId = INVALID_ID;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
             statement.setString(INSERT_ORDER_USERNAME_INDEX, order.getUsername());
-            statement.setDate(INSERT_ORDER_DATE_INDEX, new Date(order.getOrderDate().getTime()));
+            statement.setDate(INSERT_ORDER_DATE_INDEX, new java.sql.Date(order.getOrderDate().getTime()));
             statement.setBigDecimal(INSERT_ORDER_COST_INDEX, order.getOrderCost());
             statement.setBoolean(INSERT_ORDER_STATUS_INDEX, order.isConfirmed());
             statement.executeUpdate();
@@ -107,5 +132,53 @@ public class OrderDaoJdbc implements OrderDao {
                 statement.executeUpdate();
             }
         }
+    }
+
+    public List<Order> getUserOrders(String username, int limit, int offset) throws OrionDatabaseException {
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = connection.prepareStatement(SELECT_USER_ORDERS)) {
+            statement.setString(SELECT_USER_ORDER_USERNAME_INDEX, username);
+            statement.setInt(SELECT_USER_ORDER_LIMIT_INDEX, limit);
+            statement.setInt(SELECT_USER_ORDER_OFFSET_INDEX, offset);
+            ResultSet ordersSet = statement.executeQuery();
+            while (ordersSet.next()) {
+                Order order = createOrder(connection, ordersSet);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return orders;
+    }
+
+    private Order createOrder(Connection connection, ResultSet ordersSet) throws SQLException {
+        int orderId = ordersSet.getInt(ORDER_ORDER_ID_INDEX);
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ORDER_DETAILS)) {
+            statement.setInt(1, orderId);
+            ResultSet productSet = statement.executeQuery();
+            Map<Object, Long> products = new HashMap<>();
+            String username = ordersSet.getString(USERNAME);
+            Date orderDate = new Date(ordersSet.getDate(ORDER_DATE).getTime());
+            BigDecimal cost = ordersSet.getBigDecimal(ORDER_COST);
+            boolean status = ordersSet.getBoolean(ORDER_STATUS);
+            return new Order(orderId, username, orderDate, products, cost, status);
+        }
+    }
+
+    public int countNumberOrders(String username) throws OrionDatabaseException {
+        int number = 0;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_ORDERS)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                number = resultSet.getInt(1);
+            }
+            logger.log(Level.DEBUG, "Counting the number of orders = {}" + number);
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return number;
     }
 }

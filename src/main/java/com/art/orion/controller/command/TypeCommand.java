@@ -12,6 +12,7 @@ import com.art.orion.controller.command.impl.LoginCommand;
 import com.art.orion.controller.command.impl.LoginUserCommand;
 import com.art.orion.controller.command.impl.LogoutCommand;
 import com.art.orion.controller.command.impl.MakeOrderCommand;
+import com.art.orion.controller.command.impl.OrdersCommand;
 import com.art.orion.controller.command.impl.ProductManagementCommand;
 import com.art.orion.controller.command.impl.ProfileCommand;
 import com.art.orion.controller.command.impl.RegisterUserCommand;

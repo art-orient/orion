@@ -47,6 +47,8 @@ public class Constant {
     public static final String DB_DESCRIPTION_RU = "description_RU";
     public static final String DB_DESCRIPTION_EN = "description_EN";
     public static final String DB_IMAGE_PATH = "image_path";
+    public static final String ORDERS = "orders";
+    public static final String NUMBER_ORDERS = "numberOrders";
 
     private Constant() {
     }

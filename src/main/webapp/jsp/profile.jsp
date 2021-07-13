@@ -19,6 +19,7 @@
         <h2 class="headline"><fmt:message key="ui.profile"/></h2>
         <form action="controller" method="get">
             <input type="hidden" name="command" value="orders"/>
+            <input type="hidden" name="page" value="1"/>
             <input type="submit" value='<fmt:message key="ui.orders"/>'/>
         </form><br>
         <table id="profileTable">
