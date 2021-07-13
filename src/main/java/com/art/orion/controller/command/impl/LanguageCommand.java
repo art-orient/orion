@@ -12,8 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.CLOTHING;
-import static com.art.orion.util.Constant.COMMAND;
-import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 import static com.art.orion.util.Constant.SHOES;
@@ -28,16 +26,17 @@ public class LanguageCommand implements Command {
         logger.log(Level.INFO, "change of language");
         ErrorMessageManager.setLocale(selectedLanguage);
         String page = (String) req.getSession().getAttribute(CURRENT_PAGE);
-        if (page == null) {
-            page = ConfigManager.getProperty("page.index");
-        }
-        String previousPage = page.substring(4, page.length() - 4);
-        if (ACCESSORIES.equals(previousPage) || CLOTHING.equals(previousPage) || SHOES.equals(previousPage)) {
-            page = ConfigManager.getProperty("page.index");
-        }
+//        if (page == null) {
+//            page = ConfigManager.getProperty("page.index");
+//        }
+//        String previousPage = page.substring(4, page.length() - 4);
+//        if (ACCESSORIES.equals(previousPage) || CLOTHING.equals(previousPage) || SHOES.equals(previousPage)) {
+//            page = ConfigManager.getProperty("page.index");
+//        }
         if (ConfigManager.getProperty("page.error").equals(page)) {
             CommandFactory.sendPageNotFound(req);
         }
+        page = ConfigManager.getProperty("page.index");
         return page;
     }
 }

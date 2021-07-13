@@ -48,7 +48,7 @@ public class Controller extends HttpServlet {
         String page = command.execute(req);
         req.getSession().setAttribute(CURRENT_PAGE, page);
         if (page != null) {
-            logger.log(Level.DEBUG, () -> String.format("forward on page = %s", page));
+            logger.log(Level.DEBUG, "forward on page = {}", page);
             req.getRequestDispatcher(page).forward(req, resp);
         }
     }

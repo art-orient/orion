@@ -68,12 +68,6 @@
         <c:if test="${sessionScope.username != null}">
             <li>
                 <form action="controller" method="get">
-                <input type="hidden" name="command" value="orders"/>
-                <input type="submit" value='<fmt:message key="ui.orders"/>'/>
-                </form>
-            </li>
-            <li>
-                <form action="controller" method="get">
                     <input type="hidden" name="command" value="profile"/>
                     <input type="submit" value='<fmt:message key="ui.profile"/>'/>
                 </form>

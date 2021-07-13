@@ -17,6 +17,10 @@
 <section id="profile" class="section">
     <div class="container">
         <h2 class="headline"><fmt:message key="ui.profile"/></h2>
+        <form action="controller" method="get">
+            <input type="hidden" name="command" value="orders"/>
+            <input type="submit" value='<fmt:message key="ui.orders"/>'/>
+        </form><br>
         <table id="profileTable">
             <tr>
                 <td><fmt:message key="ui.username"/></td>

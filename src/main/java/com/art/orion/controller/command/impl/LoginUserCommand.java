@@ -29,11 +29,11 @@ public class LoginUserCommand implements Command {
         String username = req.getParameter(USERNAME);
         String password = req.getParameter(PASSWORD);
         String encryptedPassword = PasswordEncryptor.encryptPassword(password);
+        HttpSession session = req.getSession();
+        String language = (String) session.getAttribute(LANGUAGE);
         try {
             if (UserService.validateCredentials(username, encryptedPassword)) {
-                HttpSession session = req.getSession();
-                String language = (String) session.getAttribute(LANGUAGE);
-                req.getSession().invalidate();
+                session.invalidate();
                 session = req.getSession();
                 session.setAttribute(LANGUAGE, language);
                 session.setAttribute(USERNAME, username);

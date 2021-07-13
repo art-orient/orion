@@ -34,7 +34,7 @@ public class MakeOrderCommand implements Command {
         try {
             if (OrderService.addOrderToDatabase(order)) {
                 session.setAttribute(CART, new ArrayList<>());
-                page = ConfigManager.getProperty("page.historyOrders");
+                page = ConfigManager.getProperty("page.confirmationOrder");
             } else {
                 String orderStatus = ErrorMessageManager.getMessage("msg.orderError");
                 req.setAttribute(ERROR, orderStatus);

@@ -41,7 +41,8 @@ public enum TypeCommand {
     CLOTHING(new ClothingCommand()),
     SHOES(new ShoesCommand()),
     SALE(new SaleCommand()),
-    PROFILE(new ProfileCommand());
+    PROFILE(new ProfileCommand()),
+    ORDERS(new OrdersCommand());
 
     private final Command command;
 
