@@ -31,9 +31,7 @@ public class OrdersCommand implements Command {
         try {
             List<Order> orders = OrderService.getUserOrders(username, LIMIT, offset);
             req.setAttribute(ORDERS, orders);
-            System.out.println("5555555555555555555");
             int numberOrders = OrderService.countNumberOrders(username);
-            System.out.println("+++++++++" + numberOrders);
             req.setAttribute(NUMBER_ORDERS, numberOrders);
             int numberPages = Paginator.findNumberPages(numberOrders);
             req.setAttribute(NUMBER_PAGES, numberPages);

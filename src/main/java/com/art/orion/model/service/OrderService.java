@@ -40,7 +40,6 @@ public class OrderService {
             numberOrders = ORDER_DAO.countNumberOrders(username);
             logger.log(Level.DEBUG, "OrderService - counting the number of orders = {} by username", numberOrders);
         } catch (OrionDatabaseException e) {
-            System.out.println("----------- error from OrderDAO");
             throw new ServiceException("Database access error occurred while retrieving user's orders", e);
         }
         return numberOrders;

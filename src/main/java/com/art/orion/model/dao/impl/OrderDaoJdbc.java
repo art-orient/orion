@@ -7,6 +7,7 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Order;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
+import com.art.orion.model.service.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -57,6 +58,13 @@ public class OrderDaoJdbc implements OrderDao {
     private static final String ORDER_COST = "order_cost";
     private static final String ORDER_STATUS = "confirmation_status";
     private static final String COUNT_ORDERS = "SELECT count(*) FROM orders WHERE username = ?";
+    private static final String PRODUCT_CATEGORY = "product_category";
+    private static final String PRODUCT_ID = "product_id";
+    private static final String PRODUCTS_COST = "products_cost";
+    private static final String NUMBER_PRODUCTS = "number_of_products";
+    private static final String SHOES_IMAGE_PATH_PREFIX = "images/shoes/";
+    private static final String CLOTHING_IMAGE_PATH_PREFIX = "images/clothing/";
+    private static final String ACCESSORIES_IMAGE_PATH_PREFIX = "images/accessories/";
 
     private OrderDaoJdbc() {
     }
@@ -134,7 +142,8 @@ public class OrderDaoJdbc implements OrderDao {
         }
     }
 
-    public List<Order> getUserOrders(String username, int limit, int offset) throws OrionDatabaseException {
+    public List<Order> getUserOrders(String username, int limit, int offset)
+            throws OrionDatabaseException, ServiceException {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SELECT_USER_ORDERS)) {
@@ -152,18 +161,57 @@ public class OrderDaoJdbc implements OrderDao {
         return orders;
     }
 
-    private Order createOrder(Connection connection, ResultSet ordersSet) throws SQLException {
+    private Order createOrder(Connection connection, ResultSet ordersSet)
+            throws SQLException, OrionDatabaseException, ServiceException {
         int orderId = ordersSet.getInt(ORDER_ORDER_ID_INDEX);
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ORDER_DETAILS)) {
             statement.setInt(1, orderId);
             ResultSet productSet = statement.executeQuery();
-            Map<Object, Long> products = new HashMap<>();
+            Map<Object, Long> products = createProducts(productSet);
             String username = ordersSet.getString(USERNAME);
             Date orderDate = new Date(ordersSet.getDate(ORDER_DATE).getTime());
             BigDecimal cost = ordersSet.getBigDecimal(ORDER_COST);
             boolean status = ordersSet.getBoolean(ORDER_STATUS);
             return new Order(orderId, username, orderDate, products, cost, status);
         }
+    }
+
+    private Map<Object, Long> createProducts(ResultSet productSet)
+                                            throws SQLException, OrionDatabaseException, ServiceException {
+        Map<Object, Long> products = new HashMap<>();
+        Object product;
+        while (productSet.next()) {
+            int categoryNumber = productSet.getInt(PRODUCT_CATEGORY);
+            int productId = productSet.getInt(PRODUCT_ID);
+            BigDecimal productCost = productSet.getBigDecimal(PRODUCTS_COST);
+            Long numberProducts = (long) productSet.getInt(NUMBER_PRODUCTS);
+            switch (categoryNumber) {
+                case 1 -> {
+                    Shoes shoes = ShoesJdbc.getInstance().getShoesById(productId);
+                    String imagePath = shoes.getProductDetails().getImgPath();
+                    shoes.getProductDetails().setImgPath(SHOES_IMAGE_PATH_PREFIX + imagePath);
+                    shoes.getProductDetails().setCost(productCost);
+                    product = shoes;
+                }
+                case 2 -> {
+                    Clothing clothing = ClothingJdbc.getInstance().getClothingById(productId);
+                    String imagePath = clothing.getProductDetails().getImgPath();
+                    clothing.getProductDetails().setImgPath(CLOTHING_IMAGE_PATH_PREFIX + imagePath);
+                    clothing.getProductDetails().setCost(productCost);
+                    product = clothing;
+                }
+                case 3 -> {
+                    Accessory accessory = AccessoryJdbc.getInstance().getAccessoryById(productId);
+                    String imagePath = accessory.getProductDetails().getImgPath();
+                    accessory.getProductDetails().setImgPath(ACCESSORIES_IMAGE_PATH_PREFIX + imagePath);
+                    accessory.getProductDetails().setCost(productCost);
+                    product = accessory;
+                }
+                default -> throw new ServiceException("Invalid number of product category");
+            }
+            products.put(product, numberProducts);
+        }
+        return products;
     }
 
     public int countNumberOrders(String username) throws OrionDatabaseException {
@@ -175,7 +223,7 @@ public class OrderDaoJdbc implements OrderDao {
             while (resultSet.next()) {
                 number = resultSet.getInt(1);
             }
-            logger.log(Level.DEBUG, "Counting the number of orders = {}" + number);
+            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }

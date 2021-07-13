@@ -33,17 +33,37 @@
             </tr>
             <c:forEach items="${orders}" var="order" varStatus="counter">
                 <tr>
-                    <td>${counter.count + offset}</td>
-                    <td>ID${order.orderId}</td>
+                    <td><c:out value="${counter.count + offset}"/></td>
+                    <td><c:out value="ID ${order.orderId}"/></td>
                     <td><fmt:formatDate value="${order.orderDate}" pattern="yyyy-MM-dd"/></td>
                     <td>
                         <table>
                             <c:forEach items="${order.productsAndQuantity}" var="product">
                                 <tr>
-                                    <td><c:out value="${product.key.modelName}"/></td>
-                                    <td><img width="100px" height="75px"
-                                             src="<c:out value="${product.key.imagePath}"/>"></td>
-                                    <td> x ${product.value}</td>
+                                    <td width="400px">
+                                        <c:choose>
+                                            <c:when test="${sessionScope.language == 'en'}">
+                                                <c:out value="${product.key.typeEn} "/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:out value="${product.key.typeRu} "/>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <c:out value="${product.key.productDetails.brand} "/>
+                                        <c:out value="${product.key.productDetails.modelName}"/>
+                                    </td>
+                                    <td><img width="150px"
+                                         src="<c:out value="${product.key.productDetails.imgPath}"/>">
+                                    </td>
+                                    <td>
+                                        <c:out value="${product.key.productDetails.cost}"/>
+                                    </td>
+                                    <td>
+                                        <c:out value="x ${product.value} = "/>
+                                    </td>
+                                    <td>
+                                        <c:out value="${product.value * product.key.productDetails.cost}"/>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </table>
