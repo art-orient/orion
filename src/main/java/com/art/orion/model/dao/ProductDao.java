@@ -13,7 +13,7 @@ public interface ProductDao {
 
     void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException;
 
-    List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException;
+    List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws OrionDatabaseException;
 
     List<Clothing> searchClothing(int limit, int offset) throws OrionDatabaseException;
 
@@ -25,5 +25,5 @@ public interface ProductDao {
 
     Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException;
 
-    int countNumberProducts(ProductCategory productCategory) throws ServiceException, OrionDatabaseException;
+    int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException, OrionDatabaseException;
 }

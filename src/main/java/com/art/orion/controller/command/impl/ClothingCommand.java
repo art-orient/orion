@@ -29,7 +29,7 @@ public class ClothingCommand implements Command {
         try {
             List<Clothing> clothing = ProductService.searchClothing(LIMIT, offset);
             req.getSession().setAttribute(PRODUCTS, clothing);
-            int numberProducts = ProductService.countNumberProducts(ProductCategory.CLOTHING);
+            int numberProducts = ProductService.countNumberProducts(ProductCategory.CLOTHING, false);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);
             int numberPages = Paginator.findNumberPages(numberProducts);
             req.setAttribute(NUMBER_PAGES, numberPages);

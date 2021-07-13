@@ -30,10 +30,10 @@ public class ProductService {
         }
     }
 
-    public static List<Accessory> searchAccessories(int limit, int offset) throws ServiceException {
+    public static List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws ServiceException {
         try {
             logger.log(Level.DEBUG, () -> "ProductService - searching for accessories");
-            return PRODUCT_DAO.searchAccessories(limit, offset);
+            return PRODUCT_DAO.searchAccessories(limit, offset, isAdmin);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for accessories", e);
         }
@@ -84,10 +84,10 @@ public class ProductService {
         }
     }
 
-    public static int countNumberProducts(ProductCategory productCategory) throws ServiceException {
+    public static int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException {
         int numberProducts;
         try {
-            numberProducts = PRODUCT_DAO.countNumberProducts(productCategory);
+            numberProducts = PRODUCT_DAO.countNumberProducts(productCategory, isAdmin);
             logger.log(Level.DEBUG, () -> "ProductService - counting the quantity of products");
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while counting the quantity of product", e);

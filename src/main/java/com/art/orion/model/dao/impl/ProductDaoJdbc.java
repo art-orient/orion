@@ -41,6 +41,9 @@ public class ProductDaoJdbc implements ProductDao {
     private static final String COUNT_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
     private static final String COUNT_CLOTHING = "SELECT count(*) FROM clothing WHERE active = 1";
     private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
+    private static final String COUNT_ALL_ACCESSORIES = "SELECT count(*) FROM accessories";
+    private static final String COUNT_ALL_CLOTHING = "SELECT count(*) FROM clothing";
+    private static final String COUNT_ALL_SHOES = "SELECT count(*) FROM shoes";
 
     @Override
     public void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException {
@@ -55,8 +58,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException {
-        return ACCESSORY_JDBC.searchAccessories(limit, offset);
+    public List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
+        return ACCESSORY_JDBC.searchAccessories(limit, offset, isAdmin);
     }
 
     @Override
@@ -84,14 +87,14 @@ public class ProductDaoJdbc implements ProductDao {
         return SHOES_JDBC.getShoesById(id);
     }
 
-    public int countNumberProducts(ProductCategory productCategory)
+    public int countNumberProducts(ProductCategory productCategory, boolean isAdmin)
                                     throws ServiceException, OrionDatabaseException {
         int number = 0;
         String query;
         switch (productCategory) {
-            case ACCESSORIES -> query = COUNT_ACCESSORIES;
-            case CLOTHING -> query = COUNT_CLOTHING;
-            case SHOES -> query = COUNT_SHOES;
+            case ACCESSORIES -> query = isAdmin ? COUNT_ALL_ACCESSORIES : COUNT_ACCESSORIES;
+            case CLOTHING -> query = isAdmin ? COUNT_ALL_CLOTHING : COUNT_CLOTHING;
+            case SHOES -> query = isAdmin ? COUNT_ALL_SHOES : COUNT_SHOES;
             default -> throw new ServiceException("Invalid product category - " + productCategory);
         }
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();

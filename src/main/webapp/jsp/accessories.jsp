@@ -28,12 +28,16 @@
                 <th><fmt:message key="ui.image"/></th>
                 <th><fmt:message key="ui.description"/></th>
                 <th><fmt:message key="ui.cost"/></th>
+                <c:if test="${sessionScope.role == 'ADMIN'}">
+                    <th><fmt:message key="ui.active"/></th>
+                    <th></th>
+                </c:if>
                 <th></th>
             </tr>
         </c:if>
         <c:forEach items="${sessionScope.products}" var="product" varStatus="counter">
             <tr>
-                <td>${counter.count + offset}</td>
+                <td width="5%">${counter.count + offset}</td>
                 <td width="200px">
                     <c:choose>
                         <c:when test="${sessionScope.language == 'en'}">
@@ -63,15 +67,36 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td><c:out value="${product.productDetails.cost}"/></td>
-                <td width="10%">
-                    <form method="get" action="controller">
-                        <input type="hidden" name="product" value="${product.accessoryId}">
-                        <input type="hidden" name="category" value="accessories">
-                        <input type="hidden" name="page" value="${page}"/>
-                        <input type="hidden" name="command" value="add_product">
-                        <button><fmt:message key="ui.addToCart"/></button>
-                    </form>
+                <td width="5%"><c:out value="${product.productDetails.cost}"/></td>
+                <c:if test="${sessionScope.role == 'ADMIN'}">
+                    <td>
+                        <c:if test="${product.productDetails.active == true}">
+                            <fmt:message key="ui.yes"/>
+                        </c:if>
+                        <c:if test="${!product.productDetails.active == true}">
+                            <fmt:message key="ui.no"/>
+                        </c:if>
+                    </td>
+                    <td width="8%">
+                        <form method="get" action="controller">
+                            <input type="hidden" name="product" value="${product.accessoryId}">
+                            <input type="hidden" name="category" value="accessories">
+                            <input type="hidden" name="page" value="${page}"/>
+                            <input type="hidden" name="command" value="edit_product">
+                            <button><fmt:message key="ui.edit"/></button>
+                        </form>
+                    </td>
+                </c:if>
+                <td width="8%">
+                    <c:if test="${product.productDetails.active == true}">
+                        <form method="get" action="controller">
+                            <input type="hidden" name="product" value="${product.accessoryId}">
+                            <input type="hidden" name="category" value="accessories">
+                            <input type="hidden" name="page" value="${page}"/>
+                            <input type="hidden" name="command" value="add_product">
+                            <button><fmt:message key="ui.addToCart"/></button>
+                        </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

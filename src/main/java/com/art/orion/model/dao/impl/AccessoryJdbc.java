@@ -44,6 +44,9 @@ public class AccessoryJdbc {
     private static final String SELECT_ACCESSORIES = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
             "description_RU, description_EN, image_path, cost, availability, active " +
             "FROM accessories WHERE active = 1 LIMIT ? OFFSET ?";
+    private static final String SELECT_ALL_ACCESSORIES = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, cost, availability, active " +
+            "FROM accessories LIMIT ? OFFSET ?";
     private static final Map<String, Integer> indices;
 
     static {
@@ -93,10 +96,14 @@ public class AccessoryJdbc {
         }
     }
 
-    public List<Accessory> searchAccessories(int limit, int offset) throws OrionDatabaseException {
+    public List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
         List<Accessory> accessories = new ArrayList<>();
+        String query = SELECT_ACCESSORIES;
+        if (isAdmin) {
+            query = SELECT_ALL_ACCESSORIES;
+        }
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_ACCESSORIES)) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, limit);
             statement.setInt(2, offset);
             try (ResultSet resultSet = statement.executeQuery()) {
