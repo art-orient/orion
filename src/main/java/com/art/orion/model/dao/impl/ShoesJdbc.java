@@ -76,7 +76,6 @@ public class ShoesJdbc {
             statement.setString(COLOR_INDEX - 1, shoes.getColor());
             statement.executeUpdate();
             connection.commit();
-            connection.setAutoCommit(true);
             logger.log(Level.INFO, () -> "The shoes is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
@@ -86,6 +85,7 @@ public class ShoesJdbc {
                 statement.close();
             }
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         }

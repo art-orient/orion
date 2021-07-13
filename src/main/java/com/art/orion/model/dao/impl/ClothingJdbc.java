@@ -76,7 +76,6 @@ public class ClothingJdbc {
             ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
             statement.executeUpdate();
             connection.commit();
-            connection.setAutoCommit(true);
             logger.log(Level.INFO, () -> "The clothing is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
@@ -86,6 +85,7 @@ public class ClothingJdbc {
                 statement.close();
             }
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         }

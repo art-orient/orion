@@ -78,7 +78,6 @@ public class AccessoryJdbc {
             statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
             statement.executeUpdate();
             connection.commit();
-            connection.setAutoCommit(true);
             logger.log(Level.INFO, () -> "The accessory is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
@@ -88,6 +87,7 @@ public class AccessoryJdbc {
                 statement.close();
             }
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         }

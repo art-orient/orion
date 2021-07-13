@@ -80,7 +80,7 @@
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="remove_order">
                                 <input type="hidden" name="page" value="${page}"/>
-                                <input type="hidden" name="order" value="${order.orderId}">
+                                <input type="hidden" name="orderId" value="${order.orderId}">
                                 <input type="submit" value='<fmt:message key="ui.remove"/>'>
                             </form>
                         </c:if>

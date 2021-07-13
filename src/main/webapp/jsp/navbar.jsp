@@ -105,13 +105,19 @@
                 <input type="submit" value='<fmt:message key="ui.userManagement"/>'/>
             </form>
         </td>
-        <td>
-            <form action="controller" method="get">
-                <input type="hidden" name="command" value="product_management"/>
-                <input type="submit" value='<fmt:message key="ui.orderManagement"/>'/>
-            </form>
-        </td>
     </tr>
+    </table>
+</c:if>
+<c:if test="${sessionScope.role == 'MANAGER'}">
+    <table>
+        <tr>
+            <td>
+                <form action="controller" method="get">
+                    <input type="hidden" name="command" value="product_management"/>
+                    <input type="submit" value='<fmt:message key="ui.orderManagement"/>'/>
+                </form>
+            </td>
+        </tr>
     </table>
 </c:if>
 <br>

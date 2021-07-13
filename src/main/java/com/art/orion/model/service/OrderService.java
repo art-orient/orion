@@ -44,4 +44,13 @@ public class OrderService {
         }
         return numberOrders;
     }
+
+
+    public static void removeOrderById(int orderId) throws ServiceException {
+        try {
+            ORDER_DAO.removeOrderById(orderId);
+        } catch (SQLException | OrionDatabaseException e) {
+            throw new ServiceException("Order is not removed from the database", e);
+        }
+    }
 }

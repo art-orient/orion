@@ -65,6 +65,8 @@ public class OrderDaoJdbc implements OrderDao {
     private static final String SHOES_IMAGE_PATH_PREFIX = "images/shoes/";
     private static final String CLOTHING_IMAGE_PATH_PREFIX = "images/clothing/";
     private static final String ACCESSORIES_IMAGE_PATH_PREFIX = "images/accessories/";
+    private static final String REMOVE_ORDER_DETAILS = "DELETE FROM order_details WHERE order_id = ?";
+    private static final String REMOVE_ORDER = "DELETE FROM orders WHERE order_id = ?";
 
     private OrderDaoJdbc() {
     }
@@ -83,13 +85,13 @@ public class OrderDaoJdbc implements OrderDao {
             orderId = saveOrder(connection, order);
             saveOrderDetails(connection, order, orderId);
             connection.commit();
-            connection.setAutoCommit(true);
             logger.log(Level.INFO, () -> "The order is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         } finally {
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         }
@@ -228,5 +230,32 @@ public class OrderDaoJdbc implements OrderDao {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return number;
+    }
+
+    public void removeOrderById(int orderId) throws SQLException, OrionDatabaseException {
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.INSTANCE.getConnection();
+            connection.setAutoCommit(false);
+            removeOrderData(connection, orderId, REMOVE_ORDER_DETAILS);
+            removeOrderData(connection, orderId, REMOVE_ORDER);
+            connection.commit();
+            logger.log(Level.INFO, () -> "The order is removed from the database");
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        } finally {
+            if (connection != null) {
+                connection.setAutoCommit(true);
+                connection.close();
+            }
+        }
+    }
+
+    private void removeOrderData(Connection connection, int orderId, String query) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, orderId);
+            statement.executeUpdate();
+        }
     }
 }

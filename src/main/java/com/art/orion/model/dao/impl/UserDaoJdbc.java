@@ -68,7 +68,6 @@ public class UserDaoJdbc implements UserDao {
             preparedStatement.setBoolean(ACTIVE_INDEX, user.isActive());
             isAddUser = (preparedStatement.executeUpdate() == 1);
             connection.commit();
-            connection.setAutoCommit(true);
             logger.log(Level.INFO, () -> "The user is saved in the database");
         } catch (SQLException e) {
             connection.rollback();
@@ -78,6 +77,7 @@ public class UserDaoJdbc implements UserDao {
                 preparedStatement.close();
             }
             if (connection != null) {
+                connection.setAutoCommit(true);
                 connection.close();
             }
         }

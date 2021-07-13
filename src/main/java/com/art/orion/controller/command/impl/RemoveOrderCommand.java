@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.Paginator;
+import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.model.entity.Order;
 import com.art.orion.model.service.OrderService;
 import com.art.orion.model.service.ServiceException;
@@ -17,32 +18,19 @@ import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_ORDERS;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.ORDERS;
-import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERNAME;
 
-public class OrdersCommand implements Command {
+public class RemoveOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
     public String execute(HttpServletRequest req) {
-        String username = (String) req.getSession().getAttribute(USERNAME);
-        String page = ConfigManager.getProperty("page.orders");
-        int offset = Paginator.preparePagination(req);
+        int orderId = RequestParseNumberHelper.getInt(req, "orderId");
         try {
-            List<Order> orders = OrderService.getUserOrders(username, LIMIT, offset);
-            req.setAttribute(ORDERS, orders);
-            int numberOrders = OrderService.countNumberOrders(username);
-            req.setAttribute(NUMBER_ORDERS, numberOrders);
-            int numberPages = Paginator.findNumberPages(numberOrders);
-            req.setAttribute(NUMBER_PAGES, numberPages);
-            int pageNumber = (int) req.getSession().getAttribute(PAGE);
-            if (pageNumber > numberPages) {
-                req.getSession().setAttribute(PAGE, numberPages);
-                page = ConfigManager.getProperty("page.ordersRedirect");
-            }
+           OrderService.removeOrderById(orderId);
         } catch (ServiceException e) {
             logger.log(Level.ERROR,e);
         }
-        return page;
+        return ConfigManager.getProperty("page.ordersRedirect");
     }
 }
