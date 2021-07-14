@@ -5,8 +5,7 @@ import com.art.orion.controller.command.util.Paginator;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.service.ServiceException;
-import com.art.orion.util.ConfigManager;
+import com.art.orion.exception.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+import static com.art.orion.controller.command.PagePath.CLOTHING_PAGE;
 import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
@@ -36,6 +36,6 @@ public class ClothingCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Database access error when searching for clothing", e);
         }
-        return ConfigManager.getProperty("page.clothing");
+        return CLOTHING_PAGE;
     }
 }

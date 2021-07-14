@@ -5,8 +5,7 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.service.ServiceException;
-import com.art.orion.util.ConfigManager;
+import com.art.orion.exception.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -16,6 +15,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.art.orion.controller.command.PagePath.ACCESSORIES_REDIRECT_PAGE;
+import static com.art.orion.controller.command.PagePath.CLOTHING_REDIRECT_PAGE;
+import static com.art.orion.controller.command.PagePath.INDEX_PAGE;
+import static com.art.orion.controller.command.PagePath.SHOES_REDIRECT_PAGE;
 import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.CLOTHING;
 import static com.art.orion.util.Constant.PRODUCT;
@@ -32,6 +35,7 @@ public class AddProductCommand implements Command {
         List<Object> cart = getCart(session);
         String category = req.getParameter(CATEGORY);
         String productId = req.getParameter(PRODUCT);
+        String page = INDEX_PAGE;
         int id = 0;
         try {
             id = Integer.parseInt(productId);
@@ -45,18 +49,21 @@ public class AddProductCommand implements Command {
                         Accessory accessory = ProductService.getAccessoryById(id);
                         if (accessory != null) {
                             cart.add(accessory);
+                            page = ACCESSORIES_REDIRECT_PAGE;
                         }
                 }
                 case CLOTHING -> {
                     Clothing clothing = ProductService.getClothingById(id);
                     if (clothing != null) {
                         cart.add(clothing);
+                        page = CLOTHING_REDIRECT_PAGE;
                     }
                 }
                 case SHOES -> {
                     Shoes shoes = ProductService.getShoesById(id);
                     if (shoes != null) {
                         cart.add(shoes);
+                        page = SHOES_REDIRECT_PAGE;
                     }
                 }
                 default -> logger.log(Level.WARN, () -> String.format("Category %s is not exist", category));
@@ -67,7 +74,7 @@ public class AddProductCommand implements Command {
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> String.format("Add product in the cart from %s with id = %s",
                 category, productId));
-        return ConfigManager.getProperty(String.format("page.%sRedirect", category));
+        return page;
     }
 
     private List<Object> getCart(HttpSession session) {

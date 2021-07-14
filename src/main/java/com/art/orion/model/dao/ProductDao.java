@@ -1,10 +1,11 @@
 package com.art.orion.model.dao;
 
+import com.art.orion.exception.OrionDatabaseException;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 
 import java.sql.SQLException;
 import java.util.List;

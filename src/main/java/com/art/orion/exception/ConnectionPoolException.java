@@ -1,4 +1,4 @@
-package com.art.orion.model.pool;
+package com.art.orion.exception;
 
 public class ConnectionPoolException extends Exception {
 

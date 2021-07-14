@@ -1,6 +1,7 @@
 package com.art.orion.model.service;
 
-import com.art.orion.model.dao.OrionDatabaseException;
+import com.art.orion.exception.OrionDatabaseException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.dao.impl.ProductDaoJdbc;
 import com.art.orion.model.entity.Accessory;

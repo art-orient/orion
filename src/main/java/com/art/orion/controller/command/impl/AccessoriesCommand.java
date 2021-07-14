@@ -6,7 +6,7 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +19,7 @@ import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
 import static com.art.orion.util.Constant.PRODUCTS;
 import static com.art.orion.util.Constant.ROLE;
+import static com.art.orion.controller.command.PagePath.ACCESSORIES_PAGE;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class AccessoriesCommand implements Command {
         int offset = Paginator.preparePagination(req);
         try {
             String role = (String) req.getSession().getAttribute(ROLE);
-            boolean isAdmin = role == Role.ADMIN.name();
+            boolean isAdmin = role.equals(Role.ADMIN.name());
             List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset, isAdmin);
             req.getSession().setAttribute(PRODUCTS, accessories);
             int numberProducts = ProductService.countNumberProducts(ProductCategory.ACCESSORIES, isAdmin);
@@ -41,6 +42,6 @@ public class AccessoriesCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Database access error when searching for accessories", e);
         }
-        return ConfigManager.getProperty("page.accessories");
+        return ConfigManager.getProperty(ACCESSORIES_PAGE);
     }
 }

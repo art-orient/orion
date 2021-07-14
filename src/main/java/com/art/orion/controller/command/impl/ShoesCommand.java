@@ -5,7 +5,7 @@ import com.art.orion.controller.command.util.Paginator;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;

@@ -1,4 +1,4 @@
-package com.art.orion.model.dao;
+package com.art.orion.exception;
 
 public class OrionDatabaseException extends Exception {
 

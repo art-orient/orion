@@ -2,7 +2,6 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.CommandFactory;
-import com.art.orion.util.ConfigManager;
 import com.art.orion.util.ErrorMessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -10,11 +9,10 @@ import org.apache.logging.log4j.Logger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.art.orion.util.Constant.ACCESSORIES;
-import static com.art.orion.util.Constant.CLOTHING;
+import static com.art.orion.controller.command.PagePath.ERROR_PAGE;
+import static com.art.orion.controller.command.PagePath.INDEX_PAGE;
 import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
-import static com.art.orion.util.Constant.SHOES;
 
 public class LanguageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -26,6 +24,7 @@ public class LanguageCommand implements Command {
         logger.log(Level.INFO, "change of language");
         ErrorMessageManager.setLocale(selectedLanguage);
         String page = (String) req.getSession().getAttribute(CURRENT_PAGE);
+//        todo
 //        if (page == null) {
 //            page = ConfigManager.getProperty("page.index");
 //        }
@@ -33,10 +32,10 @@ public class LanguageCommand implements Command {
 //        if (ACCESSORIES.equals(previousPage) || CLOTHING.equals(previousPage) || SHOES.equals(previousPage)) {
 //            page = ConfigManager.getProperty("page.index");
 //        }
-        if (ConfigManager.getProperty("page.error").equals(page)) {
+        if (ERROR_PAGE.equals(page)) {
             CommandFactory.sendPageNotFound(req);
         }
-        page = ConfigManager.getProperty("page.index");
+        page = INDEX_PAGE;
         return page;
     }
 }

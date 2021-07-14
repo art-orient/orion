@@ -1,7 +1,5 @@
 package com.art.orion.model.validator;
 
-import com.art.orion.model.service.ServiceException;
-import com.art.orion.model.service.UserService;
 import com.art.orion.util.ErrorMessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,15 +14,6 @@ public class UserValidator {
     public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
                                 String lastname, String email, StringBuilder validationStatus) {
         boolean isValidUser = true;
-        try {
-            if (UserService.checkIsUsernameBusy(username)) {
-                validationStatus.append(ErrorMessageManager.getMessage("msg.nameExists")).append("\n");
-                isValidUser = false;
-            }
-        } catch (ServiceException e) {
-            validationStatus.append(e.getMessage());
-            logger.log(Level.ERROR, e.getMessage(), e);
-        }
         if (isNotValidUsername(username)) {
             validationStatus.append(ErrorMessageManager.getMessage("msg.notValidUsername")).append("\n");
             isValidUser = false;
@@ -49,6 +38,7 @@ public class UserValidator {
             validationStatus.append(ErrorMessageManager.getMessage("msg.notValidEmail"));
             isValidUser = false;
         }
+        logger.log(Level.INFO, "User is valid = {}", isValidUser);
         return isValidUser;
     }
 

@@ -1,7 +1,7 @@
 package com.art.orion.controller.listener;
 
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.model.pool.ConnectionPoolException;
+import com.art.orion.exception.ConnectionPoolException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

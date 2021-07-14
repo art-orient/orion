@@ -4,7 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.model.entity.Order;
 import com.art.orion.model.service.CartService;
 import com.art.orion.model.service.OrderService;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.util.ConfigManager;
 import com.art.orion.util.ErrorMessageManager;
 import jakarta.servlet.http.HttpServletRequest;

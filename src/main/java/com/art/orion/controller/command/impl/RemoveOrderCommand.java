@@ -3,7 +3,7 @@ package com.art.orion.controller.command.impl;
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.model.service.OrderService;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;

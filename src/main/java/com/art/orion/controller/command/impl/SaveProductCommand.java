@@ -8,7 +8,7 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.model.validator.ProductValidator;
 import com.art.orion.util.ConfigManager;
 

@@ -21,13 +21,15 @@ public class CommandFactory {
     public static Command defineCommand(HttpServletRequest req) {
         String action = req.getParameter(COMMAND);
         logger.log(Level.DEBUG, () -> String.format("command action = %s", action));
-        Command command = new EmptyCommand();
+        Command command;
         if (action == null || action.isEmpty()) {
+            command = new EmptyCommand();
             sendPageNotFound(req);
         } else {
             try {
-                command = TypeCommand.valueOf(action.toUpperCase()).getCommand();
+                command = CommandType.valueOf(action.toUpperCase()).getCommand();
             } catch (IllegalArgumentException e) {
+                command = new EmptyCommand();
                 logger.log(Level.ERROR, () -> String.format("Invalid action = %s", action));
                 sendPageNotFound(req);
             }

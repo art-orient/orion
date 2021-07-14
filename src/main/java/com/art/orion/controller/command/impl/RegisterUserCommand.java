@@ -4,7 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.PasswordEncryptor;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.model.validator.UserValidator;
 import com.art.orion.util.ConfigManager;
@@ -25,6 +25,11 @@ import static com.art.orion.util.Constant.REGISTRATION_STATUS;
 
 public class RegisterUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final UserService userService;
+
+    public RegisterUserCommand(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -37,15 +42,21 @@ public class RegisterUserCommand implements Command {
         UserValidator validator = new UserValidator();
         String registrationStatus;
         StringBuilder validationStatus = new StringBuilder();
-        if (validator.isValidUser(username, password, confirmPassword, firstname, lastname, email,
-                validationStatus)) {
+        boolean isUsernameBusy = false;
+        try {
+            isUsernameBusy = userService.checkIsUsernameBusy(username, validationStatus);
+        } catch (ServiceException e) {
+            logger.log(Level.ERROR, e);
+        }
+        if (validator.isValidUser(username, password, confirmPassword, firstname, lastname, email, validationStatus)
+            && !isUsernameBusy) {
             User user = new User(username, firstname, lastname, email);
             String encryptedPassword = PasswordEncryptor.encryptPassword(password);
             user.setPassword(encryptedPassword);
             setRoleForClient(user);
             user.setActive(true);
             try {
-                if (UserService.registerUser(user)) {
+                if (userService.registerUser(user)) {
                     registrationStatus = ErrorMessageManager.getMessage("msg.registrationSuccess");
                     logger.log(Level.INFO, "User registered successfully");
                 } else {
@@ -66,7 +77,7 @@ public class RegisterUserCommand implements Command {
     private void setRoleForClient(User user) {
         user.setRole(Role.CUSTOMER);
         try {
-            if (UserService.isFirstUser()) {
+            if (userService.isFirstUser()) {
                 user.setRole(Role.ADMIN);
             }
         } catch (ServiceException e) {

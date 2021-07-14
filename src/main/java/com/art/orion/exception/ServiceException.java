@@ -1,4 +1,4 @@
-package com.art.orion.model.service;
+package com.art.orion.exception;
 
 public class ServiceException extends Exception {
 

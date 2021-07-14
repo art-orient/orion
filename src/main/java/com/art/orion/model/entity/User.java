@@ -20,6 +20,17 @@ public class User {
         this.email = email;
     }
 
+    public User(String username, String password, String firstName, String lastName, String email, Role role,
+                boolean active) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -56,10 +67,6 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -77,15 +84,26 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return username.equals(user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
+
+    @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", role=" + role +
-                ", active=" + active +
-                '}';
+        return new StringBuilder("User {username = ").append(username)
+                .append(", firstName = ").append(firstName)
+                .append(", lastName = ").append(lastName)
+                .append(", email = ").append(email)
+                .append(", role = ").append(role)
+                .append(", active = ").append(active)
+                .append('}').toString();
     }
 }

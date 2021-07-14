@@ -1,5 +1,6 @@
 package com.art.orion.model.pool;
 
+import com.art.orion.exception.ConnectionPoolException;
 import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

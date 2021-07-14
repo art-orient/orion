@@ -22,15 +22,16 @@ import com.art.orion.controller.command.impl.RemoveProductCommand;
 import com.art.orion.controller.command.impl.SaleCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
 import com.art.orion.controller.command.impl.ShoesCommand;
+import com.art.orion.model.service.impl.UserServiceImpl;
 
-public enum TypeCommand {
+public enum CommandType {
     LANGUAGE(new LanguageCommand()),
     HOME(new HomeCommand()),
     REGISTRATION(new RegistrationCommand()),
-    REGISTER_USER(new RegisterUserCommand()),
+    REGISTER_USER(new RegisterUserCommand(new UserServiceImpl())),
     CHECK_REG_STATUS(new CheckRegStatusCommand()),
     LOGIN(new LoginCommand()),
-    LOGIN_USER(new LoginUserCommand()),
+    LOGIN_USER(new LoginUserCommand(new UserServiceImpl())),
     LOGOUT(new LogoutCommand()),
     PRODUCT_MANAGEMENT(new ProductManagementCommand()),
     ADD_PRODUCT_PAGE(new AddProductPageCommand()),
@@ -43,13 +44,13 @@ public enum TypeCommand {
     CLOTHING(new ClothingCommand()),
     SHOES(new ShoesCommand()),
     SALE(new SaleCommand()),
-    PROFILE(new ProfileCommand()),
+    PROFILE(new ProfileCommand(new UserServiceImpl())),
     ORDERS(new OrdersCommand()),
     REMOVE_ORDER(new RemoveOrderCommand());
 
     private final Command command;
 
-    TypeCommand(Command command) {
+    CommandType(Command command) {
         this.command = command;
     }
 

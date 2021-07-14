@@ -1,7 +1,7 @@
 package com.art.orion.model.dao.impl;
 
 import com.art.orion.controller.command.util.TextHandler;
-import com.art.orion.model.dao.OrionDatabaseException;
+import com.art.orion.exception.OrionDatabaseException;
 import com.art.orion.model.dao.ProductDao;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
@@ -9,7 +9,7 @@ import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.model.service.ServiceException;
+import com.art.orion.exception.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

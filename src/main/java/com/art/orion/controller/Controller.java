@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 
-@WebServlet("/controller")
+@WebServlet(urlPatterns = "/controller")
 @MultipartConfig(fileSizeThreshold = Controller.MB1,
                 maxFileSize = Controller.MB10,
                 maxRequestSize = Controller.MB50)

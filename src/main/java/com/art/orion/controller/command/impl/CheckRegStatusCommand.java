@@ -1,13 +1,13 @@
 package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
-import com.art.orion.util.ConfigManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.art.orion.controller.command.PagePath.REGISTRATION_PAGE;
 import static com.art.orion.util.Constant.REGISTRATION_STATUS;
 
 public class CheckRegStatusCommand implements Command {
@@ -21,6 +21,6 @@ public class CheckRegStatusCommand implements Command {
         }
         req.getSession().setAttribute(REGISTRATION_STATUS, registrationStatus);
         logger.log(Level.DEBUG, "Create registration status");
-        return ConfigManager.getProperty("page.registration");
+        return REGISTRATION_PAGE;
     }
 }
