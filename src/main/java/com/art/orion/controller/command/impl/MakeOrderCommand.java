@@ -5,7 +5,6 @@ import com.art.orion.model.entity.Order;
 import com.art.orion.model.service.CartService;
 import com.art.orion.model.service.OrderService;
 import com.art.orion.exception.ServiceException;
-import com.art.orion.util.ConfigManager;
 import com.art.orion.util.ErrorMessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.art.orion.controller.command.PagePath.CART_REDIRECT_PAGE;
+import static com.art.orion.controller.command.PagePath.CONFIRMATION_ORDER_PAGE;
 import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.ERROR;
 import static com.art.orion.util.Constant.USERNAME;
@@ -30,11 +31,11 @@ public class MakeOrderCommand implements Command {
     public String execute(HttpServletRequest req) {
         HttpSession session = req.getSession();
         Order order = createOrder(session);
-        String page = ConfigManager.getProperty("page.cartRedirect");
+        String page = CART_REDIRECT_PAGE;
         try {
             if (OrderService.addOrderToDatabase(order)) {
                 session.setAttribute(CART, new ArrayList<>());
-                page = ConfigManager.getProperty("page.confirmationOrder");
+                page = CONFIRMATION_ORDER_PAGE;
             } else {
                 String orderStatus = ErrorMessageManager.getMessage("msg.orderError");
                 req.setAttribute(ERROR, orderStatus);

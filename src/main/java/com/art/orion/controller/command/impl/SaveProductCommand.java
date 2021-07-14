@@ -10,7 +10,6 @@ import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.exception.ServiceException;
 import com.art.orion.model.validator.ProductValidator;
-import com.art.orion.util.ConfigManager;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.art.orion.controller.command.PagePath.PRODUCT_MANAGEMENT_PAGE;
 import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.BRAND;
 import static com.art.orion.util.Constant.CATEGORY;
@@ -95,6 +95,6 @@ public class SaveProductCommand implements Command {
                 logger.log(Level.ERROR, e);
             }
         }
-        return ConfigManager.getProperty("page.productManagement");
+        return PRODUCT_MANAGEMENT_PAGE;
     }
 }

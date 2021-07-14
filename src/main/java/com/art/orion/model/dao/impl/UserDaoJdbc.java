@@ -17,20 +17,20 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-import static com.art.orion.model.dao.UsersColumn.ACTIVE;
-import static com.art.orion.model.dao.UsersColumn.ACTIVE_INDEX;
-import static com.art.orion.model.dao.UsersColumn.EMAIL;
-import static com.art.orion.model.dao.UsersColumn.EMAIL_INDEX;
-import static com.art.orion.model.dao.UsersColumn.FIRSTNAME;
-import static com.art.orion.model.dao.UsersColumn.FIRSTNAME_INDEX;
-import static com.art.orion.model.dao.UsersColumn.LASTNAME;
-import static com.art.orion.model.dao.UsersColumn.LASTNAME_INDEX;
-import static com.art.orion.model.dao.UsersColumn.PASSWORD;
-import static com.art.orion.model.dao.UsersColumn.PASSWORD_INDEX;
-import static com.art.orion.model.dao.UsersColumn.ROLE;
-import static com.art.orion.model.dao.UsersColumn.ROLE_INDEX;
-import static com.art.orion.model.dao.UsersColumn.USERNAME;
-import static com.art.orion.model.dao.UsersColumn.USERNAME_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.ACTIVE;
+import static com.art.orion.model.dao.column.UsersColumn.ACTIVE_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.EMAIL;
+import static com.art.orion.model.dao.column.UsersColumn.EMAIL_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.FIRSTNAME;
+import static com.art.orion.model.dao.column.UsersColumn.FIRSTNAME_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.LASTNAME;
+import static com.art.orion.model.dao.column.UsersColumn.LASTNAME_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.PASSWORD;
+import static com.art.orion.model.dao.column.UsersColumn.PASSWORD_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.ROLE;
+import static com.art.orion.model.dao.column.UsersColumn.ROLE_INDEX;
+import static com.art.orion.model.dao.column.UsersColumn.USERNAME;
+import static com.art.orion.model.dao.column.UsersColumn.USERNAME_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
 public class UserDaoJdbc implements UserDao {

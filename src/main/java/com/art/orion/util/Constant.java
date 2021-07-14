@@ -49,6 +49,7 @@ public class Constant {
     public static final String DB_IMAGE_PATH = "image_path";
     public static final String ORDERS = "orders";
     public static final String NUMBER_ORDERS = "numberOrders";
+    public static final String ORDER_ID = "orderId";
 
     private Constant() {
     }

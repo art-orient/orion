@@ -1,4 +1,4 @@
-package com.art.orion.model.dao;
+package com.art.orion.model.dao.column;
 
 public final class UsersColumn {
     public static final String USERNAME = "username";

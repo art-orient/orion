@@ -7,7 +7,6 @@ import com.art.orion.model.entity.User;
 import com.art.orion.exception.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.model.validator.UserValidator;
-import com.art.orion.util.ConfigManager;
 import com.art.orion.util.ErrorMessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import static com.art.orion.controller.command.PagePath.CHECK_REG_STATUS_PAGE;
 import static com.art.orion.util.Constant.USERNAME;
 import static com.art.orion.util.Constant.PASSWORD;
 import static com.art.orion.util.Constant.CONFIRM_PASSWORD;
@@ -71,7 +71,7 @@ public class RegisterUserCommand implements Command {
             registrationStatus = validationStatus.toString();
         }
         req.setAttribute(REGISTRATION_STATUS, registrationStatus);
-        return ConfigManager.getProperty("page.checkRegStatus");
+        return CHECK_REG_STATUS_PAGE;
     }
 
     private void setRoleForClient(User user) {

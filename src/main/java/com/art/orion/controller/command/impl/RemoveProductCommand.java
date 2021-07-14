@@ -6,7 +6,6 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.exception.ServiceException;
-import com.art.orion.util.ConfigManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.Level;
@@ -16,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.art.orion.controller.command.PagePath.CART_REDIRECT_PAGE;
 import static com.art.orion.util.Constant.ACCESSORIES;
 import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.CATEGORY;
@@ -38,7 +38,7 @@ public class RemoveProductCommand implements Command {
         }
         String category = req.getParameter(CATEGORY);
         logger.log(Level.DEBUG, () -> String.format("Category of product is %s", category));
-        logger.log(Level.DEBUG, String.format("ID of product is %d", productId));
+        logger.log(Level.DEBUG, "ID of product is {}", productId);
         try {
             switch (category) {
                 case ACCESSORIES -> {
@@ -60,6 +60,6 @@ public class RemoveProductCommand implements Command {
         }
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> "A product removed from the cart");
-        return ConfigManager.getProperty("page.cartRedirect");
+        return CART_REDIRECT_PAGE;
     }
 }
