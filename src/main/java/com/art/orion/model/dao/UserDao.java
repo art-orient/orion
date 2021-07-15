@@ -3,13 +3,12 @@ package com.art.orion.model.dao;
 import com.art.orion.exception.OrionDatabaseException;
 import com.art.orion.model.entity.User;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
 
-    boolean createUser(User user) throws SQLException, OrionDatabaseException;
+    boolean createUser(User user) throws OrionDatabaseException;
 
     boolean checkIsUsernameBusy(String username) throws OrionDatabaseException;
 

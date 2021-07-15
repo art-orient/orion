@@ -4,7 +4,6 @@ import com.art.orion.exception.OrionDatabaseException;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.exception.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -119,7 +118,7 @@ public class ClothingJdbc {
         return new Clothing(clothingId, typeRu, typeEn, productDetails, color);
     }
 
-    public Optional<Clothing> findClothingById(int id) throws ServiceException, OrionDatabaseException {
+    public Optional<Clothing> findClothingById(int id) throws OrionDatabaseException {
         Optional<Clothing> optionalClothing;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_CLOSING_BY_ID)) {
@@ -129,7 +128,7 @@ public class ClothingJdbc {
                     Clothing clothing = createClothing(resultSet);
                     optionalClothing = Optional.of(clothing);
                 } else {
-                    throw new ServiceException(String.format("Clothing with id = %s is not found", id));
+                    throw new OrionDatabaseException(String.format("Clothing with id = %s is not found", id));
                 }
             }
             logger.log(Level.DEBUG, () -> String.format("Clothing with id = %s got from the database", id));

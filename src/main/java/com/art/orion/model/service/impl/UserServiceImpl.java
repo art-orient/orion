@@ -8,7 +8,6 @@ import com.art.orion.exception.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.util.ErrorMessageManager;
 
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public boolean registerUser(User user) throws ServiceException {
         try {
             return USER_DAO.createUser(user);
-        } catch (SQLException | OrionDatabaseException e) {
+        } catch (OrionDatabaseException e) {
             throw new ServiceException("user registration error", e);
         }
     }

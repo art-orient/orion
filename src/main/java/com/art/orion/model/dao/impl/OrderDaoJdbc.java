@@ -7,7 +7,6 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Order;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.exception.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +24,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_COST;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_DATE;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_ID;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_STATUS;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.CATEGORY_INDEX;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.COST_INDEX;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.NUMBER_PRODUCTS;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.NUMBER_PRODUCTS_INDEX;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.ORDER_ID_INDEX;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.PRODUCTS_COST;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.PRODUCT_CATEGORY;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.PRODUCT_ID;
+import static com.art.orion.model.dao.column.OrdersDetailsColumn.PRODUCT_ID_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.USERNAME;
 
@@ -34,40 +46,27 @@ public class OrderDaoJdbc implements OrderDao {
     private static final int INVALID_ID = -1;
     private static final String INSERT_ORDER = "INSERT INTO orders " +
             "(username, order_date, order_cost, confirmation_status) VALUES (?, ?, ?, ?)";
-    private static final int INSERT_ORDER_USERNAME_INDEX = 1;
-    private static final int INSERT_ORDER_DATE_INDEX = 2;
-    private static final int INSERT_ORDER_COST_INDEX = 3;
-    private static final int INSERT_ORDER_STATUS_INDEX = 4;
+    private static final int INSERT_ORDER_USERNAME = 1;
+    private static final int INSERT_ORDER_DATE = 2;
+    private static final int INSERT_ORDER_COST = 3;
+    private static final int INSERT_ORDER_STATUS = 4;
     private static final String INSERT_ORDER_DETAILS = "INSERT INTO order_details VALUES (?, ?, ?, ?, ?)";
-    private static final int INSERT_DETAILS_ORDER_ID_INDEX = 1;
-    private static final int INSERT_DETAILS_CATEGORY_INDEX = 2;
-    private static final int INSERT_DETAILS_PRODUCT_ID_INDEX = 3;
-    private static final int INSERT_DETAILS_NUMBER_PRODUCTS_INDEX = 4;
-    private static final int INSERT_DETAILS_COST_INDEX = 5;
+    private static final String SELECT_USER_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
+            "confirmation_status FROM orders WHERE username = ? LIMIT ? OFFSET ?";
+    private static final int SELECT_USER_ORDERS_USERNAME = 1;
+    private static final int SELECT_USER_ORDERS_LIMIT = 2;
+    private static final int SELECT_USER_ORDERS_OFFSET = 3;
+    private static final String SELECT_ORDER_DETAILS = "SELECT order_id, product_category, product_id, " +
+            "number_of_products, products_cost FROM order_details WHERE order_id = ?";
+    private static final String COUNT_ORDERS = "SELECT count(*) FROM orders WHERE username = ?";
+    private static final String REMOVE_ORDER_DETAILS = "DELETE FROM order_details WHERE order_id = ?";
+    private static final String REMOVE_ORDER = "DELETE FROM orders WHERE order_id = ?";
     private static final int SHOES_CATEGORY_NUMBER = 1;
     private static final int CLOTHING_CATEGORY_NUMBER = 2;
     private static final int ACCESSORIES_CATEGORY_NUMBER = 3;
-    private static final String SELECT_USER_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
-            "confirmation_status FROM orders WHERE username = ? LIMIT ? OFFSET ?";
-    private static final int SELECT_USER_ORDER_USERNAME_INDEX = 1;
-    private static final int SELECT_USER_ORDER_LIMIT_INDEX = 2;
-    private static final int SELECT_USER_ORDER_OFFSET_INDEX = 3;
-    private static final int ORDER_ORDER_ID_INDEX = 1;
-    private static final String SELECT_ORDER_DETAILS = "SELECT order_id, product_category, product_id, " +
-            "number_of_products, products_cost FROM order_details WHERE order_id = ?";
-    private static final String ORDER_DATE = "order_date";
-    private static final String ORDER_COST = "order_cost";
-    private static final String ORDER_STATUS = "confirmation_status";
-    private static final String COUNT_ORDERS = "SELECT count(*) FROM orders WHERE username = ?";
-    private static final String PRODUCT_CATEGORY = "product_category";
-    private static final String PRODUCT_ID = "product_id";
-    private static final String PRODUCTS_COST = "products_cost";
-    private static final String NUMBER_PRODUCTS = "number_of_products";
     private static final String SHOES_IMAGE_PATH_PREFIX = "images/shoes/";
     private static final String CLOTHING_IMAGE_PATH_PREFIX = "images/clothing/";
     private static final String ACCESSORIES_IMAGE_PATH_PREFIX = "images/accessories/";
-    private static final String REMOVE_ORDER_DETAILS = "DELETE FROM order_details WHERE order_id = ?";
-    private static final String REMOVE_ORDER = "DELETE FROM orders WHERE order_id = ?";
 
     private OrderDaoJdbc() {
     }
@@ -102,10 +101,10 @@ public class OrderDaoJdbc implements OrderDao {
     private int saveOrder(Connection connection, Order order) throws SQLException {
         int orderId = INVALID_ID;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
-            statement.setString(INSERT_ORDER_USERNAME_INDEX, order.getUsername());
-            statement.setDate(INSERT_ORDER_DATE_INDEX, new java.sql.Date(order.getOrderDate().getTime()));
-            statement.setBigDecimal(INSERT_ORDER_COST_INDEX, order.getOrderCost());
-            statement.setBoolean(INSERT_ORDER_STATUS_INDEX, order.isConfirmed());
+            statement.setString(INSERT_ORDER_USERNAME, order.getUsername());
+            statement.setDate(INSERT_ORDER_DATE, new java.sql.Date(order.getOrderDate().getTime()));
+            statement.setBigDecimal(INSERT_ORDER_COST, order.getOrderCost());
+            statement.setBoolean(INSERT_ORDER_STATUS, order.isConfirmed());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -122,37 +121,37 @@ public class OrderDaoJdbc implements OrderDao {
             for (Map.Entry<Object, Long> entry : order.getProductsAndQuantity().entrySet()) {
                 Object product = entry.getKey();
                 int numberProducts = entry.getValue().intValue();
-                statement.setInt(INSERT_DETAILS_ORDER_ID_INDEX, orderId);
+                statement.setInt(ORDER_ID_INDEX, orderId);
                 if (product instanceof Shoes) {
                     Shoes shoes = (Shoes) product;
-                    statement.setInt(INSERT_DETAILS_CATEGORY_INDEX, SHOES_CATEGORY_NUMBER);
-                    statement.setInt(INSERT_DETAILS_PRODUCT_ID_INDEX, shoes.getShoesId());
-                    statement.setBigDecimal(INSERT_DETAILS_COST_INDEX, shoes.getProductDetails().getCost());
+                    statement.setInt(CATEGORY_INDEX, SHOES_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, shoes.getShoesId());
+                    statement.setBigDecimal(COST_INDEX, shoes.getProductDetails().getCost());
                 } else if (product instanceof Clothing) {
                     Clothing clothing = (Clothing) product;
-                    statement.setInt(INSERT_DETAILS_CATEGORY_INDEX, CLOTHING_CATEGORY_NUMBER);
-                    statement.setInt(INSERT_DETAILS_PRODUCT_ID_INDEX, clothing.getClothingId());
-                    statement.setBigDecimal(INSERT_DETAILS_COST_INDEX, clothing.getProductDetails().getCost());
+                    statement.setInt(CATEGORY_INDEX, CLOTHING_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, clothing.getClothingId());
+                    statement.setBigDecimal(COST_INDEX, clothing.getProductDetails().getCost());
                 } else if (product instanceof Accessory) {
                     Accessory accessory = (Accessory) product;
-                    statement.setInt(INSERT_DETAILS_CATEGORY_INDEX, ACCESSORIES_CATEGORY_NUMBER);
-                    statement.setInt(INSERT_DETAILS_PRODUCT_ID_INDEX, accessory.getAccessoryId());
-                    statement.setBigDecimal(INSERT_DETAILS_COST_INDEX, accessory.getProductDetails().getCost());
+                    statement.setInt(CATEGORY_INDEX, ACCESSORIES_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, accessory.getAccessoryId());
+                    statement.setBigDecimal(COST_INDEX, accessory.getProductDetails().getCost());
                 }
-                statement.setInt(INSERT_DETAILS_NUMBER_PRODUCTS_INDEX, numberProducts);
+                statement.setInt(NUMBER_PRODUCTS_INDEX, numberProducts);
                 statement.executeUpdate();
             }
         }
     }
 
     public List<Order> findUserOrders(String username, int limit, int offset)
-            throws OrionDatabaseException, ServiceException {
+            throws OrionDatabaseException {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = connection.prepareStatement(SELECT_USER_ORDERS)) {
-            statement.setString(SELECT_USER_ORDER_USERNAME_INDEX, username);
-            statement.setInt(SELECT_USER_ORDER_LIMIT_INDEX, limit);
-            statement.setInt(SELECT_USER_ORDER_OFFSET_INDEX, offset);
+            statement.setString(SELECT_USER_ORDERS_USERNAME, username);
+            statement.setInt(SELECT_USER_ORDERS_LIMIT, limit);
+            statement.setInt(SELECT_USER_ORDERS_OFFSET, offset);
             ResultSet ordersSet = statement.executeQuery();
             while (ordersSet.next()) {
                 Order order = createOrder(connection, ordersSet);
@@ -165,14 +164,14 @@ public class OrderDaoJdbc implements OrderDao {
     }
 
     private Order createOrder(Connection connection, ResultSet ordersSet)
-            throws SQLException, OrionDatabaseException, ServiceException {
-        int orderId = ordersSet.getInt(ORDER_ORDER_ID_INDEX);
+            throws SQLException, OrionDatabaseException {
+        int orderId = ordersSet.getInt(ORDER_ID);
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ORDER_DETAILS)) {
             statement.setInt(1, orderId);
             ResultSet productSet = statement.executeQuery();
             Map<Object, Long> products = createProducts(productSet);
             String username = ordersSet.getString(USERNAME);
-            Date orderDate = new Date(ordersSet.getDate(ORDER_DATE).getTime());
+            Date orderDate = ordersSet.getDate(ORDER_DATE);
             BigDecimal cost = ordersSet.getBigDecimal(ORDER_COST);
             boolean status = ordersSet.getBoolean(ORDER_STATUS);
             return new Order(orderId, username, orderDate, products, cost, status);
@@ -180,7 +179,7 @@ public class OrderDaoJdbc implements OrderDao {
     }
 
     private Map<Object, Long> createProducts(ResultSet productSet)
-                                            throws SQLException, OrionDatabaseException, ServiceException {
+                                            throws SQLException, OrionDatabaseException {
         Map<Object, Long> products = new HashMap<>();
         Object product = null;
         while (productSet.next()) {
@@ -189,7 +188,7 @@ public class OrderDaoJdbc implements OrderDao {
             BigDecimal productCost = productSet.getBigDecimal(PRODUCTS_COST);
             Long numberProducts = (long) productSet.getInt(NUMBER_PRODUCTS);
             switch (categoryNumber) {
-                case 1 -> {
+                case SHOES_CATEGORY_NUMBER -> {
                     Optional<Shoes> optionalShoes = ShoesJdbc.getInstance().findShoesById(productId);
                     if (optionalShoes.isPresent()) {
                         Shoes shoes = optionalShoes.get();
@@ -199,7 +198,7 @@ public class OrderDaoJdbc implements OrderDao {
                         product = shoes;
                     }
                 }
-                case 2 -> {
+                case CLOTHING_CATEGORY_NUMBER -> {
                     Optional<Clothing> optionalClothing = ClothingJdbc.getInstance().findClothingById(productId);
                     if (optionalClothing.isPresent()) {
                         Clothing clothing = optionalClothing.get();
@@ -209,7 +208,7 @@ public class OrderDaoJdbc implements OrderDao {
                         product = clothing;
                     }
                 }
-                case 3 -> {
+                case ACCESSORIES_CATEGORY_NUMBER -> {
                     Optional<Accessory> optionalAccessory = AccessoryJdbc.getInstance().findAccessoryById(productId);
                     if (optionalAccessory.isPresent()) {
                         Accessory accessory = optionalAccessory.get();
@@ -219,7 +218,7 @@ public class OrderDaoJdbc implements OrderDao {
                         product = accessory;
                     }
                 }
-                default -> throw new ServiceException("Invalid number of product category");
+                default -> throw new OrionDatabaseException("Invalid number of product category");
             }
             products.put(product, numberProducts);
         }

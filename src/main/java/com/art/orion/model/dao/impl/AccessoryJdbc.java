@@ -5,7 +5,6 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.pool.ConnectionPool;
 
-import com.art.orion.exception.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -129,7 +128,7 @@ public class AccessoryJdbc {
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
 
-    public Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException {
+    public Optional<Accessory> findAccessoryById(int id) throws OrionDatabaseException {
         Optional<Accessory> optionalAccessory;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ACCESSORY_BY_ID)) {
@@ -139,7 +138,7 @@ public class AccessoryJdbc {
                     Accessory accessory = createAccessory(resultSet);
                     optionalAccessory = Optional.of(accessory);
                 } else {
-                    throw new ServiceException(String.format("Accessory with id = %s is not found", id));
+                    throw new OrionDatabaseException(String.format("Accessory with id = %s is not found", id));
                 }
             }
             logger.log(Level.DEBUG, () -> String.format("Accessory with id = %s got from the database", id));
