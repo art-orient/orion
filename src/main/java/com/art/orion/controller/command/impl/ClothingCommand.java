@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.Paginator;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
+import com.art.orion.model.entity.Role;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.exception.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
 import static com.art.orion.util.Constant.PRODUCTS;
+import static com.art.orion.util.Constant.ROLE;
 
 public class ClothingCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -32,7 +34,9 @@ public class ClothingCommand implements Command {
         logger.log(Level.DEBUG,"Go to page clothing");
         int offset = Paginator.preparePagination(req);
         try {
-            List<Clothing> clothing = productService.searchClothing(LIMIT, offset);
+            String role = (String) req.getSession().getAttribute(ROLE);
+            boolean isAdmin = Role.ADMIN.name().equals(role);
+            List<Clothing> clothing = productService.searchClothing(LIMIT, offset, isAdmin);
             req.getSession().setAttribute(PRODUCTS, clothing);
             int numberProducts = productService.countNumberProducts(ProductCategory.CLOTHING, false);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);

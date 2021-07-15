@@ -42,20 +42,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Clothing> searchClothing(int limit, int offset) throws ServiceException {
+    public List<Clothing> searchClothing(int limit, int offset, boolean isAdmin) throws ServiceException {
         try {
             logger.log(Level.DEBUG, () -> "ProductService - searching for clothing");
-            return PRODUCT_DAO.searchClothing(limit, offset);
+            return PRODUCT_DAO.searchClothing(limit, offset, isAdmin);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for clothing", e);
         }
     }
 
     @Override
-    public List<Shoes> searchShoes(int limit, int offset) throws ServiceException {
+    public List<Shoes> searchShoes(int limit, int offset, boolean isAdmin) throws ServiceException {
         try {
             logger.log(Level.DEBUG, () -> "ProductService - searching for shoes");
-            return PRODUCT_DAO.searchShoes(limit, offset);
+            return PRODUCT_DAO.searchShoes(limit, offset, isAdmin);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while searching for shoes", e);
         }

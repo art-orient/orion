@@ -55,7 +55,7 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException {
+    public void addProductToDatabase(Object product) throws OrionDatabaseException {
         if (product instanceof Accessory) {
             ACCESSORY_JDBC.addAccessoryToDatabase((Accessory) product);
         } else if (product instanceof Clothing) {
@@ -77,8 +77,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Clothing> searchClothing(int limit, int offset) throws OrionDatabaseException {
-        return CLOTHING_JDBC.searchClothing(limit, offset);
+    public List<Clothing> searchClothing(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
+        return CLOTHING_JDBC.searchClothing(limit, offset, isAdmin);
     }
 
     @Override
@@ -87,8 +87,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Shoes> searchShoes(int limit, int offset) throws OrionDatabaseException {
-        return SHOES_JDBC.searchShoes(limit, offset);
+    public List<Shoes> searchShoes(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
+        return SHOES_JDBC.searchShoes(limit, offset, isAdmin);
     }
 
     @Override

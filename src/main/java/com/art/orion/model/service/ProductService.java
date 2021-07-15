@@ -15,9 +15,9 @@ public interface ProductService {
 
     List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws ServiceException;
 
-    List<Clothing> searchClothing(int limit, int offset) throws ServiceException;
+    List<Clothing> searchClothing(int limit, int offset, boolean isAdmin) throws ServiceException;
 
-    List<Shoes> searchShoes(int limit, int offset) throws ServiceException;
+    List<Shoes> searchShoes(int limit, int offset, boolean isAdmin) throws ServiceException;
 
     Optional<Accessory> findAccessoryById(int id) throws ServiceException;
 

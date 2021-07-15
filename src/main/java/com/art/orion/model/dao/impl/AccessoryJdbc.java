@@ -19,14 +19,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.art.orion.util.Constant.ACTIVE;
-import static com.art.orion.util.Constant.BRAND;
-import static com.art.orion.util.Constant.COST;
+import static com.art.orion.model.dao.column.AccessoriesColumn.ACCESSORIES_ID;
+import static com.art.orion.model.dao.column.AccessoriesColumn.ACCESSORIES_ID_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.ACTIVE;
+import static com.art.orion.model.dao.column.AccessoriesColumn.ACTIVE_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.AVAILABILITY;
+import static com.art.orion.model.dao.column.AccessoriesColumn.AVAILABILITY_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.BRAND;
+import static com.art.orion.model.dao.column.AccessoriesColumn.BRAND_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.COST;
+import static com.art.orion.model.dao.column.AccessoriesColumn.COST_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.DESCRIPTION_EN;
+import static com.art.orion.model.dao.column.AccessoriesColumn.DESCRIPTION_EN_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.DESCRIPTION_RU;
+import static com.art.orion.model.dao.column.AccessoriesColumn.DESCRIPTION_RU_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.IMAGE_PATH;
+import static com.art.orion.model.dao.column.AccessoriesColumn.IMAGE_PATH_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.MODEL_NAME;
+import static com.art.orion.model.dao.column.AccessoriesColumn.MODEL_NAME_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_EN;
+import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_EN_INDEX;
+import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_RU;
+import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_RU_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
-import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
-import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
-import static com.art.orion.util.Constant.DB_IMAGE_PATH;
-import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class AccessoryJdbc {
     private static final Logger logger = LogManager.getLogger();
@@ -34,30 +49,24 @@ public class AccessoryJdbc {
     private static final String INSERT_ACCESSORY = "INSERT INTO accessories " +
         "(type_Ru, type_En, brand, model_name, description_RU, description_EN, image_path, cost, availability, active) " +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String GET_ACCESSORY_BY_ID = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
+    private static final String FIND_ACCESSORY_BY_ID = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
             "description_RU, description_EN, image_path, cost, availability, active " +
             "FROM accessories WHERE accessories_id = ?";
-    private static final int ACCESSORIES_ID_INDEX = 1;
-    private static final int TYPE_RU_INDEX = 2;
-    private static final int TYPE_EN_INDEX = 3;
-    private static final int AVAILABILITY_INDEX = 10;
-    private static final String SELECT_ACCESSORIES = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
-            "description_RU, description_EN, image_path, cost, availability, active " +
-            "FROM accessories WHERE active = 1 LIMIT ? OFFSET ?";
-    private static final String SELECT_ALL_ACCESSORIES = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
-            "description_RU, description_EN, image_path, cost, availability, active " +
-            "FROM accessories LIMIT ? OFFSET ?";
+    private static final String SELECT = "SELECT accessories_id, type_Ru, type_En, brand, model_name, " +
+            "description_RU, description_EN, image_path, cost, availability, active FROM accessories ";
+    private static final String SELECT_ACTIVE_ACCESSORIES = SELECT + "WHERE active = 1 LIMIT ? OFFSET ?";
+    private static final String SELECT_ALL_ACCESSORIES = SELECT + "LIMIT ? OFFSET ?";
     private static final Map<String, Integer> indices;
 
     static {
         indices = new HashMap<>();
-        indices.put(BRAND, 4);
-        indices.put(DB_MODEL_NAME, 5);
-        indices.put(DB_DESCRIPTION_RU, 6);
-        indices.put(DB_DESCRIPTION_EN, 7);
-        indices.put(DB_IMAGE_PATH, 8);
-        indices.put(COST, 9);
-        indices.put(ACTIVE, 11);
+        indices.put(BRAND, BRAND_INDEX);
+        indices.put(MODEL_NAME, MODEL_NAME_INDEX);
+        indices.put(DESCRIPTION_RU, DESCRIPTION_RU_INDEX);
+        indices.put(DESCRIPTION_EN, DESCRIPTION_EN_INDEX);
+        indices.put(IMAGE_PATH, IMAGE_PATH_INDEX);
+        indices.put(COST, COST_INDEX);
+        indices.put(ACTIVE, ACTIVE_INDEX);
     }
 
     private AccessoryJdbc() {
@@ -67,38 +76,24 @@ public class AccessoryJdbc {
         return INSTANCE;
     }
 
-    public void addAccessoryToDatabase(Accessory accessory) throws SQLException, OrionDatabaseException {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = ConnectionPool.INSTANCE.getConnection();
-            connection.setAutoCommit(false);
-            statement = connection.prepareStatement(INSERT_ACCESSORY);
+    public void addAccessoryToDatabase(Accessory accessory) throws OrionDatabaseException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_ACCESSORY)){
             statement.setString(TYPE_RU_INDEX - 1, accessory.getTypeRu());
             statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());
             ProductDetails productDetails = accessory.getProductDetails();
             ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
             statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
             statement.executeUpdate();
-            connection.commit();
             logger.log(Level.INFO, () -> "The accessory is saved in the database");
         } catch (SQLException e) {
-            connection.rollback();
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
-        } finally {
-            if (statement != null) {
-                statement.close();
-            }
-            if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
-            }
         }
     }
 
     public List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
         List<Accessory> accessories = new ArrayList<>();
-        String query = SELECT_ACCESSORIES;
+        String query = SELECT_ACTIVE_ACCESSORIES;
         if (isAdmin) {
             query = SELECT_ALL_ACCESSORIES;
         }
@@ -108,7 +103,8 @@ public class AccessoryJdbc {
             statement.setInt(2, offset);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    accessories.add(createAccessory(resultSet));
+                    Accessory accessory = createAccessory(resultSet);
+                    accessories.add(accessory);
                 }
             }
             logger.log(Level.INFO, () -> "Accessory search completed successfully");
@@ -118,21 +114,11 @@ public class AccessoryJdbc {
         return accessories;
     }
 
-    private Accessory createAccessory(ResultSet resultSet) throws SQLException, OrionDatabaseException {
-        int accessoryId = resultSet.getInt(ACCESSORIES_ID_INDEX);
-        String typeRu = resultSet.getString(TYPE_RU_INDEX);
-        String typeEn = resultSet.getString(TYPE_EN_INDEX);
-        ProductDetails productDetails = ProductDaoJdbc.createProductDetails(resultSet);
-        int availability = resultSet.getInt(AVAILABILITY_INDEX);
-        logger.log(Level.DEBUG, () -> "Accessory creation completed successfully");
-        return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
-    }
-
     public Optional<Accessory> findAccessoryById(int id) throws OrionDatabaseException {
         Optional<Accessory> optionalAccessory;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(GET_ACCESSORY_BY_ID)) {
-            statement.setInt(1, id);
+             PreparedStatement statement = connection.prepareStatement(FIND_ACCESSORY_BY_ID)) {
+            statement.setInt(ACCESSORIES_ID_INDEX, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Accessory accessory = createAccessory(resultSet);
@@ -146,5 +132,15 @@ public class AccessoryJdbc {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return optionalAccessory;
+    }
+
+    private Accessory createAccessory(ResultSet resultSet) throws SQLException, OrionDatabaseException {
+        int accessoryId = resultSet.getInt(ACCESSORIES_ID);
+        String typeRu = resultSet.getString(TYPE_RU);
+        String typeEn = resultSet.getString(TYPE_EN);
+        ProductDetails productDetails = ProductDaoJdbc.createProductDetails(resultSet);
+        int availability = resultSet.getInt(AVAILABILITY);
+        logger.log(Level.DEBUG, () -> "Accessory creation completed successfully");
+        return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
 }
