@@ -22,6 +22,9 @@ import com.art.orion.controller.command.impl.RemoveProductCommand;
 import com.art.orion.controller.command.impl.SaleCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
 import com.art.orion.controller.command.impl.ShoesCommand;
+import com.art.orion.model.service.impl.CartServiceImpl;
+import com.art.orion.model.service.impl.OrderServiceImpl;
+import com.art.orion.model.service.impl.ProductServiceImpl;
 import com.art.orion.model.service.impl.UserServiceImpl;
 
 public enum CommandType {
@@ -35,18 +38,18 @@ public enum CommandType {
     LOGOUT(new LogoutCommand()),
     PRODUCT_MANAGEMENT(new ProductManagementCommand()),
     ADD_PRODUCT_PAGE(new AddProductPageCommand()),
-    SAVE_PRODUCT(new SaveProductCommand()),
-    ACCESSORIES(new AccessoriesCommand()),
-    ADD_PRODUCT(new AddProductCommand()),
-    CART(new CartCommand()),
-    REMOVE_PRODUCT(new RemoveProductCommand()),
-    MAKE_ORDER(new MakeOrderCommand()),
-    CLOTHING(new ClothingCommand()),
-    SHOES(new ShoesCommand()),
+    SAVE_PRODUCT(new SaveProductCommand(new ProductServiceImpl())),
+    ACCESSORIES(new AccessoriesCommand(new ProductServiceImpl())),
+    ADD_PRODUCT(new AddProductCommand(new ProductServiceImpl())),
+    CART(new CartCommand(new CartServiceImpl())),
+    REMOVE_PRODUCT(new RemoveProductCommand(new ProductServiceImpl())),
+    MAKE_ORDER(new MakeOrderCommand(new OrderServiceImpl(), new CartServiceImpl())),
+    CLOTHING(new ClothingCommand(new ProductServiceImpl())),
+    SHOES(new ShoesCommand(new ProductServiceImpl())),
     SALE(new SaleCommand()),
     PROFILE(new ProfileCommand(new UserServiceImpl())),
-    ORDERS(new OrdersCommand()),
-    REMOVE_ORDER(new RemoveOrderCommand());
+    ORDERS(new OrdersCommand(new OrderServiceImpl())),
+    REMOVE_ORDER(new RemoveOrderCommand(new OrderServiceImpl()));
 
     private final Command command;
 

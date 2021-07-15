@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.art.orion.controller.command.PagePath.ACCESSORIES_REDIRECT_PAGE;
 import static com.art.orion.controller.command.PagePath.CLOTHING_REDIRECT_PAGE;
@@ -28,6 +29,11 @@ import static com.art.orion.util.Constant.SHOES;
 
 public class AddProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final ProductService productService;
+
+    public AddProductCommand(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -46,22 +52,25 @@ public class AddProductCommand implements Command {
         try {
             switch (category) {
                 case ACCESSORIES -> {
-                        Accessory accessory = ProductService.getAccessoryById(id);
-                        if (accessory != null) {
+                        Optional<Accessory> optionalAccessory = productService.findAccessoryById(id);
+                        if (optionalAccessory.isPresent()) {
+                            Accessory accessory = optionalAccessory.get();
                             cart.add(accessory);
                             page = ACCESSORIES_REDIRECT_PAGE;
                         }
                 }
                 case CLOTHING -> {
-                    Clothing clothing = ProductService.getClothingById(id);
-                    if (clothing != null) {
+                    Optional<Clothing> optionalClothing = productService.findClothingById(id);
+                    if (optionalClothing.isPresent()) {
+                        Clothing clothing = optionalClothing.get();
                         cart.add(clothing);
                         page = CLOTHING_REDIRECT_PAGE;
                     }
                 }
                 case SHOES -> {
-                    Shoes shoes = ProductService.getShoesById(id);
-                    if (shoes != null) {
+                    Optional<Shoes> optionalShoes = productService.findShoesById(id);
+                    if (optionalShoes.isPresent()) {
+                        Shoes shoes = optionalShoes.get();
                         cart.add(shoes);
                         page = SHOES_REDIRECT_PAGE;
                     }

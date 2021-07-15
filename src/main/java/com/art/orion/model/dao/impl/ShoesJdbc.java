@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
@@ -119,14 +120,15 @@ public class ShoesJdbc {
         return new Shoes(shoesId, typeRu, typeEn, productDetails, color);
     }
 
-    public Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException {
-        Shoes shoes;
+    public Optional<Shoes> findShoesById(int id) throws ServiceException, OrionDatabaseException {
+        Optional<Shoes> optionalShoes;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_SHOES_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    shoes = createShoes(resultSet);
+                    Shoes shoes = createShoes(resultSet);
+                    optionalShoes = Optional.of(shoes);
                 } else {
                     throw new ServiceException(String.format("Shoes with id = %s is not found", id));
                 }
@@ -135,6 +137,6 @@ public class ShoesJdbc {
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
-        return shoes;
+        return optionalShoes;
     }
 }

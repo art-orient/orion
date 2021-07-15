@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkIsUsernameBusy(String username, StringBuilder validationStatus) throws ServiceException {
-        boolean isUsernameBusy = false;
+        boolean isUsernameBusy;
         try {
             isUsernameBusy = USER_DAO.checkIsUsernameBusy(username);
         } catch (OrionDatabaseException e) {
@@ -28,14 +28,6 @@ public class UserServiceImpl implements UserService {
         }
         return isUsernameBusy;
     }
-
-//                if (userService.checkIsUsernameBusy(username)) {
-//                validationStatus.append(ErrorMessageManager.getMessage("msg.nameExists")).append("\n");
-//                isValidUser = false;
-//                }
-//                } catch (ServiceException e) {
-//                validationStatus.append(e.getMessage());
-//                logger.log(Level.ERROR, e.getMessage(), e);
 
     public boolean isFirstUser() throws ServiceException {
         try {

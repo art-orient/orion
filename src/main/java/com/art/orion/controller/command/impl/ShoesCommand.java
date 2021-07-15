@@ -21,15 +21,20 @@ import static com.art.orion.util.Constant.PRODUCTS;
 
 public class ShoesCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final ProductService productService;
+
+    public ShoesCommand(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page shoes");
         int offset = Paginator.preparePagination(req);
         try {
-            List<Shoes> products = ProductService.searchShoes(LIMIT, offset);
+            List<Shoes> products = productService.searchShoes(LIMIT, offset);
             req.getSession().setAttribute(PRODUCTS, products);
-            int numberProducts = ProductService.countNumberProducts(ProductCategory.SHOES, false);
+            int numberProducts = productService.countNumberProducts(ProductCategory.SHOES, false);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);
             int numberPages = Paginator.findNumberPages(numberProducts);
             req.setAttribute(NUMBER_PAGES, numberPages);

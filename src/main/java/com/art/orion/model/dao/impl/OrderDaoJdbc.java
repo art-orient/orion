@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.USERNAME;
@@ -144,7 +145,7 @@ public class OrderDaoJdbc implements OrderDao {
         }
     }
 
-    public List<Order> getUserOrders(String username, int limit, int offset)
+    public List<Order> findUserOrders(String username, int limit, int offset)
             throws OrionDatabaseException, ServiceException {
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -181,7 +182,7 @@ public class OrderDaoJdbc implements OrderDao {
     private Map<Object, Long> createProducts(ResultSet productSet)
                                             throws SQLException, OrionDatabaseException, ServiceException {
         Map<Object, Long> products = new HashMap<>();
-        Object product;
+        Object product = null;
         while (productSet.next()) {
             int categoryNumber = productSet.getInt(PRODUCT_CATEGORY);
             int productId = productSet.getInt(PRODUCT_ID);
@@ -189,25 +190,34 @@ public class OrderDaoJdbc implements OrderDao {
             Long numberProducts = (long) productSet.getInt(NUMBER_PRODUCTS);
             switch (categoryNumber) {
                 case 1 -> {
-                    Shoes shoes = ShoesJdbc.getInstance().getShoesById(productId);
-                    String imagePath = shoes.getProductDetails().getImgPath();
-                    shoes.getProductDetails().setImgPath(SHOES_IMAGE_PATH_PREFIX + imagePath);
-                    shoes.getProductDetails().setCost(productCost);
-                    product = shoes;
+                    Optional<Shoes> optionalShoes = ShoesJdbc.getInstance().findShoesById(productId);
+                    if (optionalShoes.isPresent()) {
+                        Shoes shoes = optionalShoes.get();
+                        String imagePath = shoes.getProductDetails().getImgPath();
+                        shoes.getProductDetails().setImgPath(SHOES_IMAGE_PATH_PREFIX + imagePath);
+                        shoes.getProductDetails().setCost(productCost);
+                        product = shoes;
+                    }
                 }
                 case 2 -> {
-                    Clothing clothing = ClothingJdbc.getInstance().getClothingById(productId);
-                    String imagePath = clothing.getProductDetails().getImgPath();
-                    clothing.getProductDetails().setImgPath(CLOTHING_IMAGE_PATH_PREFIX + imagePath);
-                    clothing.getProductDetails().setCost(productCost);
-                    product = clothing;
+                    Optional<Clothing> optionalClothing = ClothingJdbc.getInstance().findClothingById(productId);
+                    if (optionalClothing.isPresent()) {
+                        Clothing clothing = optionalClothing.get();
+                        String imagePath = clothing.getProductDetails().getImgPath();
+                        clothing.getProductDetails().setImgPath(CLOTHING_IMAGE_PATH_PREFIX + imagePath);
+                        clothing.getProductDetails().setCost(productCost);
+                        product = clothing;
+                    }
                 }
                 case 3 -> {
-                    Accessory accessory = AccessoryJdbc.getInstance().getAccessoryById(productId);
-                    String imagePath = accessory.getProductDetails().getImgPath();
-                    accessory.getProductDetails().setImgPath(ACCESSORIES_IMAGE_PATH_PREFIX + imagePath);
-                    accessory.getProductDetails().setCost(productCost);
-                    product = accessory;
+                    Optional<Accessory> optionalAccessory = AccessoryJdbc.getInstance().findAccessoryById(productId);
+                    if (optionalAccessory.isPresent()) {
+                        Accessory accessory = optionalAccessory.get();
+                        String imagePath = accessory.getProductDetails().getImgPath();
+                        accessory.getProductDetails().setImgPath(ACCESSORIES_IMAGE_PATH_PREFIX + imagePath);
+                        accessory.getProductDetails().setCost(productCost);
+                        product = accessory;
+                    }
                 }
                 default -> throw new ServiceException("Invalid number of product category");
             }

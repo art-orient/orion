@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.art.orion.controller.command.PagePath.CART_REDIRECT_PAGE;
 import static com.art.orion.util.Constant.ACCESSORIES;
@@ -25,6 +26,11 @@ import static com.art.orion.util.Constant.SHOES;
 
 public class RemoveProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final ProductService productService;
+
+    public RemoveProductCommand(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -42,16 +48,25 @@ public class RemoveProductCommand implements Command {
         try {
             switch (category) {
                 case ACCESSORIES -> {
-                    Accessory accessory = ProductService.getAccessoryById(productId);
-                    cart.remove(accessory);
+                    Optional<Accessory> optionalAccessory = productService.findAccessoryById(productId);
+                    if (optionalAccessory.isPresent()) {
+                        Accessory accessory = optionalAccessory.get();
+                        cart.remove(accessory);
+                    }
                 }
                 case CLOTHING -> {
-                    Clothing clothing = ProductService.getClothingById(productId);
-                    cart.remove(clothing);
+                    Optional<Clothing> optionalClothing = productService.findClothingById(productId);
+                    if (optionalClothing.isPresent()) {
+                        Clothing clothing = optionalClothing.get();
+                        cart.remove(clothing);
+                    }
                 }
                 case SHOES -> {
-                    Shoes shoes = ProductService.getShoesById(productId);
-                    cart.remove(shoes);
+                    Optional<Shoes> optionalShoes = productService.findShoesById(productId);
+                    if (optionalShoes.isPresent()) {
+                        Shoes shoes = optionalShoes.get();
+                        cart.remove(shoes);
+                    }
                 }
                 default -> logger.log(Level.WARN, () -> String.format("Invalid category - %s", category));
             }

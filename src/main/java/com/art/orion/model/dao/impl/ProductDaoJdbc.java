@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
@@ -35,6 +36,7 @@ import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
+    private static final ProductDaoJdbc INSTANCE = new ProductDaoJdbc();
     private static final AccessoryJdbc ACCESSORY_JDBC = AccessoryJdbc.getInstance();
     private static final ClothingJdbc CLOTHING_JDBC = ClothingJdbc.getInstance();
     private static final ShoesJdbc SHOES_JDBC = ShoesJdbc.getInstance();
@@ -44,6 +46,13 @@ public class ProductDaoJdbc implements ProductDao {
     private static final String COUNT_ALL_ACCESSORIES = "SELECT count(*) FROM accessories";
     private static final String COUNT_ALL_CLOTHING = "SELECT count(*) FROM clothing";
     private static final String COUNT_ALL_SHOES = "SELECT count(*) FROM shoes";
+
+    private ProductDaoJdbc() {
+    }
+
+    public static ProductDaoJdbc getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     public void addProductToDatabase(Object product) throws SQLException, OrionDatabaseException {
@@ -63,8 +72,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException {
-        return ACCESSORY_JDBC.getAccessoryById(id);
+    public Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException {
+        return ACCESSORY_JDBC.findAccessoryById(id);
     }
 
     @Override
@@ -73,8 +82,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Clothing getClothingById(int id) throws ServiceException, OrionDatabaseException {
-        return CLOTHING_JDBC.getClothingById(id);
+    public Optional<Clothing> findClothingById(int id) throws ServiceException, OrionDatabaseException {
+        return CLOTHING_JDBC.findClothingById(id);
     }
 
     @Override
@@ -83,8 +92,8 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException {
-        return SHOES_JDBC.getShoesById(id);
+    public Optional<Shoes> findShoesById(int id) throws ServiceException, OrionDatabaseException {
+        return SHOES_JDBC.findShoesById(id);
     }
 
     public int countNumberProducts(ProductCategory productCategory, boolean isAdmin)

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.art.orion.util.Constant.ACTIVE;
 import static com.art.orion.util.Constant.BRAND;
@@ -128,14 +129,15 @@ public class AccessoryJdbc {
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
 
-    public Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException {
-        Accessory accessory;
+    public Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException {
+        Optional<Accessory> optionalAccessory;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ACCESSORY_BY_ID)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    accessory = createAccessory(resultSet);
+                    Accessory accessory = createAccessory(resultSet);
+                    optionalAccessory = Optional.of(accessory);
                 } else {
                     throw new ServiceException(String.format("Accessory with id = %s is not found", id));
                 }
@@ -144,6 +146,6 @@ public class AccessoryJdbc {
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
-        return accessory;
+        return optionalAccessory;
     }
 }

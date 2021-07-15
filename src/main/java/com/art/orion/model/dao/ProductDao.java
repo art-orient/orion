@@ -9,6 +9,7 @@ import com.art.orion.exception.ServiceException;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductDao {
 
@@ -20,11 +21,11 @@ public interface ProductDao {
 
     List<Shoes> searchShoes(int limit, int offset) throws OrionDatabaseException;
 
-    Accessory getAccessoryById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException;
 
-    Clothing getClothingById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Clothing> findClothingById(int id) throws ServiceException, OrionDatabaseException;
 
-    Shoes getShoesById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Shoes> findShoesById(int id) throws ServiceException, OrionDatabaseException;
 
     int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException, OrionDatabaseException;
 }

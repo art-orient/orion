@@ -14,12 +14,16 @@ import static com.art.orion.util.Constant.ORDER_ID;
 
 public class RemoveOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final OrderService orderService;
 
+    public RemoveOrderCommand(OrderService orderService) {
+        this.orderService = orderService;
+    }
     @Override
     public String execute(HttpServletRequest req) {
         int orderId = RequestParseNumberHelper.getInt(req, ORDER_ID);
         try {
-           OrderService.removeOrderById(orderId);
+            orderService.removeOrderById(orderId);
         } catch (ServiceException e) {
             logger.log(Level.ERROR,e);
         }

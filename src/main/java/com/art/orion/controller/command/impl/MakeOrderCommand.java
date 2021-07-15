@@ -26,6 +26,13 @@ import static com.art.orion.util.Constant.USERNAME;
 
 public class MakeOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final OrderService orderService;
+    private final CartService cartService;
+
+    public MakeOrderCommand(OrderService orderService, CartService cartService) {
+        this.orderService = orderService;
+        this.cartService = cartService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -33,7 +40,7 @@ public class MakeOrderCommand implements Command {
         Order order = createOrder(session);
         String page = CART_REDIRECT_PAGE;
         try {
-            if (OrderService.addOrderToDatabase(order)) {
+            if (orderService.addOrderToDatabase(order)) {
                 session.setAttribute(CART, new ArrayList<>());
                 page = CONFIRMATION_ORDER_PAGE;
             } else {
@@ -51,8 +58,8 @@ public class MakeOrderCommand implements Command {
         String username = (String) session.getAttribute(USERNAME);
         List<Object> cart = (ArrayList<Object>) session.getAttribute(CART);
         Date date = new Date();
-        Map<Object, Long> products = CartService.groupProducts(cart);
-        BigDecimal totalCost = CartService.findTotalCost(cart);
+        Map<Object, Long> products = cartService.groupProducts(cart);
+        BigDecimal totalCost = cartService.findTotalCost(cart);
         return new Order(username, date, products, totalCost);
     }
 }

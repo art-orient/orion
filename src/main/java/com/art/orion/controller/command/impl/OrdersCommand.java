@@ -23,6 +23,11 @@ import static com.art.orion.util.Constant.USERNAME;
 
 public class OrdersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final OrderService orderService;
+
+    public OrdersCommand(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -30,9 +35,9 @@ public class OrdersCommand implements Command {
         String page = ORDERS_PAGE;
         int offset = Paginator.preparePagination(req);
         try {
-            List<Order> orders = OrderService.getUserOrders(username, LIMIT, offset);
+            List<Order> orders = orderService.findUserOrders(username, LIMIT, offset);
             req.setAttribute(ORDERS, orders);
-            int numberOrders = OrderService.countNumberOrders(username);
+            int numberOrders = orderService.countNumberOrders(username);
             req.setAttribute(NUMBER_ORDERS, numberOrders);
             int numberPages = Paginator.findNumberPages(numberOrders);
             req.setAttribute(NUMBER_PAGES, numberPages);

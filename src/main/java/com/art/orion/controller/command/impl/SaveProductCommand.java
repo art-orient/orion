@@ -38,6 +38,11 @@ import static com.art.orion.util.Constant.TYPE_EN;
 
 public class SaveProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final ProductService productService;
+
+    public SaveProductCommand(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -90,7 +95,7 @@ public class SaveProductCommand implements Command {
         }
         if (product != null) {
             try {
-                ProductService.addProductToDatabase(product);
+                productService.addProductToDatabase(product);
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, e);
             }

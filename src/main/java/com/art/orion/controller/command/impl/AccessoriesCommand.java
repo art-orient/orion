@@ -24,6 +24,11 @@ import java.util.List;
 
 public class AccessoriesCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final ProductService productService;
+
+    public AccessoriesCommand(ProductService productService) {
+        this.productService = productService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
@@ -32,9 +37,9 @@ public class AccessoriesCommand implements Command {
         try {
             String role = (String) req.getSession().getAttribute(ROLE);
             boolean isAdmin = Role.ADMIN.name().equals(role);
-            List<Accessory> accessories = ProductService.searchAccessories(LIMIT, offset, isAdmin);
+            List<Accessory> accessories = productService.searchAccessories(LIMIT, offset, isAdmin);
             req.getSession().setAttribute(PRODUCTS, accessories);
-            int numberProducts = ProductService.countNumberProducts(ProductCategory.ACCESSORIES, isAdmin);
+            int numberProducts = productService.countNumberProducts(ProductCategory.ACCESSORIES, isAdmin);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);
             int numberPages = Paginator.findNumberPages(numberProducts);
             req.setAttribute(NUMBER_PAGES, numberPages);

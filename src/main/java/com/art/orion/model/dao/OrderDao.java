@@ -11,7 +11,7 @@ public interface OrderDao {
 
     int addOrderToDatabase(Order order) throws SQLException, OrionDatabaseException;
 
-    List<Order> getUserOrders(String username, int limit, int offset)
+    List<Order> findUserOrders(String username, int limit, int offset)
                                 throws OrionDatabaseException, ServiceException;
 
     int countNumberOrders(String username) throws OrionDatabaseException;

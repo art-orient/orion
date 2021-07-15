@@ -21,14 +21,19 @@ import static com.art.orion.util.Constant.TOTAL_COST;
 
 public class CartCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
+    private final CartService cartService;
+
+    public CartCommand(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @Override
     public String execute(HttpServletRequest req) {
         List<Object> products = (ArrayList<Object>) req.getSession().getAttribute(CART);
         if (products != null) {
-            Map<Object, Long> groupedProducts = CartService.groupProducts(products);
+            Map<Object, Long> groupedProducts = cartService.groupProducts(products);
             req.setAttribute(GROUPED_CART, new ArrayList<>(groupedProducts.entrySet()));
-            BigDecimal totalCost = CartService.findTotalCost(products);
+            BigDecimal totalCost = cartService.findTotalCost(products);
             req.setAttribute(TOTAL_COST, totalCost);
             req.setAttribute(NUMBER, products.size());
             req.setAttribute(ERROR, req.getParameter(ERROR));
