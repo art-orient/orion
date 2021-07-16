@@ -79,7 +79,7 @@
                     </td>
                     <td width="8%">
                         <form method="get" action="controller">
-                            <input type="hidden" name="product" value="${product.accessoryId}">
+                            <input type="hidden" name="productId" value="${product.accessoryId}">
                             <input type="hidden" name="category" value="accessories">
                             <input type="hidden" name="page" value="${page}"/>
                             <input type="hidden" name="command" value="edit_product">

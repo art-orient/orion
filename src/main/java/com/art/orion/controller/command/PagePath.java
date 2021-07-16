@@ -27,6 +27,7 @@ public class PagePath {
     public static final String ORDERS_PAGE = "jsp/orders.jsp";
     public static final String ORDERS_REDIRECT_PAGE = "jsp/ordersRedirect.jsp";
     public static final String CONFIRMATION_ORDER_PAGE = "jsp/confirmationOrder.jsp";
+    public static final String EDIT_PRODUCT_PAGE = "jsp/editProduct.jsp";
 
     private PagePath() {
     }

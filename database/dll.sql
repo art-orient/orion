@@ -56,7 +56,7 @@ VALUES (3, 'Поясная сумка для бега', 'Running belt bag', 'Asi
 
 Основа сумки из прочной объемной ткани-сетки рипстоп с отличным воздухообменом. Ремень с замком на карабине можно регулировать по объему талии. Светоотражающие элементы для безопасных тренировок в темное время суток.', 'A belt bag that allows you to take your phone, gels, keys and other important things with you for a run. The main compartment closes with a zipper. Front side pocket made of elastic stretch fabric, ideal for storing jersey running accessories such as bandage, buff, sleeves.
 
-The base of the bag is made of durable ripstop mesh fabric with excellent breathability. The carabiner strap can be adjusted to fit the waist. Reflective elements for safe workouts in the dark. ', 'Asics_WAIST_POUCH.jpg', 39.00, 3, 1);
+The base of the bag is made of durable ripstop mesh fabric with excellent breathability. The carabiner strap can be adjusted to fit the waist. Reflective elements for safe workouts in the dark. ', 'Asics_WAIST_POUCH.jpg', 39.00, 3, 0);
 
 INSERT INTO accessories
 VALUES (4, 'Бейсболка', 'Baseball cap', 'Asics', 'Lightweight Running Cap', 'БЕЙСБОЛКА ASICS УНИСЕКС
@@ -105,7 +105,7 @@ Mesh side pockets
 Backpack strap pocket
 Zip pocket with belt closure
 Reflective elements to increase the level of safety of movement in the dark
-Width (W) 23cm x Height (H) 44cm', 'Asics_Lightweight_Running_Backpack.jpg', 124.00, 5, 1);
+Width (W) 23cm x Height (H) 44cm', 'Asics_Lightweight_Running_Backpack.jpg', 124.00, 5, 0);
 
 INSERT INTO accessories
 VALUES (7, 'Козырек', 'Visor', 'Salomon', 'SENSE VISOR PAPAYA',
@@ -361,7 +361,7 @@ Gloves cuffs
 Reflective elements
 1 chest pocket
 Method of drawing a picture - laser printing',
- 'Noname_Running_Jacket_Pro_Talwind.jpeg', 'green', 124.00, 1);
+ 'Noname_Running_Jacket_Pro_Talwind.jpeg', 'green', 124.00, 0);
 
 INSERT INTO clothing
 VALUES (5, 'Олимпийка', 'Olympian', 'Asics', 'Tokyo Warm Up Jacket', 'МУЖСКАЯ ОЛИМПИЙКА ASICS
@@ -395,7 +395,7 @@ VALUES (6, 'Шорты мужские', 'Men`s Shorts', 'Asics', 'Silver Split S
 Lightweight material with moisture wicking properties
 
 Elastic waist with drawcord for size adjustment',
- 'Asics_Silver_Split_Short_grey.jpg', 'grey', 74.00, 1);
+ 'Asics_Silver_Split_Short_grey.jpg', 'grey', 74.00, 0);
 
 INSERT INTO clothing
 VALUES (7, 'Шорты мужские', 'Men`s Shorts', 'Mizuno', 'Premium Jpn Split Short blue', 'МУЖСКИЕ БЕГОВЫЕ ШОРТЫ MIZUNO
@@ -544,8 +544,6 @@ Reflective elements for increased driving safety at night',
 INSERT INTO clothing
 VALUES (11, 'Шорты женские', 'Women`s shorts', 'Asics', 'Silver Split Short', 'Женские беговые шорты Asics Silver Split Short
 
-
-
 100% полиэстер
 
 Легкий материал с влаговыводящими свойствами
@@ -553,14 +551,11 @@ VALUES (11, 'Шорты женские', 'Women`s shorts', 'Asics', 'Silver Spli
 Эластичный пояс со шнурком для регулировки размера',
  'Women`s Running Shorts Asics Silver Split Short
 
-
-
 100% Polyester
 
 Lightweight material with moisture wicking properties
 
-Elastic waist with drawcord for size adjustment
-',
+Elastic waist with drawcord for size adjustment',
  'Asics_Silver_Split_Short.jpg', 'black', 64.00, 1);
 
 INSERT INTO shoes
@@ -695,7 +690,7 @@ FlyteFoam midsole for extra cushioning
 Asics Heel Gel reduces stress on the athlete`s spine, heels and knees
 
 Rubber outsole with tread for secure traction',
- 'Asics_Gel-Noosa_Tri_12_Blue.jpg', 'blue', 274.00, 1);
+ 'Asics_Gel-Noosa_Tri_12_Blue.jpg', 'blue', 274.00, 0);
 
 INSERT INTO shoes
 VALUES (5, 'Кроссовки для бега мужские', 'Running shoes for men', 'Asics', 'GT-2000 9 black/blue', 'Беговые кроссовки Asics Gt 2000 9 - легкая, стабилизирующая и с отличной амортизацией обувь для бегунов всех уровней, от любителей до профессионалов. Облегченная средняя часть подошвы с технологией FlyteFoam обеспечивает мягкое приземление после каждого шага. Обновленная технология Asics Gel и более мягкая секция в области пятки для повышения комфорта и амортизации.
@@ -765,3 +760,46 @@ PWRRUN cushioning maintains lightweight responsiveness, making this shoe a favor
 The extra ground contact adds power to the agile ride, making the transition from touchdown to takeoff even faster.
 Lightweight printing gives the breathable, adaptable mesh upper enough structure to feel secure without weighing you down.',
  'Saucony_Kinvara_12_Future-Black.jpg', 'black', 324.00, 1);
+
+
+INSERT INTO orders VALUES (1, 'admin', '2021-07-12', 179.00, 0);
+INSERT INTO orders VALUES (2, 'admin', '2021-07-12', 551.00, 0);
+INSERT INTO orders VALUES (3, 'admin', '2021-07-12', 158.00, 0);
+INSERT INTO orders VALUES (4, 'natarti', '2021-07-12', 403.00, 0);
+INSERT INTO orders VALUES (5, 'admin', '2021-07-13', 328.00, 1);
+INSERT INTO orders VALUES (6, 'admin', '2021-07-13', 134.00, 0);
+INSERT INTO orders VALUES (7, 'admin', '2021-07-13', 403.00, 0);
+INSERT INTO orders VALUES (8, 'admin', '2021-07-14', 358.00, 0);
+INSERT INTO orders VALUES (9, 'admin', '2021-07-14', 138.00, 1);
+INSERT INTO orders VALUES (10, 'natarti', '2021-07-14', 243.00, 0);
+INSERT INTO orders VALUES (11, 'admin', '2021-07-15', 39.00, 0);
+INSERT INTO orders VALUES (12, 'admin', '2021-07-15', 268.00, 0);
+INSERT INTO orders VALUES (13, 'lesha', '2021-07-16', 591.00, 0);
+
+INSERT INTO order_details
+VALUES (1, 2, 1, 1, 179.00),
+        (2, 1, 5, 1, 269.00),
+        (2, 2, 5, 1, 144.00),
+        (2, 3, 5, 2, 69.00),
+        (3, 3, 1, 1, 99.00),
+        (3, 3, 13, 1, 59.00),
+        (4, 1, 6, 1, 324.00),
+        (4, 3, 22, 1, 79.00),
+        (5, 1, 4, 1, 274.00),
+        (5, 3, 4, 1, 54.00),
+        (6, 2, 3, 1, 134.00),
+        (7, 2, 7, 1, 89.00),
+        (7, 2, 9, 1, 314.00),
+        (8, 1, 5, 1, 269.00),
+        (8, 2, 8, 1, 89.00),
+        (9, 2, 11, 1, 64.00),
+        (9, 3, 15, 1, 74.00),
+        (10, 1, 2, 1, 119.00),
+        (10, 3, 6, 1, 124.00),
+        (11, 3, 3, 1, 39.00),
+        (12, 2, 4, 1, 124.00),
+        (12, 2, 5, 1, 144.00),
+        (13, 1, 5, 1, 269.00),
+        (13, 2, 3, 1, 134.00),
+        (13, 2, 7, 1, 89.00),
+        (13, 3, 1, 1, 99.00);

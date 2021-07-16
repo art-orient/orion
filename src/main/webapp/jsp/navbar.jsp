@@ -96,7 +96,7 @@
         <td>
             <form action="controller" method="get">
                 <input type="hidden" name="command" value="product_management"/>
-                <input type="submit" value='<fmt:message key="ui.productManagement"/>'/>
+                <input type="submit" value='<fmt:message key="ui.addProduct"/>'/>
             </form>
         </td>
         <td>

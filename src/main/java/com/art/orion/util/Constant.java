@@ -43,13 +43,10 @@ public class Constant {
     public static final String SHOES = "shoes";
     public static final String USER = "user";
     public static final String DATABASE_EXCEPTION = "database exception";
-    public static final String DB_MODEL_NAME = "model_name";
-    public static final String DB_DESCRIPTION_RU = "description_RU";
-    public static final String DB_DESCRIPTION_EN = "description_EN";
-    public static final String DB_IMAGE_PATH = "image_path";
     public static final String ORDERS = "orders";
     public static final String NUMBER_ORDERS = "numberOrders";
     public static final String ORDER_ID = "orderId";
+    public static final String PRODUCT_ID = "productId";
 
     private Constant() {
     }

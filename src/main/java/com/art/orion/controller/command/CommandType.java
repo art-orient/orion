@@ -6,6 +6,7 @@ import com.art.orion.controller.command.impl.AddProductPageCommand;
 import com.art.orion.controller.command.impl.CartCommand;
 import com.art.orion.controller.command.impl.CheckRegStatusCommand;
 import com.art.orion.controller.command.impl.ClothingCommand;
+import com.art.orion.controller.command.impl.EditProductCommand;
 import com.art.orion.controller.command.impl.HomeCommand;
 import com.art.orion.controller.command.impl.LanguageCommand;
 import com.art.orion.controller.command.impl.LoginCommand;
@@ -49,7 +50,8 @@ public enum CommandType {
     SALE(new SaleCommand()),
     PROFILE(new ProfileCommand(new UserServiceImpl())),
     ORDERS(new OrdersCommand(new OrderServiceImpl())),
-    REMOVE_ORDER(new RemoveOrderCommand(new OrderServiceImpl()));
+    REMOVE_ORDER(new RemoveOrderCommand(new OrderServiceImpl())),
+    EDIT_PRODUCT(new EditProductCommand(new ProductServiceImpl()));
 
     private final Command command;
 
