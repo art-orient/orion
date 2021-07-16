@@ -9,7 +9,6 @@ import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.pool.ConnectionPool;
-import com.art.orion.exception.ServiceException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,14 +24,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.art.orion.util.Constant.ACTIVE;
-import static com.art.orion.util.Constant.BRAND;
-import static com.art.orion.util.Constant.COST;
+import static com.art.orion.model.dao.column.ShoesColumn.ACTIVE;
+import static com.art.orion.model.dao.column.ShoesColumn.BRAND;
+import static com.art.orion.model.dao.column.ShoesColumn.COST;
+import static com.art.orion.model.dao.column.ShoesColumn.DESCRIPTION_EN;
+import static com.art.orion.model.dao.column.ShoesColumn.DESCRIPTION_RU;
+import static com.art.orion.model.dao.column.ShoesColumn.IMAGE_PATH;
+import static com.art.orion.model.dao.column.ShoesColumn.MODEL_NAME;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
-import static com.art.orion.util.Constant.DB_DESCRIPTION_EN;
-import static com.art.orion.util.Constant.DB_DESCRIPTION_RU;
-import static com.art.orion.util.Constant.DB_IMAGE_PATH;
-import static com.art.orion.util.Constant.DB_MODEL_NAME;
 
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
@@ -40,12 +39,12 @@ public class ProductDaoJdbc implements ProductDao {
     private static final AccessoryJdbc ACCESSORY_JDBC = AccessoryJdbc.getInstance();
     private static final ClothingJdbc CLOTHING_JDBC = ClothingJdbc.getInstance();
     private static final ShoesJdbc SHOES_JDBC = ShoesJdbc.getInstance();
-    private static final String COUNT_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
-    private static final String COUNT_CLOTHING = "SELECT count(*) FROM clothing WHERE active = 1";
-    private static final String COUNT_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
     private static final String COUNT_ALL_ACCESSORIES = "SELECT count(*) FROM accessories";
     private static final String COUNT_ALL_CLOTHING = "SELECT count(*) FROM clothing";
     private static final String COUNT_ALL_SHOES = "SELECT count(*) FROM shoes";
+    private static final String COUNT_ACTIVE_ACCESSORIES = "SELECT count(*) FROM accessories WHERE active = 1";
+    private static final String COUNT_ACTIVE_CLOTHING = "SELECT count(*) FROM clothing WHERE active = 1";
+    private static final String COUNT_ACTIVE_SHOES = "SELECT count(*) FROM shoes WHERE active = 1";
 
     private ProductDaoJdbc() {
     }
@@ -72,7 +71,7 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException {
+    public Optional<Accessory> findAccessoryById(int id) throws OrionDatabaseException {
         return ACCESSORY_JDBC.findAccessoryById(id);
     }
 
@@ -82,7 +81,7 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Optional<Clothing> findClothingById(int id) throws ServiceException, OrionDatabaseException {
+    public Optional<Clothing> findClothingById(int id) throws OrionDatabaseException {
         return CLOTHING_JDBC.findClothingById(id);
     }
 
@@ -92,19 +91,19 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public Optional<Shoes> findShoesById(int id) throws ServiceException, OrionDatabaseException {
+    public Optional<Shoes> findShoesById(int id) throws OrionDatabaseException {
         return SHOES_JDBC.findShoesById(id);
     }
 
     public int countNumberProducts(ProductCategory productCategory, boolean isAdmin)
-                                    throws ServiceException, OrionDatabaseException {
+                                    throws OrionDatabaseException {
         int number = 0;
         String query;
         switch (productCategory) {
-            case ACCESSORIES -> query = isAdmin ? COUNT_ALL_ACCESSORIES : COUNT_ACCESSORIES;
-            case CLOTHING -> query = isAdmin ? COUNT_ALL_CLOTHING : COUNT_CLOTHING;
-            case SHOES -> query = isAdmin ? COUNT_ALL_SHOES : COUNT_SHOES;
-            default -> throw new ServiceException("Invalid product category - " + productCategory);
+            case ACCESSORIES -> query = isAdmin ? COUNT_ALL_ACCESSORIES : COUNT_ACTIVE_ACCESSORIES;
+            case CLOTHING -> query = isAdmin ? COUNT_ALL_CLOTHING : COUNT_ACTIVE_CLOTHING;
+            case SHOES -> query = isAdmin ? COUNT_ALL_SHOES : COUNT_ACTIVE_SHOES;
+            default -> throw new OrionDatabaseException("Invalid product category - " + productCategory);
         }
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              Statement statement = connection.createStatement();
@@ -123,10 +122,10 @@ public class ProductDaoJdbc implements ProductDao {
         ProductDetails productDetails;
         try {
             String brand = resultSet.getString(BRAND);
-            String modelName = resultSet.getString(DB_MODEL_NAME);
-            List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DB_DESCRIPTION_RU));
-            List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DB_DESCRIPTION_EN));
-            String imagePath = resultSet.getString(DB_IMAGE_PATH);
+            String modelName = resultSet.getString(MODEL_NAME);
+            List<String> descriptionRu = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_RU));
+            List<String> descriptionEn = TextHandler.createListFromText(resultSet.getString(DESCRIPTION_EN));
+            String imagePath = resultSet.getString(IMAGE_PATH);
             BigDecimal cost = BigDecimal.valueOf(resultSet.getDouble(COST)).setScale(2, RoundingMode.HALF_UP);
             boolean active = resultSet.getBoolean(ACTIVE);
             productDetails = new ProductDetails(brand, modelName, descriptionRu, descriptionEn,
@@ -142,10 +141,10 @@ public class ProductDaoJdbc implements ProductDao {
                             ProductDetails productDetails, Map<String, Integer> indices)
                             throws SQLException {
         int brandIndex = indices.get(BRAND);
-        int modelNameIndex = indices.get(DB_MODEL_NAME);
-        int descriptionRuIndex = indices.get(DB_DESCRIPTION_RU);
-        int descriptionEnIndex = indices.get(DB_DESCRIPTION_EN);
-        int imagePathIndex = indices.get(DB_IMAGE_PATH);
+        int modelNameIndex = indices.get(MODEL_NAME);
+        int descriptionRuIndex = indices.get(DESCRIPTION_RU);
+        int descriptionEnIndex = indices.get(DESCRIPTION_EN);
+        int imagePathIndex = indices.get(IMAGE_PATH);
         int costIndex = indices.get(COST);
         int activeIndex = indices.get(ACTIVE);
         statement.setString(brandIndex - 1, productDetails.getBrand());

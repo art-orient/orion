@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             PRODUCT_DAO.addProductToDatabase(product);
             logger.log(Level.DEBUG, () -> "ProductService - product added to the database");
-        } catch (SQLException | OrionDatabaseException e) {
+        } catch (OrionDatabaseException e) {
             throw new ServiceException("Product is not added in the database", e);
         }
     }

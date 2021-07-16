@@ -5,7 +5,6 @@ import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
-import com.art.orion.exception.ServiceException;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,11 +19,11 @@ public interface ProductDao {
 
     List<Shoes> searchShoes(int limit, int offset, boolean isAdmin) throws OrionDatabaseException;
 
-    Optional<Accessory> findAccessoryById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Accessory> findAccessoryById(int id) throws OrionDatabaseException;
 
-    Optional<Clothing> findClothingById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Clothing> findClothingById(int id) throws OrionDatabaseException;
 
-    Optional<Shoes> findShoesById(int id) throws ServiceException, OrionDatabaseException;
+    Optional<Shoes> findShoesById(int id) throws OrionDatabaseException;
 
-    int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException, OrionDatabaseException;
+    int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws OrionDatabaseException;
 }
