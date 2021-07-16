@@ -38,7 +38,7 @@ public class ClothingCommand implements Command {
             boolean isAdmin = Role.ADMIN.name().equals(role);
             List<Clothing> clothing = productService.searchClothing(LIMIT, offset, isAdmin);
             req.getSession().setAttribute(PRODUCTS, clothing);
-            int numberProducts = productService.countNumberProducts(ProductCategory.CLOTHING, false);
+            int numberProducts = productService.countNumberProducts(ProductCategory.CLOTHING, isAdmin);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);
             int numberPages = Paginator.findNumberPages(numberProducts);
             req.setAttribute(NUMBER_PAGES, numberPages);

@@ -38,7 +38,7 @@ public class ShoesCommand implements Command {
             boolean isAdmin = Role.ADMIN.name().equals(role);
             List<Shoes> products = productService.searchShoes(LIMIT, offset, isAdmin);
             req.getSession().setAttribute(PRODUCTS, products);
-            int numberProducts = productService.countNumberProducts(ProductCategory.SHOES, false);
+            int numberProducts = productService.countNumberProducts(ProductCategory.SHOES, isAdmin);
             req.setAttribute(NUMBER_PRODUCTS, numberProducts);
             int numberPages = Paginator.findNumberPages(numberProducts);
             req.setAttribute(NUMBER_PAGES, numberPages);
