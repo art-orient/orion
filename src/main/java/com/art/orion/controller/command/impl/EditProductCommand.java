@@ -35,6 +35,7 @@ public class EditProductCommand implements Command {
         String category = req.getParameter(CATEGORY);
         req.setAttribute(CATEGORY, category);
         int productId = RequestParseNumberHelper.getInt(req, PRODUCT_ID);
+        req.setAttribute(PRODUCT_ID, productId);
         try {
             switch (category) {
                 case SHOES -> {

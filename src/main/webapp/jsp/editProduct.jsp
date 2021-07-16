@@ -19,35 +19,49 @@
     <div class="container">
         <h2 class="headline"><fmt:message key="ui.edit"/></h2><br>
         <form action="controller" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="command" value="save_product"/>
+            <input type="hidden" name="command" value="update_product"/>
+            <input type="hidden" name="productId" value="${productId}">
+            <input type="hidden" name="category" value="${category}">
             <label for="typeRu"><fmt:message key="ui.type"/> <fmt:message key="ui.russian"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="typeRu" id="typeRu">
+            <input type="text" minlength="2" maxlength="30" name="typeRu" id="typeRu" value="${product.typeRu}">
             <br>
             <label for="typeEn"><fmt:message key="ui.type"/>  <fmt:message key="ui.english"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="typeEn" id="typeEn" required>
+            <input type="text" minlength="2" maxlength="30" name="typeEn" id="typeEn" value="${product.typeEn}">
             <br>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" required>
+            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" value="${product.getProductDetails().brand}" required>
             <br>
             <label for="modelName"><fmt:message key="ui.modelName"/></label><br/>
-            <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" required>
+            <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" value="${product.getProductDetails().modelName}" required>
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
-            <textarea rows="10" cols="50" name="descriptionRu" id="descriptionRu"></textarea>
+            <textarea rows="10" cols="50" name="descriptionRu" id="descriptionRu">
+                <c:forEach items="${product.productDetails.descriptionRu}" var="str">
+                    ${str}
+                </c:forEach>
+            </textarea>
             <br>
             <label for="descriptionEn"><fmt:message key="ui.description"/> <fmt:message key="ui.english"/></label><br/>
-            <textarea rows="10" cols="50" name="descriptionEn" id="descriptionEn"></textarea>
+            <textarea rows="10" cols="50" name="descriptionEn" id="descriptionEn">
+                <c:forEach items="${product.productDetails.descriptionEn}" var="str">
+                    <c:out value="${str}"/>
+                </c:forEach>
+            </textarea>
             <br>
-            <label for="image"><fmt:message key="ui.image"/></label><br/>
-            <input type="file" accept=".someext,image/*" name="image" id="image" required>
+            <label for="currentImage"><fmt:message key="ui.currentImage"/></label><br>
+            <img id="currentImage" width="200px" src="images/${category}/${product.getProductDetails().imgPath}">
+            <br>
+            <label for="image"><fmt:message key="ui.changeImage"/></label>
+            <input type="checkbox" name="changeImage" value="true"><br>
+            <input type="file" accept=".someext,image/*" name="image" id="image">
             <br>
             <c:if test="${category == 'clothing' || category == 'shoes'}">
                 <label for="color"><fmt:message key="ui.color"/></label><br/>
-                <input type="text" name="color" id="color">
+                <input type="text" name="color" id="color" value="${product.color}">
                 <br>
             </c:if>
             <label for="cost"><fmt:message key="ui.cost"/></label><br/>
-            <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" required>
+            <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" value="${product.getProductDetails().cost}" required>
             <br>
             <c:if test="${category == 'accessories'}">
                 <label for="availability"><fmt:message key="ui.availability"/></label><br/>
