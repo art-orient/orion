@@ -48,6 +48,9 @@ public class Constant {
     public static final String ORDER_ID = "orderId";
     public static final String PRODUCT_ID = "productId";
     public static final String CHANGE_IMAGE = "changeImage";
+    public static final String USER_MANAGEMENT = "user_management";
+    public static final String USERS = "users";
+    public static final String NUMBER_USERS = "number_users";
 
     private Constant() {
     }

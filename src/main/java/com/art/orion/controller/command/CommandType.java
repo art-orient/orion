@@ -23,6 +23,7 @@ import com.art.orion.controller.command.impl.RemoveProductCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
 import com.art.orion.controller.command.impl.ShoesCommand;
 import com.art.orion.controller.command.impl.UpdateProductCommand;
+import com.art.orion.controller.command.impl.UserManagementCommand;
 import com.art.orion.model.service.impl.CartServiceImpl;
 import com.art.orion.model.service.impl.OrderServiceImpl;
 import com.art.orion.model.service.impl.ProductServiceImpl;
@@ -51,7 +52,8 @@ public enum CommandType {
     ORDERS(new OrdersCommand(new OrderServiceImpl())),
     REMOVE_ORDER(new RemoveOrderCommand(new OrderServiceImpl())),
     EDIT_PRODUCT(new EditProductCommand(new ProductServiceImpl())),
-    UPDATE_PRODUCT(new UpdateProductCommand(new ProductServiceImpl()));
+    UPDATE_PRODUCT(new UpdateProductCommand(new ProductServiceImpl())),
+    USER_MANAGEMENT(new UserManagementCommand(new UserServiceImpl()));
 
     private final Command command;
 

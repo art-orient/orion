@@ -11,10 +11,12 @@ import static com.art.orion.util.Constant.COMMAND;
 import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.OFFSET;
+import static com.art.orion.util.Constant.USER_MANAGEMENT;
 
 public class Paginator {
     private static final Logger logger = LogManager.getLogger();
     public static final int LIMIT = 5;
+    public static final int USER_LIMIT = 10;
 
     private Paginator() {
     }
@@ -37,17 +39,21 @@ public class Paginator {
     public static int  preparePagination(HttpServletRequest req) {
         int pageNumber = getCurrentPage(req);
         req.getSession().setAttribute(PAGE, pageNumber);
-        int offset = getOffset(pageNumber);
-        req.setAttribute(OFFSET, offset);
         String currentCommand = req.getParameter(COMMAND);
         req.setAttribute(CURRENT_COMMAND, currentCommand);
+        int offset = getOffset(pageNumber, currentCommand);
+        req.setAttribute(OFFSET, offset);
         return offset;
     }
 
-    public static int getOffset(int pageNumber) {
+    public static int getOffset(int pageNumber, String command) {
         int offset = 0;
         if (pageNumber > 1) {
-            offset = LIMIT * (pageNumber - 1);
+            if (USER_MANAGEMENT.equals(command)) {
+                offset = USER_LIMIT * (pageNumber - 1);
+            } else {
+                offset = LIMIT * (pageNumber - 1);
+            }
         }
         return offset;
     }
@@ -58,5 +64,13 @@ public class Paginator {
             numberPages = numberProducts / LIMIT;
         }
         return numberProducts % LIMIT > 0 ? numberPages + 1: numberPages;
+    }
+
+    public static int findUserNumberPages(int numberUsers) {
+        int numberPages = 0;
+        if (numberUsers > 0) {
+            numberPages = numberUsers / USER_LIMIT;
+        }
+        return numberUsers % LIMIT > 0 ? numberPages + 1: numberPages;
     }
 }

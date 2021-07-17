@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,8 @@ public class UserDaoJdbc implements UserDao {
             " role, active FROM users WHERE username = ?";
     private static final String GET_USER_BY_CREDENTIALS = "SELECT username FROM users" +
             " WHERE username = ? AND password = ?";
+    private static final String SELECT_ALL_USERS = "SELECT username, password, firstname, lastname, email, " +
+            "role, active FROM users LIMIT ? OFFSET ?";
 
     private UserDaoJdbc() {
     }
@@ -143,10 +146,24 @@ public class UserDaoJdbc implements UserDao {
         return optionalUser;
     }
 
-    //    not currently used
     @Override
-    public List<User> getUsers() {
-        throw new UnsupportedOperationException("operation not supported");
+    public List<User> findUsers(int limit, int offset) throws OrionDatabaseException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User user = buildUser(resultSet);
+                    users.add(user);
+                }
+            }
+            logger.log(Level.DEBUG, () -> "Users got from the database");
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return users;
     }
 
     //    not currently used

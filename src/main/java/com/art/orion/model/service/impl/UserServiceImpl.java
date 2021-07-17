@@ -8,6 +8,7 @@ import com.art.orion.exception.ServiceException;
 import com.art.orion.model.service.UserService;
 import com.art.orion.util.ErrorMessageManager;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
@@ -57,6 +58,23 @@ public class UserServiceImpl implements UserService {
             return USER_DAO.findUserByUsername(username);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while retrieving the user from the database", e);
+        }
+    }
+
+    @Override
+    public List<User> findUsers(int limit, int offset) throws ServiceException {
+        try {
+            return USER_DAO.findUsers(limit, offset);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("An error occurred while retrieving users from the database", e);
+        }
+    }
+
+    public int countUsers() throws ServiceException {
+        try {
+            return USER_DAO.countUsers();
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("An error occurred while retrieving number of users", e);
         }
     }
 }

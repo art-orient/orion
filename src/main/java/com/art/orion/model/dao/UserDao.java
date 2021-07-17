@@ -18,8 +18,8 @@ public interface UserDao {
 
     Optional<User> findUserByUsername(String username) throws OrionDatabaseException;
 
-    List<User> getUsers() throws OrionDatabaseException;
-
     boolean updateUser(User user) throws OrionDatabaseException;
+
+    List<User> findUsers(int limit, int offset) throws OrionDatabaseException;
 }
 

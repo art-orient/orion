@@ -21,12 +21,12 @@ public class PagePath {
     public static final String CLOTHING_REDIRECT_PAGE = "jsp/clothingRedirect.jsp";
     public static final String SHOES_PAGE = "jsp/shoes.jsp";
     public static final String SHOES_REDIRECT_PAGE = "jsp/shoesRedirect.jsp";
-    public static final String SALE_PAGE = "jsp/sale.jsp";
     public static final String PROFILE_PAGE = "jsp/profile.jsp";
     public static final String ORDERS_PAGE = "jsp/orders.jsp";
     public static final String ORDERS_REDIRECT_PAGE = "jsp/ordersRedirect.jsp";
     public static final String CONFIRMATION_ORDER_PAGE = "jsp/confirmationOrder.jsp";
     public static final String EDIT_PRODUCT_PAGE = "jsp/editProduct.jsp";
+    public static final String USER_MANAGEMENT_PAGE = "jsp/userManagement.jsp";
 
     private PagePath() {
     }
