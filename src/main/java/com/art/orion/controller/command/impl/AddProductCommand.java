@@ -1,6 +1,7 @@
 package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
+import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
@@ -40,15 +41,8 @@ public class AddProductCommand implements Command {
         HttpSession session = req.getSession();
         List<Object> cart = getCart(session);
         String category = req.getParameter(CATEGORY);
-        String productId = req.getParameter(PRODUCT);
         String page = INDEX_PAGE;
-        int id = 0;
-        try {
-            id = Integer.parseInt(productId);
-        } catch (NumberFormatException e) {
-            logger.log(Level.ERROR, () -> String.format("Bad product id from %s = %s",
-                    category, productId));
-        }
+        int id = RequestParseNumberHelper.getInt(req, PRODUCT);
         try {
             switch (category) {
                 case ACCESSORIES -> {
@@ -82,7 +76,7 @@ public class AddProductCommand implements Command {
         }
         session.setAttribute(CART, cart);
         logger.log(Level.INFO, () -> String.format("Add product in the cart from %s with id = %s",
-                category, productId));
+                category, id));
         return page;
     }
 

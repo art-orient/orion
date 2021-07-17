@@ -4,6 +4,5 @@ public enum Role {
     ADMIN,
     UNREGISTERED_USER,
     CUSTOMER,
-    CLUB_MEMBER,
     MANAGER
 }

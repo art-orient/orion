@@ -56,6 +56,10 @@ public class AccessoryJdbc {
             "description_RU, description_EN, image_path, cost, availability, active FROM accessories ";
     private static final String SELECT_ACTIVE_ACCESSORIES = SELECT + "WHERE active = 1 LIMIT ? OFFSET ?";
     private static final String SELECT_ALL_ACCESSORIES = SELECT + "LIMIT ? OFFSET ?";
+    private static final String UPDATE_ACCESSORY = "UPDATE accessories SET type_Ru = ?, type_En = ?," +
+            " brand = ?, model_name = ?, description_RU = ?, description_EN = ?, image_path = ?, cost = ?, " +
+            "availability = ?, active = ? WHERE accessories_id = ?";
+    private static final int UPDATE_ID_INDEX = 11;
     private static final Map<String, Integer> indices;
 
     static {
@@ -79,11 +83,7 @@ public class AccessoryJdbc {
     public void addAccessoryToDatabase(Accessory accessory) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_ACCESSORY)){
-            statement.setString(TYPE_RU_INDEX - 1, accessory.getTypeRu());
-            statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());
-            ProductDetails productDetails = accessory.getProductDetails();
-            ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
-            statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
+            fillStatement(statement, accessory);
             statement.executeUpdate();
             logger.log(Level.INFO, () -> "The accessory is saved in the database");
         } catch (SQLException e) {
@@ -134,6 +134,18 @@ public class AccessoryJdbc {
         return optionalAccessory;
     }
 
+    public void updateProduct(Accessory accessory) throws OrionDatabaseException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_ACCESSORY)){
+            fillStatement(statement, accessory);
+            statement.setInt(UPDATE_ID_INDEX, accessory.getAccessoryId());
+            statement.executeUpdate();
+            logger.log(Level.INFO, () -> "The accessory is updated in the database");
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+    }
+
     private Accessory createAccessory(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int accessoryId = resultSet.getInt(ACCESSORIES_ID);
         String typeRu = resultSet.getString(TYPE_RU);
@@ -142,5 +154,13 @@ public class AccessoryJdbc {
         int availability = resultSet.getInt(AVAILABILITY);
         logger.log(Level.DEBUG, () -> "Accessory creation completed successfully");
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
+    }
+
+    private void fillStatement(PreparedStatement statement, Accessory accessory) throws SQLException {
+        statement.setString(TYPE_RU_INDEX - 1, accessory.getTypeRu());
+        statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());
+        ProductDetails productDetails = accessory.getProductDetails();
+        ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
+        statement.setInt(AVAILABILITY_INDEX - 1, accessory.getAvailability());
     }
 }

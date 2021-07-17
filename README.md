@@ -109,26 +109,3 @@ but don't have privileges of a manager, but can register a user with a manager's
     * Register
     * Logout
     * Change website language
-
-
-### Club member
-
-User with client rights who is a member of the Orion sports club. A club member can
-do everything that is allowed to the client, but when ordering goods, he has 
-the opportunity to receive a discount set by the administrator. The club member role
-is set to the client and removed by the administrator. 
-
-* Allowed actions:
-    * Add a product to the cart
-    * View the personal cart
-    * Remove a product from the cart
-    * Make an order
-    * Remove a previously made order
-    * View personal orders history
-    * View profile information
-    * Visit the main page
-    * Browse catalogs
-    * Logout
-    * Change website language
-
-

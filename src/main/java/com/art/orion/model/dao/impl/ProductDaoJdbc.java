@@ -118,6 +118,18 @@ public class ProductDaoJdbc implements ProductDao {
         return number;
     }
 
+    @Override
+    public void updateProduct(Object product) throws OrionDatabaseException {
+        if (product instanceof Accessory) {
+            ACCESSORY_JDBC.updateProduct((Accessory) product);
+        } else if (product instanceof Clothing) {
+            CLOTHING_JDBC.updateProduct((Clothing) product);
+        } else if (product instanceof Shoes) {
+            SHOES_JDBC.updateProduct((Shoes) product);
+        }
+        logger.log(Level.DEBUG, "Product is updated in the database");
+    }
+
     protected static ProductDetails createProductDetails (ResultSet resultSet) throws OrionDatabaseException {
         ProductDetails productDetails;
         try {

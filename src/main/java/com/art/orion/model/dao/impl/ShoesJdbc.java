@@ -53,6 +53,10 @@ public class ShoesJdbc {
             " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String FIND_SHOES_BY_ID = SELECT + "WHERE shoes_id = ?";
     private static final String SELECT_ALL_SHOES = SELECT + "LIMIT ? OFFSET ?";
+    private static final String UPDATE_SHOES = "UPDATE shoes SET type_Ru = ?, type_En = ?," +
+            " brand = ?, model_name = ?, description_RU = ?, description_EN = ?, image_path = ?, color = ?, " +
+            "cost = ?, active = ? WHERE shoes_id = ?";
+    private static final int UPDATE_ID_INDEX = 11;
     private static final Map<String, Integer> indices;
 
     static {
@@ -76,11 +80,7 @@ public class ShoesJdbc {
     public void addShoesToDatabase(Shoes shoes) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_SHOES)){
-            ProductDetails productDetails = shoes.getProductDetails();
-            ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
-            statement.setString(TYPE_RU_INDEX - 1, shoes.getTypeRu());
-            statement.setString(TYPE_EN_INDEX - 1, shoes.getTypeEn());
-            statement.setString(COLOR_INDEX - 1, shoes.getColor());
+            fillStatement(statement, shoes);
             statement.executeUpdate();
             logger.log(Level.INFO, () -> "The shoes is saved in the database");
         } catch (SQLException e) {
@@ -131,6 +131,18 @@ public class ShoesJdbc {
         return optionalShoes;
     }
 
+    public void updateProduct(Shoes shoes) throws OrionDatabaseException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_SHOES)){
+            fillStatement(statement, shoes);
+            statement.setInt(UPDATE_ID_INDEX, shoes.getShoesId());
+            statement.executeUpdate();
+            logger.log(Level.INFO, () -> "Shoes is updated in the database");
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+    }
+
     private Shoes createShoes(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int shoesId = resultSet.getInt(SHOES_ID);
         String typeRu = resultSet.getString(TYPE_RU);
@@ -139,5 +151,13 @@ public class ShoesJdbc {
         String color = resultSet.getString(COLOR);
         logger.log(Level.DEBUG, () -> "Shoes creation completed successfully");
         return new Shoes(shoesId, typeRu, typeEn, productDetails, color);
+    }
+
+    private void fillStatement(PreparedStatement statement, Shoes shoes) throws SQLException {
+        ProductDetails productDetails = shoes.getProductDetails();
+        ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);
+        statement.setString(TYPE_RU_INDEX - 1, shoes.getTypeRu());
+        statement.setString(TYPE_EN_INDEX - 1, shoes.getTypeEn());
+        statement.setString(COLOR_INDEX - 1, shoes.getColor());
     }
 }

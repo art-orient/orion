@@ -44,11 +44,11 @@
             </a>
         </div>
         <div class="grid-cell">
-            <a href="/controller?command=sale&page=1" class="catalog-item">
+            <a href="/controller?command=cart" class="catalog-item">
                 <div class="catalog-img">
-                    <img src="images/saucony.JPG" alt="<fmt:message key="ui.sale"/>">
+                    <img id="cart-img" src="images/cart.JPG" alt="<fmt:message key="ui.cart"/>">
                 </div>
-                <div class="catalog-name"><fmt:message key="ui.sale"/></div>
+                <div class="catalog-name"><fmt:message key="ui.cart"/></div>
             </a>
         </div>
     </div>

@@ -26,4 +26,6 @@ public interface ProductDao {
     Optional<Shoes> findShoesById(int id) throws OrionDatabaseException;
 
     int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws OrionDatabaseException;
+
+    void updateProduct(Object product) throws OrionDatabaseException;
 }

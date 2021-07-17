@@ -26,4 +26,6 @@ public interface ProductService {
     Optional<Shoes> findShoesById(int id) throws ServiceException;
 
     int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException;
+
+    void updateProduct(Object product) throws ServiceException;
 }

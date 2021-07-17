@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.ImageProcessor;
+import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.controller.command.util.TextHandler;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
@@ -54,12 +55,7 @@ public class SaveProductCommand implements Command {
         List<String> descriptionRu = TextHandler.createListFromText(req.getParameter(DESCRIPTION_RU));
         List<String> descriptionEn = TextHandler.createListFromText(req.getParameter(DESCRIPTION_EN));
         String filename = ImageProcessor.uploadImage(req, brand, modelName);
-        BigDecimal cost = BigDecimal.ZERO;
-        try {
-            cost = BigDecimal.valueOf(Double.parseDouble(req.getParameter(COST)));
-        } catch (NumberFormatException e) {
-            logger.log(Level.ERROR, () -> "This price is not BigDecimal - " + req.getParameter(COST));
-        }
+        BigDecimal cost = RequestParseNumberHelper.getBigDecimal(req, COST);
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
         ProductDetails productDetails = new ProductDetails();
         if (ProductValidator.isProductValid(brand, modelName, cost)) {

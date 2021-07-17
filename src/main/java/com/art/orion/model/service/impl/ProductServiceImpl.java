@@ -101,4 +101,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return numberProducts;
     }
+
+    @Override
+    public void updateProduct(Object product) throws ServiceException {
+        try {
+            PRODUCT_DAO.updateProduct(product);
+            logger.log(Level.DEBUG, () -> "ProductService - updating a product");
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while updating a product", e);
+        }
+    }
 }

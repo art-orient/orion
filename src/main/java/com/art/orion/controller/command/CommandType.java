@@ -20,9 +20,9 @@ import com.art.orion.controller.command.impl.RegisterUserCommand;
 import com.art.orion.controller.command.impl.RegistrationCommand;
 import com.art.orion.controller.command.impl.RemoveOrderCommand;
 import com.art.orion.controller.command.impl.RemoveProductCommand;
-import com.art.orion.controller.command.impl.SaleCommand;
 import com.art.orion.controller.command.impl.SaveProductCommand;
 import com.art.orion.controller.command.impl.ShoesCommand;
+import com.art.orion.controller.command.impl.UpdateProductCommand;
 import com.art.orion.model.service.impl.CartServiceImpl;
 import com.art.orion.model.service.impl.OrderServiceImpl;
 import com.art.orion.model.service.impl.ProductServiceImpl;
@@ -47,11 +47,11 @@ public enum CommandType {
     MAKE_ORDER(new MakeOrderCommand(new OrderServiceImpl(), new CartServiceImpl())),
     CLOTHING(new ClothingCommand(new ProductServiceImpl())),
     SHOES(new ShoesCommand(new ProductServiceImpl())),
-    SALE(new SaleCommand()),
     PROFILE(new ProfileCommand(new UserServiceImpl())),
     ORDERS(new OrdersCommand(new OrderServiceImpl())),
     REMOVE_ORDER(new RemoveOrderCommand(new OrderServiceImpl())),
-    EDIT_PRODUCT(new EditProductCommand(new ProductServiceImpl()));
+    EDIT_PRODUCT(new EditProductCommand(new ProductServiceImpl())),
+    UPDATE_PRODUCT(new UpdateProductCommand(new ProductServiceImpl()));
 
     private final Command command;
 
