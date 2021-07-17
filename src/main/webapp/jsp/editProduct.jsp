@@ -29,27 +29,21 @@
             <input type="text" minlength="2" maxlength="30" name="typeEn" id="typeEn" value="${product.typeEn}">
             <br>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" value="${product.getProductDetails().brand}" required>
+            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" value="${product.productDetails.brand}" required>
             <br>
             <label for="modelName"><fmt:message key="ui.modelName"/></label><br/>
-            <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" value="${product.getProductDetails().modelName}" required>
+            <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" value="${product.productDetails.modelName}" required>
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
-            <textarea rows="10" cols="50" name="descriptionRu" id="descriptionRu">
-                <c:forEach items="${product.productDetails.descriptionRu}" var="str">
-                    ${str}
-                </c:forEach>
+            <textarea rows="12" cols="70" name="descriptionRu" id="descriptionRu"><c:out value="${descriptionRu}"/>
             </textarea>
             <br>
             <label for="descriptionEn"><fmt:message key="ui.description"/> <fmt:message key="ui.english"/></label><br/>
-            <textarea rows="10" cols="50" name="descriptionEn" id="descriptionEn">
-                <c:forEach items="${product.productDetails.descriptionEn}" var="str">
-                    <c:out value="${str}"/>
-                </c:forEach>
+            <textarea rows="12" cols="70" name="descriptionEn" id="descriptionEn"><c:out value="${descriptionEn}"/>
             </textarea>
             <br>
             <label for="currentImage"><fmt:message key="ui.currentImage"/></label><br>
-            <img id="currentImage" width="200px" src="images/${category}/${product.getProductDetails().imgPath}">
+            <img id="currentImage" width="200px" src="images/${category}/${product.productDetails.imgPath}">
             <br>
             <label for="image"><fmt:message key="ui.changeImage"/></label>
             <input type="checkbox" name="changeImage" value="true"><br>
@@ -61,20 +55,20 @@
                 <br>
             </c:if>
             <label for="cost"><fmt:message key="ui.cost"/></label><br/>
-            <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" value="${product.getProductDetails().cost}" required>
+            <input type="number" min="00.01" max="999" step=".01" name="cost" id="cost" value="${product.productDetails.cost}" required>
             <br>
             <c:if test="${category == 'accessories'}">
                 <label for="availability"><fmt:message key="ui.availability"/></label><br/>
-                <input type="number" min="0" name="availability" id="availability" required>
+                <input type="number" min="0" name="availability" id="availability" value="${product.availability}" required>
                 <br>
             </c:if>
             <label><fmt:message key="ui.active"/>
-                <input type="radio" name="active" value="true" checked>
+                <input type="radio" name="active" value="true" ${product.productDetails.active ? 'checked' : ''}>
                 <fmt:message key="ui.yes"/>
-                <input type="radio" name="active" value="false">
+                <input type="radio" name="active" value="false" ${!product.productDetails.active ? 'checked' : ''}>
                 <fmt:message key="ui.no"/>
             </label><br>
-            <input type="submit" value='<fmt:message key="ui.addProduct"/>' id="submit">
+            <input type="submit" value='<fmt:message key="ui.edit"/>' id="submit">
             <br><br>
         </form><br>
     </div>

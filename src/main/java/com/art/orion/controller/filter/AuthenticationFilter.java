@@ -1,6 +1,6 @@
 package com.art.orion.controller.filter;
 
-import com.art.orion.util.ConfigManager;
+import com.art.orion.controller.command.PagePath;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -28,7 +28,8 @@ public class AuthenticationFilter implements Filter {
         String action = request.getParameter(COMMAND);
         if (action != null && isForbiddenPage(action) && isUnauthorizedUser(request)) {
             logger.log(Level.WARN, () -> String.format("Forbidden page for unauthorized user - %s", action));
-            request.getRequestDispatcher(ConfigManager.getProperty("page.login")).forward(request, servletResponse);
+            request.getRequestDispatcher(PagePath.LOGIN_PAGE).forward(servletRequest, servletResponse);
+            return;
         }
         filterChain.doFilter(request, servletResponse);
     }

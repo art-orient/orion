@@ -22,7 +22,6 @@ public class PagePath {
     public static final String SHOES_PAGE = "jsp/shoes.jsp";
     public static final String SHOES_REDIRECT_PAGE = "jsp/shoesRedirect.jsp";
     public static final String SALE_PAGE = "jsp/sale.jsp";
-    public static final String SALE_REDIRECT_PAGE = "jsp/saleRedirect.jsp";
     public static final String PROFILE_PAGE = "jsp/profile.jsp";
     public static final String ORDERS_PAGE = "jsp/orders.jsp";
     public static final String ORDERS_REDIRECT_PAGE = "jsp/ordersRedirect.jsp";
