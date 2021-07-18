@@ -17,10 +17,11 @@ public class RequestParseNumberHelper {
 
     public static int getInt(HttpServletRequest request, String parameter) {
         int number = 0;
+        String value = request.getParameter(parameter);
         try {
-            number = Integer.parseInt(request.getParameter(parameter));
+            number = Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            logger.log(Level.ERROR, e);
+            logger.log(Level.ERROR, "Parameter {} = {} is not number", parameter, value, e);
         }
         return number;
     }

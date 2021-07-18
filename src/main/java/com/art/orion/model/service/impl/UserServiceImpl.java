@@ -77,4 +77,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("An error occurred while retrieving number of users", e);
         }
     }
+
+    public boolean updateUser(User user) throws ServiceException {
+        try {
+           return USER_DAO.updateUser(user);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("An error occurred while updating of user", e);
+        }
+    }
 }

@@ -16,6 +16,7 @@ import static com.art.orion.controller.command.PagePath.USER_MANAGEMENT_PAGE;
 import static com.art.orion.controller.command.util.Paginator.USER_LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_USERS;
+import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERS;
 
 public class UserManagementCommand implements Command {
@@ -29,7 +30,15 @@ public class UserManagementCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.INFO, "Go to user management page");
+        String pageNumber = req.getParameter(PAGE);
+        System.out.println(pageNumber + "_________33333333333____________________");
+        req.getSession().setAttribute(PAGE, pageNumber);
+        String pageNumber2 = (String) req.getSession().getAttribute(PAGE);
+        System.out.println(pageNumber2 + "_________555555555555555555_________________");
+
+
         int offset = Paginator.preparePagination(req);
+        System.out.println("77777777777777777777777777777777777");
         try {
             List<User> users = userService.findUsers(USER_LIMIT, offset);
             req.setAttribute(USERS, users);

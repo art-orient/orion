@@ -46,6 +46,9 @@ public class UserDaoJdbc implements UserDao {
             " WHERE username = ? AND password = ?";
     private static final String SELECT_ALL_USERS = "SELECT username, password, firstname, lastname, email, " +
             "role, active FROM users LIMIT ? OFFSET ?";
+    private static final String UPDATE_USER = "UPDATE users SET password = ?, firstname = ?, lastname = ?, " +
+            "email = ?, role = ?, active = ? WHERE username = ?";
+    private static final int UPDATE_USERNAME_INDEX = 7;
 
     private UserDaoJdbc() {
     }
@@ -166,10 +169,24 @@ public class UserDaoJdbc implements UserDao {
         return users;
     }
 
-    //    not currently used
     @Override
-    public boolean updateUser(User user) {
-        throw new UnsupportedOperationException("operation not supported");
+    public boolean updateUser(User user) throws OrionDatabaseException {
+        boolean isUserUpdated;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
+            preparedStatement.setString(PASSWORD_INDEX -1, user.getPassword());
+            preparedStatement.setString(FIRSTNAME_INDEX - 1, user.getFirstName());
+            preparedStatement.setString(LASTNAME_INDEX - 1, user.getLastName());
+            preparedStatement.setString(EMAIL_INDEX - 1, user.getEmail());
+            preparedStatement.setInt(ROLE_INDEX - 1, user.getRole().ordinal());
+            preparedStatement.setBoolean(ACTIVE_INDEX - 1, user.isActive());
+            preparedStatement.setString(UPDATE_USERNAME_INDEX, user.getUsername());
+            isUserUpdated = (preparedStatement.executeUpdate() == 1);
+            logger.log(Level.INFO, "The user {} is updated", user.getUsername());
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return isUserUpdated;
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {

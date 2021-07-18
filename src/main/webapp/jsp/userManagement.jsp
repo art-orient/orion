@@ -35,32 +35,52 @@
             </tr>
             <c:forEach items="${users}" var="user" varStatus="counter">
                 <tr>
-                    <td>${counter.count + index}</td>
+                    <td>${counter.count + offset}</td>
                     <td><c:out value="${user.username}"/></td>
                     <td><c:out value="${user.firstName}"/></td>
                     <td><c:out value="${user.lastName}"/></td>
                     <td><c:out value="${user.email}"/></td>
                     <td><c:out value="${user.role}"/></td>
-                    <td><c:out value="${user.active}"/></td>
                     <td>
-                        <form action="controller" method="post">
+                        <c:if test="${user.active == true}">
+                            <fmt:message key="ui.yes"/>
+                        </c:if>
+                        <c:if test="${user.active == false}">
+                            <fmt:message key="ui.no"/>
+                        </c:if>
+                    </td>
+                    <td>
+                        <form action="controller" method="get">
                             <input type="hidden" name="command" value="change_role">
                             <input type="hidden" name="page" value="${page}"/>
-                            <input type="hidden" name="user" value="${user.username}">
-<%--                            <select name="category">--%>
-<%--                                <option value="" style="display:none"><fmt:message key="ui.selectCategory"/></option>--%>
-<%--                                <option value="ADMIN"><c:out value="ADMIN"></option>--%>
-<%--                                <option value="MANAGER"><c:out value="MANAGER"></option>--%>
-<%--                                <option value="CUSTOMER"><c:out value="CUSTOMER"></option>--%>
-<%--                            </select><br>--%>
+                            <input type="hidden" name="username" value="${user.username}">
+                            <select name="role">
+                                <option value="" style="display:none"><fmt:message key="ui.selectRole"/></option>
+                                <option value="ADMIN"><c:out value="ADMIN"/></option>
+                                <option value="MANAGER"><c:out value="MANAGER"/></option>
+                                <option value="CUSTOMER"><c:out value="CUSTOMER"/></option>
+                            </select><br>
                             <input type="submit" value='<fmt:message key="ui.changeRole"/>'>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="page" value="${page}"/>
+                            <input type="hidden" name="username" value="${user.username}">
+                            <input type="hidden" name="command" value="change_activity">
+                            <c:if test="${user.active == true}">
+                                <input type="submit" value='<fmt:message key="ui.blockUser"/>'>
+                            </c:if>
+                            <c:if test="${user.active == false}">
+                                <input type="submit" value='<fmt:message key="ui.unblockUser"/>'>
+                            </c:if>
                         </form>
                     </td>
                     <td>
                         <form action="controller" method="post">
                             <input type="hidden" name="command" value="delete_user">
                             <input type="hidden" name="page" value="${page}"/>
-                            <input type="hidden" name="user" value="${user.username}">
+                            <input type="hidden" name="username" value="${user.username}">
                             <input type="submit" value='<fmt:message key="ui.delete"/>'>
                         </form>
                     </td>

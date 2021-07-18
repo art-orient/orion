@@ -18,6 +18,21 @@ VALUES ('alexei', '3c4c0aec843b3d5164285a367f92794eee300bafdd1ee56407bd680f0898b
 INSERT INTO users
 VALUES ('pavel', 'b4b6e5deeec1253972cd0ec230e2951c5b2518c19cf9aa4198ee8731fee58795',
         'Pavel', 'Pavlonus', 'pablo@eu.lt', 2, 1);  -- password=pavel
+INSERT INTO users
+VALUES ('fedor', '30318e793178c2e1ae3210ade3963da999641e1bf64189b51477f962d8fb9aee',
+        'Fedor', 'Fedorov', 'fedia@gmail.com', 2, 1);
+INSERT INTO users
+VALUES ('irina', '97bdac9cc3df255a555f904e545c7ba7a4c8667c43dabf0a2d685949363b007c',
+        'Irina', 'Irinina', 'ira@mail.ru', 2, 0);
+INSERT INTO users
+VALUES ('kostia', '3d2a96334b8c0ae558ef2a5f2bec61bd8aa786b7b980401dc6a40b41731ad75c',
+        'Kostia', 'Lebedev', 'lebedev@mail.ru', 2, 1);
+INSERT INTO users
+VALUES ('taniusha', '9128948c6d1f7648371f4d91e48fd030fad561966bc03dd0eca793352e2e08fe',
+        'Татьяна', 'Артихович', 'tatiana@gmail.com', 2, 1);
+INSERT INTO users
+VALUES ('vova', 'e889cf90c39f0447c4c4ce6b8623c437f861a84bad8096bd5332065bd300895c',
+        'Владимир', 'Устинов', 'vovust@tut.by', 2, 1);
 
 INSERT INTO accessories
 VALUES (1, 'Рюкзак', 'A backpack', 'Mizuno', 'Running Backpack 10L', 'РЮКЗАК MIZUNO УНИСЕКС

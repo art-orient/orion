@@ -21,4 +21,6 @@ public interface UserService {
     List<User> findUsers(int limit, int offset) throws ServiceException;
 
     int countUsers() throws ServiceException;
+
+    boolean updateUser(User user) throws ServiceException;
 }

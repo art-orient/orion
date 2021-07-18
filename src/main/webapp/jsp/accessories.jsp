@@ -73,7 +73,7 @@
                         <c:if test="${product.productDetails.active == true}">
                             <fmt:message key="ui.yes"/>
                         </c:if>
-                        <c:if test="${!product.productDetails.active == true}">
+                        <c:if test="${product.productDetails.active == false}">
                             <fmt:message key="ui.no"/>
                         </c:if>
                     </td>

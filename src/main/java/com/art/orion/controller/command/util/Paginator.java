@@ -22,22 +22,25 @@ public class Paginator {
     }
 
     public static int getCurrentPage(HttpServletRequest request) {
-        int requestPageNumber = RequestParseNumberHelper.getInt(request, PAGE);
-        if (requestPageNumber == 0) {
-            Integer sessionPageNumber;
+        Integer sessionPageNumber;
+        String pageNumber = (String) request.getSession().getAttribute(PAGE);
             try {
-                sessionPageNumber = (Integer) request.getSession().getAttribute(PAGE);
+                if (pageNumber == null) {
+                    sessionPageNumber = 1;
+                } else {
+                    sessionPageNumber = Integer.parseInt(pageNumber);
+                    System.out.println("getCurrentPage ===============" + sessionPageNumber);
+                }
             } catch (ClassCastException e) {
                 logger.log(Level.ERROR, e);
                 sessionPageNumber = 1;
             }
-            requestPageNumber = Objects.requireNonNullElse(sessionPageNumber, 1);
-        }
-        return requestPageNumber;
+        return sessionPageNumber;
     }
 
     public static int  preparePagination(HttpServletRequest req) {
         int pageNumber = getCurrentPage(req);
+        System.out.println("prepare - ----------- " + pageNumber);
         req.getSession().setAttribute(PAGE, pageNumber);
         String currentCommand = req.getParameter(COMMAND);
         req.setAttribute(CURRENT_COMMAND, currentCommand);
