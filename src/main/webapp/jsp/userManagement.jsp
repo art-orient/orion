@@ -17,6 +17,10 @@
 <section id="products" class="section">
     <div class="container">
         <br><h2><fmt:message key="ui.userManagement"/></h2><br>
+        <form action="controller" method="get">
+            <input type="hidden" name="command" value="check_reg_status"/>
+            <input type="submit" value='<fmt:message key="ui.addNewUser"/>'/>
+        </form><br>
         <c:if test="${error != null}">
             <c:out value="${error}"/><br>
         </c:if>

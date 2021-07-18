@@ -85,4 +85,12 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("An error occurred while updating of user", e);
         }
     }
+
+    public boolean deleteUser(String username) throws ServiceException {
+        try {
+            return USER_DAO.deleteUser(username);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("An error occurred while deleting of user", e);
+        }
+    }
 }

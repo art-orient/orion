@@ -21,5 +21,7 @@ public interface UserDao {
     boolean updateUser(User user) throws OrionDatabaseException;
 
     List<User> findUsers(int limit, int offset) throws OrionDatabaseException;
+
+    boolean deleteUser(String username) throws OrionDatabaseException;
 }
 

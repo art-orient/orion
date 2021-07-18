@@ -8,6 +8,7 @@ import com.art.orion.controller.command.impl.ChangeActivityCommand;
 import com.art.orion.controller.command.impl.ChangeRoleCommand;
 import com.art.orion.controller.command.impl.CheckRegStatusCommand;
 import com.art.orion.controller.command.impl.ClothingCommand;
+import com.art.orion.controller.command.impl.DeleteUserCommand;
 import com.art.orion.controller.command.impl.EditProductCommand;
 import com.art.orion.controller.command.impl.HomeCommand;
 import com.art.orion.controller.command.impl.LanguageCommand;
@@ -57,7 +58,8 @@ public enum CommandType {
     UPDATE_PRODUCT(new UpdateProductCommand(new ProductServiceImpl())),
     USER_MANAGEMENT(new UserManagementCommand(new UserServiceImpl())),
     CHANGE_ROLE(new ChangeRoleCommand(new UserServiceImpl())),
-    CHANGE_ACTIVITY(new ChangeActivityCommand(new UserServiceImpl()));
+    CHANGE_ACTIVITY(new ChangeActivityCommand(new UserServiceImpl())),
+    DELETE_USER(new DeleteUserCommand(new UserServiceImpl()));
 
     private final Command command;
 

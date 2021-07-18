@@ -23,4 +23,6 @@ public interface UserService {
     int countUsers() throws ServiceException;
 
     boolean updateUser(User user) throws ServiceException;
+
+    boolean deleteUser(String username) throws ServiceException;
 }

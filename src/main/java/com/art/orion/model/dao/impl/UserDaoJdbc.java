@@ -49,6 +49,7 @@ public class UserDaoJdbc implements UserDao {
     private static final String UPDATE_USER = "UPDATE users SET password = ?, firstname = ?, lastname = ?, " +
             "email = ?, role = ?, active = ? WHERE username = ?";
     private static final int UPDATE_USERNAME_INDEX = 7;
+    private static final String DELETE_USER = "DELETE FROM users WHERE username = ?";
 
     private UserDaoJdbc() {
     }
@@ -187,6 +188,20 @@ public class UserDaoJdbc implements UserDao {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
         return isUserUpdated;
+    }
+
+    @Override
+    public boolean deleteUser(String username) throws OrionDatabaseException {
+        boolean isUserDeleted;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
+            preparedStatement.setString(USERNAME_INDEX, username);
+            isUserDeleted = (preparedStatement.executeUpdate() == 1);
+            logger.log(Level.INFO, "The user {} is deleted", username);
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return isUserDeleted;
     }
 
     private User buildUser(ResultSet resultSet) throws SQLException {
