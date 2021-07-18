@@ -14,4 +14,8 @@ public interface OrderService {
     int countNumberOrders(String username) throws ServiceException;
 
     void removeOrderById(int orderId) throws ServiceException;
+
+    List<Order> findAllOrders(int limit, int offset) throws ServiceException;
+
+    int countNumberAllOrders() throws ServiceException;
 }

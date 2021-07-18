@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
             numberOrders = ORDER_DAO.countNumberOrders(username);
             logger.log(Level.DEBUG, "OrderService - counting the number of orders = {} by username", numberOrders);
         } catch (OrionDatabaseException e) {
-            throw new ServiceException("Database access error occurred while retrieving user's orders", e);
+            throw new ServiceException("Database access error occurred while counting user's orders", e);
         }
         return numberOrders;
     }
@@ -54,5 +54,26 @@ public class OrderServiceImpl implements OrderService {
         } catch (SQLException | OrionDatabaseException e) {
             throw new ServiceException("Order is not removed from the database", e);
         }
+    }
+
+    @Override
+    public List<Order> findAllOrders(int limit, int offset) throws ServiceException {
+        try {
+            return ORDER_DAO.findAllOrders(limit, offset);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while retrieving all orders", e);
+        }
+    }
+
+    @Override
+    public int countNumberAllOrders() throws ServiceException {
+        int numberOrders;
+        try {
+            numberOrders = ORDER_DAO.countNumberAllOrders();
+            logger.log(Level.DEBUG, "OrderService - counting the number of orders = {}", numberOrders);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while counting all orders", e);
+        }
+        return numberOrders;
     }
 }

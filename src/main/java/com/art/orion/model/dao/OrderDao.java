@@ -17,4 +17,8 @@ public interface OrderDao {
     int countNumberOrders(String username) throws OrionDatabaseException;
 
     void removeOrderById(int orderId) throws SQLException, OrionDatabaseException;
+
+    List<Order> findAllOrders(int limit, int offset) throws OrionDatabaseException;
+
+    int countNumberAllOrders() throws OrionDatabaseException;
 }

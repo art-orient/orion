@@ -67,6 +67,9 @@ public class OrderDaoJdbc implements OrderDao {
     private static final String SHOES_IMAGE_PATH_PREFIX = "images/shoes/";
     private static final String CLOTHING_IMAGE_PATH_PREFIX = "images/clothing/";
     private static final String ACCESSORIES_IMAGE_PATH_PREFIX = "images/accessories/";
+    private static final String SELECT_ALL_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
+            "confirmation_status FROM orders LIMIT ? OFFSET ?";
+    private static final String COUNT_ALL_ORDERS = "SELECT count(*) FROM orders";
 
     private OrderDaoJdbc() {
     }
@@ -152,6 +155,24 @@ public class OrderDaoJdbc implements OrderDao {
             statement.setString(SELECT_USER_ORDERS_USERNAME, username);
             statement.setInt(SELECT_USER_ORDERS_LIMIT, limit);
             statement.setInt(SELECT_USER_ORDERS_OFFSET, offset);
+            ResultSet ordersSet = statement.executeQuery();
+            while (ordersSet.next()) {
+                Order order = createOrder(connection, ordersSet);
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findAllOrders(int limit, int offset) throws OrionDatabaseException {
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SELECT_ALL_ORDERS)) {
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet ordersSet = statement.executeQuery();
             while (ordersSet.next()) {
                 Order order = createOrder(connection, ordersSet);
@@ -259,6 +280,21 @@ public class OrderDaoJdbc implements OrderDao {
                 connection.close();
             }
         }
+    }
+
+    public int countNumberAllOrders() throws OrionDatabaseException {
+        int number = 0;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_ALL_ORDERS)) {
+            while (resultSet.next()) {
+                number = resultSet.getInt(1);
+            }
+            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return number;
     }
 
     private void removeOrderData(Connection connection, int orderId, String query) throws SQLException {

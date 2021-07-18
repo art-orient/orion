@@ -28,6 +28,8 @@ public class PagePath {
     public static final String EDIT_PRODUCT_PAGE = "jsp/editProduct.jsp";
     public static final String USER_MANAGEMENT_PAGE = "jsp/userManagement.jsp";
     public static final String USER_MANAGEMENT_REDIRECT_PAGE = "jsp/userManagementRedirect.jsp";
+    public static final String ORDER_MANAGEMENT_PAGE = "jsp/orderManagement.jsp";
+    public static final String ORDER_MANAGEMENT_REDIRECT_PAGE = "jsp/orderManagementRedirect.jsp";
 
     private PagePath() {
     }

@@ -16,6 +16,7 @@ import com.art.orion.controller.command.impl.LoginCommand;
 import com.art.orion.controller.command.impl.LoginUserCommand;
 import com.art.orion.controller.command.impl.LogoutCommand;
 import com.art.orion.controller.command.impl.MakeOrderCommand;
+import com.art.orion.controller.command.impl.OrderManagementCommand;
 import com.art.orion.controller.command.impl.OrdersCommand;
 import com.art.orion.controller.command.impl.ProductManagementCommand;
 import com.art.orion.controller.command.impl.ProfileCommand;
@@ -59,7 +60,8 @@ public enum CommandType {
     USER_MANAGEMENT(new UserManagementCommand(new UserServiceImpl())),
     CHANGE_ROLE(new ChangeRoleCommand(new UserServiceImpl())),
     CHANGE_ACTIVITY(new ChangeActivityCommand(new UserServiceImpl())),
-    DELETE_USER(new DeleteUserCommand(new UserServiceImpl()));
+    DELETE_USER(new DeleteUserCommand(new UserServiceImpl())),
+    ORDER_MANAGEMENT(new OrderManagementCommand(new OrderServiceImpl()));
 
     private final Command command;
 

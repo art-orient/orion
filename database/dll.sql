@@ -1,14 +1,12 @@
 USE orion;
 
-INSERT INTO users
-VALUES ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
-        'Александр', 'Артихович', 'art-orient@tut.by', 0, 1);  -- password=admin
-INSERT INTO users
-VALUES ('natarti', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',
-        'Наталья', 'Артихович', 'natarti75@gmail.com', 2, 1);  -- password=123456
-INSERT INTO users
-VALUES ('lesha', 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2',
-        'Lesha', 'Artsikhovich', 'art22@tut.by', 2, 1);  -- password=11111
+INSERT INTO users VALUES
+('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Александр', 'Артихович',
+'art-orient@tut.by', 0, 1),  -- password=admin
+('natarti', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Наталья', 'Артихович',
+'natarti75@gmail.com', 2, 1),  -- password=123456
+('lesha', 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2', 'Lesha', 'Artsikhovich',
+'art22@tut.by', 1, 1);  -- password=11111
 INSERT INTO users
 VALUES ('andrei', 'b9352494463399aa6a44ed5e39425b8a0bc39b2fc3d0184ba2583ce9bc4e4c1d',
         'Андрей', 'Андреев', 'andrei@and.com', 2, 1);  -- password=andrei
@@ -33,6 +31,10 @@ VALUES ('taniusha', '9128948c6d1f7648371f4d91e48fd030fad561966bc03dd0eca793352e2
 INSERT INTO users
 VALUES ('vova', 'e889cf90c39f0447c4c4ce6b8623c437f861a84bad8096bd5332065bd300895c',
         'Владимир', 'Устинов', 'vovust@tut.by', 2, 1);
+INSERT INTO users
+VALUES ('artem', 'ffb622df7e9926a3b77284dcb024a2ca667e1c474dd644321e90a16330107519',
+        'Artem', 'Suvorov', 'suvorov@tut.by', 2, 1);
+
 
 INSERT INTO accessories
 VALUES (1, 'Рюкзак', 'A backpack', 'Mizuno', 'Running Backpack 10L', 'РЮКЗАК MIZUNO УНИСЕКС
