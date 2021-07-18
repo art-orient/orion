@@ -13,6 +13,12 @@ import static com.art.orion.controller.command.PagePath.PRODUCT_MANAGEMENT_PAGE;
 import static com.art.orion.util.Constant.CATEGORY;
 import static com.art.orion.util.Constant.ERROR;
 
+/**
+ * The command is responsible for going to the page for adding products
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class AddProductPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

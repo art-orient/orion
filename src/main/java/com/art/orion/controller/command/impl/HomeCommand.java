@@ -9,6 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static com.art.orion.controller.command.PagePath.INDEX_PAGE;
 
+/**
+ * The command is responsible for going to the home page
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class HomeCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

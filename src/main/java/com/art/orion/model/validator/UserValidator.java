@@ -42,7 +42,7 @@ public class UserValidator {
         return isValidUser;
     }
 
-    private boolean isNotValidUsername(String username) {
+    public boolean isNotValidUsername(String username) {
         boolean isNotValidUsername;
         if (username==null || username.isEmpty()) {
             isNotValidUsername = true;

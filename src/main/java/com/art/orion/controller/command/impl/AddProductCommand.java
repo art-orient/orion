@@ -28,6 +28,12 @@ import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.CATEGORY;
 import static com.art.orion.util.Constant.SHOES;
 
+/**
+ * The command is responsible for accepting products
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class AddProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

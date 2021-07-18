@@ -20,6 +20,12 @@ import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.ROLE;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for changing the role of the user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ChangeRoleCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

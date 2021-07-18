@@ -19,6 +19,12 @@ import static com.art.orion.util.Constant.GROUPED_CART;
 import static com.art.orion.util.Constant.NUMBER;
 import static com.art.orion.util.Constant.TOTAL_COST;
 
+/**
+ * The command is responsible for the formation of the user's cart
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class CartCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final CartService cartService;

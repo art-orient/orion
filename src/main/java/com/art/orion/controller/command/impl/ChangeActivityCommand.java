@@ -17,6 +17,12 @@ import static com.art.orion.util.Constant.ERROR;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for changing the active status of the user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ChangeActivityCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

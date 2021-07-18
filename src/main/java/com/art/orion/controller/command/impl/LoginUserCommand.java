@@ -23,6 +23,12 @@ import static com.art.orion.util.Constant.PASSWORD;
 import static com.art.orion.util.Constant.ROLE;
 import static com.art.orion.util.Constant.ERROR;
 
+/**
+ * The command is responsible for user authentication
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class LoginUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

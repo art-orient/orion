@@ -10,6 +10,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import static com.art.orion.controller.command.PagePath.REGISTRATION_PAGE;
 import static com.art.orion.util.Constant.REGISTRATION_STATUS;
 
+/**
+ * The command is responsible for creating the registration status when registering a new user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class CheckRegStatusCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

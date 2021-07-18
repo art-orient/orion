@@ -17,6 +17,12 @@ import static com.art.orion.controller.command.PagePath.ORDER_MANAGEMENT_REDIREC
 import static com.art.orion.util.Constant.ORDER_ID;
 import static com.art.orion.util.Constant.PAGE;
 
+/**
+ * The command is responsible for changing the status of the order
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ChangeStatusOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final OrderService orderService;

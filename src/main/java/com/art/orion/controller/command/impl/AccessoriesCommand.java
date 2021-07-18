@@ -22,6 +22,12 @@ import static com.art.orion.util.Constant.ROLE;
 
 import java.util.List;
 
+/**
+ * The command is responsible for the formation of the list of accessories
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class AccessoriesCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

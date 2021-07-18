@@ -14,6 +14,12 @@ import static com.art.orion.util.Constant.ERROR;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for deleting a user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class DeleteUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

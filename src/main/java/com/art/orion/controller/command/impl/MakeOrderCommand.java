@@ -24,6 +24,12 @@ import static com.art.orion.util.Constant.CART;
 import static com.art.orion.util.Constant.ERROR;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for the user's order
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class MakeOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final OrderService orderService;

@@ -9,6 +9,12 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static com.art.orion.controller.command.PagePath.INDEX_PAGE;
 
+/**
+ * The command is responsible for logging out the user and clearing his session
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class LogoutCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 

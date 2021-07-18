@@ -21,6 +21,12 @@ import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
 import static com.art.orion.util.Constant.PRODUCTS;
 import static com.art.orion.util.Constant.ROLE;
 
+/**
+ * The command is responsible for the formation of the list of clothing
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ClothingCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

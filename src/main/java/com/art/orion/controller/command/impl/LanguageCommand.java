@@ -14,6 +14,12 @@ import static com.art.orion.controller.command.PagePath.INDEX_PAGE;
 import static com.art.orion.util.Constant.LANGUAGE;
 import static com.art.orion.util.Constant.CURRENT_PAGE;
 
+/**
+ * The command is responsible for changing the interface language
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class LanguageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
 
@@ -24,14 +30,6 @@ public class LanguageCommand implements Command {
         logger.log(Level.INFO, "change of language");
         ErrorMessageManager.setLocale(selectedLanguage);
         String page = (String) req.getSession().getAttribute(CURRENT_PAGE);
-//        todo
-//        if (page == null) {
-//            page = ConfigManager.getProperty("page.index");
-//        }
-//        String previousPage = page.substring(4, page.length() - 4);
-//        if (ACCESSORIES.equals(previousPage) || CLOTHING.equals(previousPage) || SHOES.equals(previousPage)) {
-//            page = ConfigManager.getProperty("page.index");
-//        }
         if (ERROR_PAGE.equals(page)) {
             CommandFactory.sendPageNotFound(req);
         }
