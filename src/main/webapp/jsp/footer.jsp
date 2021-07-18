@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="customtag" prefix="mytag" %>
 <c:if test="${sessionScope.language != null}">
     <fmt:setLocale value="${sessionScope.language}"/>
 </c:if>
@@ -20,9 +21,9 @@
             <c:out value="+375-29-3721259"/><br><br>
             <c:out value="+375-29-7694238"/>
         </div>
-        <br><br><br>
+        <br><br>
         <div class="author">
-            <fmt:message key="ui.author"/>
+            <mytag:author/>
         </div>
     </div>
     </div>
