@@ -17,6 +17,9 @@
 <section id="orders" class="section">
     <div class="container">
         <h2 class="headline"><fmt:message key="ui.allOrders"/></h2>
+        <fmt:message key="ui.foundOrders"/>
+        <c:if test="${orders == null}"><c:out value="0"/></c:if>
+        <c:out value="${numberOrders}"/><br>
     <c:if test="${numberOrders == 0}">
         <p><fmt:message key="ui.noOrders"/></p>
     </c:if>
@@ -83,6 +86,7 @@
                             <form action="controller" method="post">
                                 <input type="hidden" name="command" value="remove_order">
                                 <input type="hidden" name="page" value="${page}"/>
+                                <input type="hidden" name="order_management" value="true"/>
                                 <input type="hidden" name="orderId" value="${order.orderId}">
                                 <input type="submit" value='<fmt:message key="ui.remove"/>'>
                             </form>

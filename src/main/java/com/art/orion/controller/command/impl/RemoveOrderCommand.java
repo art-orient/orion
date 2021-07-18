@@ -10,7 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static com.art.orion.controller.command.PagePath.ORDERS_REDIRECT_PAGE;
+import static com.art.orion.controller.command.PagePath.ORDER_MANAGEMENT_REDIRECT_PAGE;
 import static com.art.orion.util.Constant.ORDER_ID;
+import static com.art.orion.util.Constant.ORDER_MANAGEMENT;
 
 public class RemoveOrderCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
@@ -19,6 +21,7 @@ public class RemoveOrderCommand implements Command {
     public RemoveOrderCommand(OrderService orderService) {
         this.orderService = orderService;
     }
+
     @Override
     public String execute(HttpServletRequest req) {
         int orderId = RequestParseNumberHelper.getInt(req, ORDER_ID);
@@ -27,6 +30,10 @@ public class RemoveOrderCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR,e);
         }
-        return ORDERS_REDIRECT_PAGE;
+        String page = ORDERS_REDIRECT_PAGE;
+        if (req.getParameter(ORDER_MANAGEMENT) != null) {
+            page = ORDER_MANAGEMENT_REDIRECT_PAGE;
+        }
+        return page;
     }
 }

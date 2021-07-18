@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
     private static final Logger logger = LogManager.getLogger();
@@ -75,5 +76,23 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException("Database access error occurred while counting all orders", e);
         }
         return numberOrders;
+    }
+
+    public Optional<Order> findOrderById(int id) throws ServiceException {
+        try {
+            logger.log(Level.DEBUG, () -> "OrderService - search order by id");
+            return ORDER_DAO.findOrderById(id);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while searching order by id", e);
+        }
+    }
+
+    public boolean updateOrder(Order order) throws ServiceException {
+        try {
+            logger.log(Level.DEBUG, () -> "OrderService - update order with id = " + order.getOrderId());
+            return ORDER_DAO.updateOrder(order);
+        } catch (OrionDatabaseException e) {
+            throw new ServiceException("Database access error occurred while searching order by id", e);
+        }
     }
 }

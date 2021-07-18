@@ -51,6 +51,7 @@ public class Constant {
     public static final String USER_MANAGEMENT = "user_management";
     public static final String USERS = "users";
     public static final String NUMBER_USERS = "number_users";
+    public static final String ORDER_MANAGEMENT = "order_management";
 
     private Constant() {
     }

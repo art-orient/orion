@@ -6,6 +6,7 @@ import com.art.orion.exception.ServiceException;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderDao {
 
@@ -21,4 +22,8 @@ public interface OrderDao {
     List<Order> findAllOrders(int limit, int offset) throws OrionDatabaseException;
 
     int countNumberAllOrders() throws OrionDatabaseException;
+
+    Optional<Order> findOrderById(int id) throws OrionDatabaseException;
+
+    boolean updateOrder(Order order) throws OrionDatabaseException;
 }

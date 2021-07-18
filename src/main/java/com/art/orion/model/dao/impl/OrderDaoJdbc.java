@@ -25,9 +25,14 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.art.orion.model.dao.column.OrdersColumn.ORDER_COST;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_COST_UPDATE_INDEX;
 import static com.art.orion.model.dao.column.OrdersColumn.ORDER_DATE;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_DATE_UPDATE_INDEX;
 import static com.art.orion.model.dao.column.OrdersColumn.ORDER_ID;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_ID_UPDATE_INDEX;
 import static com.art.orion.model.dao.column.OrdersColumn.ORDER_STATUS;
+import static com.art.orion.model.dao.column.OrdersColumn.ORDER_STATUS_UPDATE_INDEX;
+import static com.art.orion.model.dao.column.OrdersColumn.USERNAME_UPDATE_INDEX;
 import static com.art.orion.model.dao.column.OrdersDetailsColumn.CATEGORY_INDEX;
 import static com.art.orion.model.dao.column.OrdersDetailsColumn.COST_INDEX;
 import static com.art.orion.model.dao.column.OrdersDetailsColumn.NUMBER_PRODUCTS;
@@ -51,8 +56,9 @@ public class OrderDaoJdbc implements OrderDao {
     private static final int INSERT_ORDER_COST = 3;
     private static final int INSERT_ORDER_STATUS = 4;
     private static final String INSERT_ORDER_DETAILS = "INSERT INTO order_details VALUES (?, ?, ?, ?, ?)";
-    private static final String SELECT_USER_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
-            "confirmation_status FROM orders WHERE username = ? LIMIT ? OFFSET ?";
+    private static final String SELECT = "SELECT order_id, username, order_date, order_cost, " +
+            "confirmation_status FROM orders ";
+    private static final String SELECT_USER_ORDERS = SELECT + "WHERE username = ? LIMIT ? OFFSET ?";
     private static final int SELECT_USER_ORDERS_USERNAME = 1;
     private static final int SELECT_USER_ORDERS_LIMIT = 2;
     private static final int SELECT_USER_ORDERS_OFFSET = 3;
@@ -67,9 +73,11 @@ public class OrderDaoJdbc implements OrderDao {
     private static final String SHOES_IMAGE_PATH_PREFIX = "images/shoes/";
     private static final String CLOTHING_IMAGE_PATH_PREFIX = "images/clothing/";
     private static final String ACCESSORIES_IMAGE_PATH_PREFIX = "images/accessories/";
-    private static final String SELECT_ALL_ORDERS = "SELECT order_id, username, order_date, order_cost, " +
-            "confirmation_status FROM orders LIMIT ? OFFSET ?";
+    private static final String SELECT_ALL_ORDERS = SELECT + "LIMIT ? OFFSET ?";
     private static final String COUNT_ALL_ORDERS = "SELECT count(*) FROM orders";
+    private static final String SELECT_ORDER_BY_ID = SELECT + "WHERE order_id = ?";
+    private static final String UPDATE_ORDER = "UPDATE orders SET username = ?, order_date = ?, order_cost = ?, " +
+            "confirmation_status = ? WHERE order_id = ?";
 
     private OrderDaoJdbc() {
     }
@@ -101,52 +109,7 @@ public class OrderDaoJdbc implements OrderDao {
         return orderId;
     }
 
-    private int saveOrder(Connection connection, Order order) throws SQLException {
-        int orderId = INVALID_ID;
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
-            statement.setString(INSERT_ORDER_USERNAME, order.getUsername());
-            statement.setDate(INSERT_ORDER_DATE, new java.sql.Date(order.getOrderDate().getTime()));
-            statement.setBigDecimal(INSERT_ORDER_COST, order.getOrderCost());
-            statement.setBoolean(INSERT_ORDER_STATUS, order.isConfirmed());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                orderId = resultSet.getInt(1);
-                logger.log(Level.DEBUG, "orderId = {}", orderId);
-            }
-        }
-        return orderId;
-    }
-
-    private void saveOrderDetails(Connection connection, Order order, int orderId) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_DETAILS,
-                                                                        Statement.RETURN_GENERATED_KEYS)) {
-            for (Map.Entry<Object, Long> entry : order.getProductsAndQuantity().entrySet()) {
-                Object product = entry.getKey();
-                int numberProducts = entry.getValue().intValue();
-                statement.setInt(ORDER_ID_INDEX, orderId);
-                if (product instanceof Shoes) {
-                    Shoes shoes = (Shoes) product;
-                    statement.setInt(CATEGORY_INDEX, SHOES_CATEGORY_NUMBER);
-                    statement.setInt(PRODUCT_ID_INDEX, shoes.getShoesId());
-                    statement.setBigDecimal(COST_INDEX, shoes.getProductDetails().getCost());
-                } else if (product instanceof Clothing) {
-                    Clothing clothing = (Clothing) product;
-                    statement.setInt(CATEGORY_INDEX, CLOTHING_CATEGORY_NUMBER);
-                    statement.setInt(PRODUCT_ID_INDEX, clothing.getClothingId());
-                    statement.setBigDecimal(COST_INDEX, clothing.getProductDetails().getCost());
-                } else if (product instanceof Accessory) {
-                    Accessory accessory = (Accessory) product;
-                    statement.setInt(CATEGORY_INDEX, ACCESSORIES_CATEGORY_NUMBER);
-                    statement.setInt(PRODUCT_ID_INDEX, accessory.getAccessoryId());
-                    statement.setBigDecimal(COST_INDEX, accessory.getProductDetails().getCost());
-                }
-                statement.setInt(NUMBER_PRODUCTS_INDEX, numberProducts);
-                statement.executeUpdate();
-            }
-        }
-    }
-
+    @Override
     public List<Order> findUserOrders(String username, int limit, int offset)
             throws OrionDatabaseException {
         List<Order> orders = new ArrayList<>();
@@ -199,8 +162,146 @@ public class OrderDaoJdbc implements OrderDao {
         }
     }
 
+    @Override
+    public int countNumberOrders(String username) throws OrionDatabaseException {
+        int number = 0;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(COUNT_ORDERS)) {
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                number = resultSet.getInt(1);
+            }
+            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return number;
+    }
+
+    @Override
+    public void removeOrderById(int orderId) throws SQLException, OrionDatabaseException {
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.INSTANCE.getConnection();
+            connection.setAutoCommit(false);
+            removeOrderData(connection, orderId, REMOVE_ORDER_DETAILS);
+            removeOrderData(connection, orderId, REMOVE_ORDER);
+            connection.commit();
+            logger.log(Level.INFO, () -> "The order is removed from the database");
+        } catch (SQLException e) {
+            connection.rollback();
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        } finally {
+            if (connection != null) {
+                connection.setAutoCommit(true);
+                connection.close();
+            }
+        }
+    }
+
+    @Override
+    public int countNumberAllOrders() throws OrionDatabaseException {
+        int number = 0;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(COUNT_ALL_ORDERS)) {
+            while (resultSet.next()) {
+                number = resultSet.getInt(1);
+            }
+            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return number;
+    }
+
+    @Override
+    public Optional<Order> findOrderById(int orderId) throws OrionDatabaseException {
+        Optional<Order> optionalOrder = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ORDER_BY_ID)) {
+            preparedStatement.setInt(1, orderId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Order order = createOrder(connection, resultSet);
+                    optionalOrder = Optional.of(order);
+                }
+            }
+            logger.log(Level.DEBUG, () -> String.format("The order with id = %s got from the database", orderId));
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return optionalOrder;
+    }
+
+    @Override
+    public boolean updateOrder(Order order) throws OrionDatabaseException {
+        boolean isOrderUpdated;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDER)) {
+            preparedStatement.setString(USERNAME_UPDATE_INDEX, order.getUsername());
+            preparedStatement.setDate(ORDER_DATE_UPDATE_INDEX, new java.sql.Date(order.getOrderDate().getTime()));
+            preparedStatement.setBigDecimal(ORDER_COST_UPDATE_INDEX, order.getOrderCost());
+            preparedStatement.setBoolean(ORDER_STATUS_UPDATE_INDEX, order.isConfirmed());
+            preparedStatement.setInt(ORDER_ID_UPDATE_INDEX, (int) order.getOrderId());
+            isOrderUpdated = (preparedStatement.executeUpdate() == 1);
+            logger.log(Level.INFO, "The order with id = {} is updated", order.getOrderId());
+        } catch (SQLException e) {
+            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
+        }
+        return isOrderUpdated;
+    }
+
+    private int saveOrder(Connection connection, Order order) throws SQLException {
+        int orderId = INVALID_ID;
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
+            statement.setString(INSERT_ORDER_USERNAME, order.getUsername());
+            statement.setDate(INSERT_ORDER_DATE, new java.sql.Date(order.getOrderDate().getTime()));
+            statement.setBigDecimal(INSERT_ORDER_COST, order.getOrderCost());
+            statement.setBoolean(INSERT_ORDER_STATUS, order.isConfirmed());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if (resultSet.next()) {
+                orderId = resultSet.getInt(1);
+                logger.log(Level.DEBUG, "orderId = {}", orderId);
+            }
+        }
+        return orderId;
+    }
+
+
+    private void saveOrderDetails(Connection connection, Order order, int orderId) throws SQLException {
+        try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_DETAILS,
+                Statement.RETURN_GENERATED_KEYS)) {
+            for (Map.Entry<Object, Long> entry : order.getProductsAndQuantity().entrySet()) {
+                Object product = entry.getKey();
+                int numberProducts = entry.getValue().intValue();
+                statement.setInt(ORDER_ID_INDEX, orderId);
+                if (product instanceof Shoes) {
+                    Shoes shoes = (Shoes) product;
+                    statement.setInt(CATEGORY_INDEX, SHOES_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, shoes.getShoesId());
+                    statement.setBigDecimal(COST_INDEX, shoes.getProductDetails().getCost());
+                } else if (product instanceof Clothing) {
+                    Clothing clothing = (Clothing) product;
+                    statement.setInt(CATEGORY_INDEX, CLOTHING_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, clothing.getClothingId());
+                    statement.setBigDecimal(COST_INDEX, clothing.getProductDetails().getCost());
+                } else if (product instanceof Accessory) {
+                    Accessory accessory = (Accessory) product;
+                    statement.setInt(CATEGORY_INDEX, ACCESSORIES_CATEGORY_NUMBER);
+                    statement.setInt(PRODUCT_ID_INDEX, accessory.getAccessoryId());
+                    statement.setBigDecimal(COST_INDEX, accessory.getProductDetails().getCost());
+                }
+                statement.setInt(NUMBER_PRODUCTS_INDEX, numberProducts);
+                statement.executeUpdate();
+            }
+        }
+    }
+
     private Map<Object, Long> createProducts(ResultSet productSet)
-                                            throws SQLException, OrionDatabaseException {
+            throws SQLException, OrionDatabaseException {
         Map<Object, Long> products = new HashMap<>();
         Object product = null;
         while (productSet.next()) {
@@ -244,57 +345,6 @@ public class OrderDaoJdbc implements OrderDao {
             products.put(product, numberProducts);
         }
         return products;
-    }
-
-    public int countNumberOrders(String username) throws OrionDatabaseException {
-        int number = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(COUNT_ORDERS)) {
-            statement.setString(1, username);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                number = resultSet.getInt(1);
-            }
-            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
-        } catch (SQLException e) {
-            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
-        }
-        return number;
-    }
-
-    public void removeOrderById(int orderId) throws SQLException, OrionDatabaseException {
-        Connection connection = null;
-        try {
-            connection = ConnectionPool.INSTANCE.getConnection();
-            connection.setAutoCommit(false);
-            removeOrderData(connection, orderId, REMOVE_ORDER_DETAILS);
-            removeOrderData(connection, orderId, REMOVE_ORDER);
-            connection.commit();
-            logger.log(Level.INFO, () -> "The order is removed from the database");
-        } catch (SQLException e) {
-            connection.rollback();
-            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
-        } finally {
-            if (connection != null) {
-                connection.setAutoCommit(true);
-                connection.close();
-            }
-        }
-    }
-
-    public int countNumberAllOrders() throws OrionDatabaseException {
-        int number = 0;
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(COUNT_ALL_ORDERS)) {
-            while (resultSet.next()) {
-                number = resultSet.getInt(1);
-            }
-            logger.log(Level.DEBUG, "Counting the number of orders = {}", number);
-        } catch (SQLException e) {
-            throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
-        }
-        return number;
     }
 
     private void removeOrderData(Connection connection, int orderId, String query) throws SQLException {

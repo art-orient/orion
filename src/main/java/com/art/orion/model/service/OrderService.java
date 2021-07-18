@@ -4,6 +4,7 @@ import com.art.orion.exception.ServiceException;
 import com.art.orion.model.entity.Order;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
 
@@ -18,4 +19,8 @@ public interface OrderService {
     List<Order> findAllOrders(int limit, int offset) throws ServiceException;
 
     int countNumberAllOrders() throws ServiceException;
+
+    Optional<Order> findOrderById(int id) throws ServiceException;
+
+    boolean updateOrder(Order order) throws ServiceException;
 }

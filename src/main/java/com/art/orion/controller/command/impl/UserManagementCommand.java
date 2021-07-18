@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 import static com.art.orion.controller.command.PagePath.USER_MANAGEMENT_PAGE;
+import static com.art.orion.controller.command.PagePath.USER_MANAGEMENT_REDIRECT_PAGE;
 import static com.art.orion.controller.command.util.Paginator.USER_LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_USERS;
@@ -33,6 +34,7 @@ public class UserManagementCommand implements Command {
         String pageNumber = req.getParameter(PAGE);
         req.getSession().setAttribute(PAGE, pageNumber);
         int offset = Paginator.preparePagination(req);
+        String page = USER_MANAGEMENT_PAGE;
         try {
             List<User> users = userService.findUsers(USER_LIMIT, offset);
             req.setAttribute(USERS, users);
@@ -40,9 +42,14 @@ public class UserManagementCommand implements Command {
             req.setAttribute(NUMBER_USERS , numberUsers);
             int numberPages = Paginator.findUserNumberPages(numberUsers);
             req.setAttribute(NUMBER_PAGES, numberPages);
+            int sessionPageNumber = (int) req.getSession().getAttribute(PAGE);
+            if (sessionPageNumber > numberPages) {
+                req.getSession().setAttribute(PAGE, numberPages);
+                page = USER_MANAGEMENT_REDIRECT_PAGE;
+            }
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e);
         }
-        return USER_MANAGEMENT_PAGE;
+        return page;
     }
 }
