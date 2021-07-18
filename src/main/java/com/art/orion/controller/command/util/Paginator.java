@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
-
 import static com.art.orion.util.Constant.COMMAND;
 import static com.art.orion.util.Constant.CURRENT_COMMAND;
 import static com.art.orion.util.Constant.PAGE;
@@ -22,14 +20,13 @@ public class Paginator {
     }
 
     public static int getCurrentPage(HttpServletRequest request) {
-        Integer sessionPageNumber;
+        int sessionPageNumber;
         String pageNumber = (String) request.getSession().getAttribute(PAGE);
             try {
                 if (pageNumber == null) {
                     sessionPageNumber = 1;
                 } else {
                     sessionPageNumber = Integer.parseInt(pageNumber);
-                    System.out.println("getCurrentPage ===============" + sessionPageNumber);
                 }
             } catch (ClassCastException e) {
                 logger.log(Level.ERROR, e);
@@ -40,7 +37,6 @@ public class Paginator {
 
     public static int  preparePagination(HttpServletRequest req) {
         int pageNumber = getCurrentPage(req);
-        System.out.println("prepare - ----------- " + pageNumber);
         req.getSession().setAttribute(PAGE, pageNumber);
         String currentCommand = req.getParameter(COMMAND);
         req.setAttribute(CURRENT_COMMAND, currentCommand);

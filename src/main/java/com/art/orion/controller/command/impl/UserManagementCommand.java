@@ -31,14 +31,8 @@ public class UserManagementCommand implements Command {
     public String execute(HttpServletRequest req) {
         logger.log(Level.INFO, "Go to user management page");
         String pageNumber = req.getParameter(PAGE);
-        System.out.println(pageNumber + "_________33333333333____________________");
         req.getSession().setAttribute(PAGE, pageNumber);
-        String pageNumber2 = (String) req.getSession().getAttribute(PAGE);
-        System.out.println(pageNumber2 + "_________555555555555555555_________________");
-
-
         int offset = Paginator.preparePagination(req);
-        System.out.println("77777777777777777777777777777777777");
         try {
             List<User> users = userService.findUsers(USER_LIMIT, offset);
             req.setAttribute(USERS, users);

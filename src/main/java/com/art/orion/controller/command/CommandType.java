@@ -4,6 +4,7 @@ import com.art.orion.controller.command.impl.AccessoriesCommand;
 import com.art.orion.controller.command.impl.AddProductCommand;
 import com.art.orion.controller.command.impl.AddProductPageCommand;
 import com.art.orion.controller.command.impl.CartCommand;
+import com.art.orion.controller.command.impl.ChangeActivityCommand;
 import com.art.orion.controller.command.impl.ChangeRoleCommand;
 import com.art.orion.controller.command.impl.CheckRegStatusCommand;
 import com.art.orion.controller.command.impl.ClothingCommand;
@@ -55,7 +56,8 @@ public enum CommandType {
     EDIT_PRODUCT(new EditProductCommand(new ProductServiceImpl())),
     UPDATE_PRODUCT(new UpdateProductCommand(new ProductServiceImpl())),
     USER_MANAGEMENT(new UserManagementCommand(new UserServiceImpl())),
-    CHANGE_ROLE(new ChangeRoleCommand(new UserServiceImpl()));
+    CHANGE_ROLE(new ChangeRoleCommand(new UserServiceImpl())),
+    CHANGE_ACTIVITY(new ChangeActivityCommand(new UserServiceImpl()));
 
     private final Command command;
 
