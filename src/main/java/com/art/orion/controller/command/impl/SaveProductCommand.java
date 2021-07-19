@@ -37,6 +37,12 @@ import static com.art.orion.util.Constant.SHOES;
 import static com.art.orion.util.Constant.TYPE_RU;
 import static com.art.orion.util.Constant.TYPE_EN;
 
+/**
+ * The command is responsible for saving product information
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class SaveProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

@@ -20,6 +20,12 @@ import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.ORDERS;
 import static com.art.orion.util.Constant.PAGE;
 
+/**
+ * The command is responsible for managing all orders
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class OrderManagementCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final OrderService orderService;

@@ -20,6 +20,12 @@ import static com.art.orion.util.Constant.NUMBER_USERS;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERS;
 
+/**
+ * The command is responsible for managing and listing users
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class UserManagementCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

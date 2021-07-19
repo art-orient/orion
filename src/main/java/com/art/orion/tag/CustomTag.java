@@ -12,7 +12,8 @@ public class CustomTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         String author = ErrorMessageManager.getMessage("msg.author");
-        String message = "<p style=\"color: yellow\">" + author + "</p>";
+        String message =
+            String.format("<p style=\"color: yellow\">%s</p><p style=\"color: yellow\">EPAM Systems</p>", author);
         try {
             JspWriter out = pageContext.getOut();
             out.write(message);

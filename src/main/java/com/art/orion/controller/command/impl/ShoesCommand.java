@@ -18,9 +18,16 @@ import static com.art.orion.controller.command.PagePath.SHOES_PAGE;
 import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
+import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCTS;
 import static com.art.orion.util.Constant.ROLE;
 
+/**
+ * The command is responsible for the formation of the list of shoes
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ShoesCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;
@@ -32,6 +39,8 @@ public class ShoesCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page shoes");
+        String pageNumber = req.getParameter(PAGE);
+        req.getSession().setAttribute(PAGE, pageNumber);
         int offset = Paginator.preparePagination(req);
         try {
             String role = (String) req.getSession().getAttribute(ROLE);

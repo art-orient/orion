@@ -21,6 +21,12 @@ import static com.art.orion.util.Constant.ORDERS;
 import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for generating a list of user orders
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class OrdersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final OrderService orderService;

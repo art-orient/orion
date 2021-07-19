@@ -15,6 +15,12 @@ import static com.art.orion.controller.command.PagePath.PROFILE_PAGE;
 import static com.art.orion.util.Constant.USER;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The command is responsible for displaying information about the user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class ProfileCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;

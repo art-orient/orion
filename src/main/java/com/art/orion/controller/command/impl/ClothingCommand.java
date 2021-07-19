@@ -18,6 +18,7 @@ import static com.art.orion.controller.command.PagePath.CLOTHING_PAGE;
 import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
+import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCTS;
 import static com.art.orion.util.Constant.ROLE;
 
@@ -38,6 +39,8 @@ public class ClothingCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page clothing");
+        String pageNumber = req.getParameter(PAGE);
+        req.getSession().setAttribute(PAGE, pageNumber);
         int offset = Paginator.preparePagination(req);
         try {
             String role = (String) req.getSession().getAttribute(ROLE);

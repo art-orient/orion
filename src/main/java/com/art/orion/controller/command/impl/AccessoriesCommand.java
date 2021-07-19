@@ -17,6 +17,7 @@ import static com.art.orion.controller.command.PagePath.ACCESSORIES_PAGE;
 import static com.art.orion.controller.command.util.Paginator.LIMIT;
 import static com.art.orion.util.Constant.NUMBER_PAGES;
 import static com.art.orion.util.Constant.NUMBER_PRODUCTS;
+import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.PRODUCTS;
 import static com.art.orion.util.Constant.ROLE;
 
@@ -39,6 +40,8 @@ public class AccessoriesCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         logger.log(Level.DEBUG,"Go to page accessories");
+        String pageNumber = req.getParameter(PAGE);
+        req.getSession().setAttribute(PAGE, pageNumber);
         int offset = Paginator.preparePagination(req);
         try {
             String role = (String) req.getSession().getAttribute(ROLE);

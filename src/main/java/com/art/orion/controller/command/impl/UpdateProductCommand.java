@@ -41,6 +41,12 @@ import static com.art.orion.util.Constant.SHOES;
 import static com.art.orion.util.Constant.TYPE_EN;
 import static com.art.orion.util.Constant.TYPE_RU;
 
+/**
+ * The command is responsible for editing product information
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class UpdateProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

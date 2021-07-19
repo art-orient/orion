@@ -21,7 +21,7 @@
             <c:out value="+375-29-3721259"/><br><br>
             <c:out value="+375-29-7694238"/>
         </div>
-        <br><br>
+        <br>
         <div class="author">
             <mytag:author/>
         </div>

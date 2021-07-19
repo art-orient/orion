@@ -24,6 +24,12 @@ import static com.art.orion.util.Constant.CLOTHING;
 import static com.art.orion.util.Constant.PRODUCT;
 import static com.art.orion.util.Constant.SHOES;
 
+/**
+ * The command is responsible for removing the product from the user's order
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class RemoveProductCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final ProductService productService;

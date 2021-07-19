@@ -23,6 +23,12 @@ import static com.art.orion.util.Constant.LASTNAME;
 import static com.art.orion.util.Constant.EMAIL;
 import static com.art.orion.util.Constant.REGISTRATION_STATUS;
 
+/**
+ * The command is responsible for registering a new user
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see Command
+ */
 public class RegisterUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService userService;
