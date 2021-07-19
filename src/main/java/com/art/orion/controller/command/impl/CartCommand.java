@@ -39,7 +39,7 @@ public class CartCommand implements Command {
         if (products != null) {
             Map<Object, Long> groupedProducts = cartService.groupProducts(products);
             req.setAttribute(GROUPED_CART, new ArrayList<>(groupedProducts.entrySet()));
-            BigDecimal totalCost = cartService.findTotalCost(products);
+            BigDecimal totalCost = cartService.findTotalCost(groupedProducts);
             req.setAttribute(TOTAL_COST, totalCost);
             req.setAttribute(NUMBER, products.size());
             req.setAttribute(ERROR, req.getParameter(ERROR));

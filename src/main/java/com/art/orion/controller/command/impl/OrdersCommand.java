@@ -38,6 +38,8 @@ public class OrdersCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         String username = (String) req.getSession().getAttribute(USERNAME);
+        String pageNumber = req.getParameter(PAGE);
+        req.getSession().setAttribute(PAGE, pageNumber);
         String page = ORDERS_PAGE;
         int offset = Paginator.preparePagination(req);
         try {
@@ -47,8 +49,8 @@ public class OrdersCommand implements Command {
             req.setAttribute(NUMBER_ORDERS, numberOrders);
             int numberPages = Paginator.findNumberPages(numberOrders);
             req.setAttribute(NUMBER_PAGES, numberPages);
-            int pageNumber = (int) req.getSession().getAttribute(PAGE);
-            if (pageNumber > numberPages) {
+            int orderPageNumber = (int) req.getSession().getAttribute(PAGE);
+            if (orderPageNumber > numberPages) {
                 req.getSession().setAttribute(PAGE, numberPages);
                 page = ORDERS_REDIRECT_PAGE;
             }

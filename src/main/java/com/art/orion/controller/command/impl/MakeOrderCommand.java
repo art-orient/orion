@@ -65,7 +65,7 @@ public class MakeOrderCommand implements Command {
         List<Object> cart = (ArrayList<Object>) session.getAttribute(CART);
         Date date = new Date();
         Map<Object, Long> products = cartService.groupProducts(cart);
-        BigDecimal totalCost = cartService.findTotalCost(cart);
+        BigDecimal totalCost = cartService.findTotalCost(products);
         return new Order(username, date, products, totalCost);
     }
 }

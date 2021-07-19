@@ -18,16 +18,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public BigDecimal findTotalCost(List<Object> products) {
+    public BigDecimal findTotalCost(Map<Object, Long> products) {
         BigDecimal totalCost = BigDecimal.ZERO;
         BigDecimal cost = BigDecimal.ZERO;
-        for (Object o : products) {
-            if (o instanceof Accessory) {
-                cost = ((Accessory) o).getProductDetails().getCost();
-            } else if (o instanceof Clothing) {
-                cost = ((Clothing) o).getProductDetails().getCost();
-            } else if (o instanceof Shoes) {
-                cost = ((Shoes) o).getProductDetails().getCost();
+        for (Map.Entry<Object, Long> entry : products.entrySet()) {
+            if (entry.getKey() instanceof Accessory) {
+                cost = ((Accessory) entry.getKey()).getProductDetails().getCost();
+                cost = cost.multiply(BigDecimal.valueOf(entry.getValue()));
+            } else if (entry.getKey() instanceof Clothing) {
+                cost = ((Clothing) entry.getKey()).getProductDetails().getCost();
+                cost = cost.multiply(BigDecimal.valueOf(entry.getValue()));
+            } else if (entry.getKey() instanceof Shoes) {
+                cost = ((Shoes) entry.getKey()).getProductDetails().getCost();
+                cost = cost.multiply(BigDecimal.valueOf(entry.getValue()));
             }
             totalCost = totalCost.add(cost);
         }

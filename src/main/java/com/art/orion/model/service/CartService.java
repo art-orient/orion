@@ -8,5 +8,5 @@ public interface CartService {
 
     Map<Object, Long> groupProducts(List<Object> cart);
 
-    BigDecimal findTotalCost(List<Object> products);
+    BigDecimal findTotalCost(Map<Object, Long> products);
 }
