@@ -14,7 +14,7 @@ public interface UserService {
 
     boolean registerUser(User user) throws ServiceException;
 
-    boolean validateCredentials(String username, String password) throws ServiceException;
+    boolean[] validateCredentialsAndActivity (String username, String password) throws ServiceException;
 
     Optional<User> findUserByUsername(String username) throws ServiceException;
 

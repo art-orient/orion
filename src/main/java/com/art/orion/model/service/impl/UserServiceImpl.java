@@ -45,9 +45,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public boolean validateCredentials(String username, String password) throws ServiceException {
+    public boolean[] validateCredentialsAndActivity(String username, String password) throws ServiceException {
         try {
-            return USER_DAO.validateCredentials(username, password);
+            return USER_DAO.validateCredentialsAndActivity (username, password);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while validating credentials", e);
         }

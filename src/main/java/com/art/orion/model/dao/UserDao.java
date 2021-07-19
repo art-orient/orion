@@ -12,7 +12,7 @@ public interface UserDao {
 
     boolean checkIsUsernameBusy(String username) throws OrionDatabaseException;
 
-    boolean validateCredentials (String username, String password) throws OrionDatabaseException;
+    boolean[] validateCredentialsAndActivity (String username, String password) throws OrionDatabaseException;
 
     int countUsers() throws OrionDatabaseException;
 

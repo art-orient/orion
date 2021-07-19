@@ -42,7 +42,7 @@ public class UserDaoJdbc implements UserDao {
     private static final String GET_USERNAME = "SELECT username FROM users WHERE username = ?";
     private static final String GET_USER_BY_USERNAME = "SELECT username, password, firstname, lastname, email," +
             " role, active FROM users WHERE username = ?";
-    private static final String GET_USER_BY_CREDENTIALS = "SELECT username FROM users" +
+    private static final String GET_USER_BY_CREDENTIALS = "SELECT username, active FROM users" +
             " WHERE username = ? AND password = ?";
     private static final String SELECT_ALL_USERS = "SELECT username, password, firstname, lastname, email, " +
             "role, active FROM users LIMIT ? OFFSET ?";
@@ -97,8 +97,10 @@ public class UserDaoJdbc implements UserDao {
     }
 
     @Override
-    public boolean validateCredentials(String username, String password) throws OrionDatabaseException {
+    public boolean[] validateCredentialsAndActivity (String username, String password) throws OrionDatabaseException {
+        boolean[] result = new boolean[2];
         boolean isValid = false;
+        boolean isActive = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_BY_CREDENTIALS)) {
             preparedStatement.setString(1, username);
@@ -106,13 +108,16 @@ public class UserDaoJdbc implements UserDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     isValid = true;
+                    isActive = resultSet.getBoolean(ACTIVE);
                 }
             }
+            result[0] = isValid;
+            result[1] = isActive;
             logger.log(Level.DEBUG, () -> "Username and password are valid");
         } catch (SQLException e) {
             throw new OrionDatabaseException(DATABASE_EXCEPTION, e);
         }
-        return isValid;
+        return result;
     }
 
     @Override

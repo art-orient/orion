@@ -46,7 +46,15 @@ public class LoginUserCommand implements Command {
         HttpSession session = req.getSession();
         String language = (String) session.getAttribute(LANGUAGE);
         try {
-            if (userService.validateCredentials(username, encryptedPassword)) {
+            boolean[] validData = userService.validateCredentialsAndActivity(username, encryptedPassword);
+            boolean isValidCredentials = validData[0];
+            boolean isActive = validData[1];
+            if (!isActive) {
+                req.setAttribute(ERROR, ErrorMessageManager.getMessage("msg.accessDenied"));
+                logger.log(Level.INFO, "User {} Access denied, account blocked", username);
+                return page;
+            }
+            if (isValidCredentials) {
                 session.invalidate();
                 session = req.getSession();
                 session.setAttribute(LANGUAGE, language);
