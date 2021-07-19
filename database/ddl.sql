@@ -72,3 +72,5 @@ products_cost decimal(6, 2) not null,
 PRIMARY KEY (order_id, product_category, product_id),
 FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
+
+CREATE INDEX order_id_index ON order_details (order_id);

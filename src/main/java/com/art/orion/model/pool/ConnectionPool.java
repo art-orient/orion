@@ -23,6 +23,10 @@ public enum ConnectionPool {
     private static final int POOL_SIZE = 8;
     private BlockingQueue<ProxyConnection> freeConnections;
     private BlockingQueue<ProxyConnection> givenAwayConnections;
+    private static final String DB_DRIVER = "db.driver";
+    private static final String DB_URL = "db.url";
+    private static final String DB_USERNAME = "db.username";
+    private static final String DB_PASSWORD = "db.password";
 
     ConnectionPool() {
     }
@@ -30,10 +34,10 @@ public enum ConnectionPool {
     public void initPool() throws ConnectionPoolException {
         freeConnections = new LinkedBlockingQueue<>(POOL_SIZE);
         givenAwayConnections = new ArrayBlockingQueue<>(POOL_SIZE);
-        String driverName = ConfigManager.getProperty("db.driver");
-        String url = ConfigManager.getProperty("db.url");
-        String username = ConfigManager.getProperty("db.username");
-        String password = ConfigManager.getProperty("db.password");
+        String driverName = ConfigManager.getProperty(DB_DRIVER);
+        String url = ConfigManager.getProperty(DB_URL);
+        String username = ConfigManager.getProperty(DB_USERNAME);
+        String password = ConfigManager.getProperty(DB_PASSWORD);
         try {
             Class.forName(driverName);
         } catch (ClassNotFoundException e) {
@@ -60,9 +64,10 @@ public enum ConnectionPool {
         ProxyConnection connection = null;
         try {
             connection = freeConnections.take();
-            givenAwayConnections.offer(connection);
+            givenAwayConnections.put(connection);
         } catch (InterruptedException e) {
             logger.log(Level.WARN,"Thread was interrupted", e);
+            Thread.currentThread().interrupt();
         }
         return connection;
     }
@@ -70,7 +75,7 @@ public enum ConnectionPool {
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection &&
                 givenAwayConnections.remove(connection)) {
-            freeConnections.offer((ProxyConnection) connection);
+            freeConnections.add((ProxyConnection) connection);
         } else {
             logger.log(Level.WARN,"Connection is not instance of ProxyConnection");
         }
