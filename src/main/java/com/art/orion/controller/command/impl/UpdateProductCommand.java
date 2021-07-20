@@ -10,7 +10,6 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
-import com.art.orion.model.validator.ProductValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -147,7 +146,7 @@ public class UpdateProductCommand implements Command {
         List<String> descriptionEn = TextHandler.createListFromText(req.getParameter(DESCRIPTION_EN));
         BigDecimal cost = RequestParseNumberHelper.getBigDecimal(req, COST);
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
-        if (ProductValidator.isProductValid(brand, modelName, cost)) {
+        if (productService.isProductValid(brand, modelName, cost)) {
             productDetails.setBrand(brand);
             productDetails.setModelName(modelName);
             productDetails.setDescriptionRu(descriptionRu);

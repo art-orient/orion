@@ -39,6 +39,7 @@ public class LoginUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
+        req.getSession().removeAttribute(ERROR);
         String page = LOGIN_PAGE;
         String username = req.getParameter(USERNAME);
         String password = req.getParameter(PASSWORD);
@@ -49,12 +50,12 @@ public class LoginUserCommand implements Command {
             boolean[] validData = userService.validateCredentialsAndActivity(username, encryptedPassword);
             boolean isValidCredentials = validData[0];
             boolean isActive = validData[1];
-            if (!isActive) {
-                req.setAttribute(ERROR, ErrorMessageManager.getMessage("msg.accessDenied"));
-                logger.log(Level.INFO, "User {} Access denied, account blocked", username);
-                return page;
-            }
             if (isValidCredentials) {
+                if (!isActive) {
+                    req.setAttribute(ERROR, ErrorMessageManager.getMessage("msg.accessDenied"));
+                    logger.log(Level.INFO, "User {} Access denied, account blocked", username);
+                    return page;
+                }
                 session.invalidate();
                 session = req.getSession();
                 session.setAttribute(LANGUAGE, language);

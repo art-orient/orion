@@ -1,76 +1,30 @@
 package com.art.orion.model.validator;
 
-import com.art.orion.util.ErrorMessageManager;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class UserValidator {
-    private static final Logger logger = LogManager.getLogger();
-    private static final String USERNAME_REGEX = "[a-zA-Z\\d_\\-.]{3,30}";
+    private static final String USERNAME_REGEX = "[\\w-]{3,30}";
     private static final String PASSWORD_REGEX = "[a-zA-ZА-я\\d\\p{Punct}]{5,40}";
     private static final String NAME_REGEX = "[a-zA-ZА-я-]{2,30}";
 
-    public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
-                                String lastname, String email, StringBuilder validationStatus) {
-        boolean isValidUser = true;
-        if (isNotValidUsername(username)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notValidUsername")).append("\n");
-            isValidUser = false;
-        }
-        if (isNotValidPassword(password)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notValidPassword")).append("\n");
-            isValidUser = false;
-        }
-        if (isNotEqualsPasswords(password, confirmPassword)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notConfirmPassword")).append("\n");
-            isValidUser = false;
-        }
-        if (isNotValidName(firstname)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notValidFirstname")).append("\n");
-            isValidUser = false;
-        }
-        if (isNotValidName(lastname)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notValidLastname")).append("\n");
-            isValidUser = false;
-        }
-        if (isNotValidEmail(email)) {
-            validationStatus.append(ErrorMessageManager.getMessage("msg.notValidEmail"));
-            isValidUser = false;
-        }
-        logger.log(Level.INFO, "User is valid = {}", isValidUser);
-        return isValidUser;
+    private UserValidator() {
     }
 
-    public boolean isNotValidUsername(String username) {
-        boolean isNotValidUsername;
-        if (username==null || username.isEmpty()) {
-            isNotValidUsername = true;
-        } else {
-            isNotValidUsername = !username.matches(USERNAME_REGEX);
-        }
-        return isNotValidUsername;
+    public static boolean isNotValidUsername(String username) {
+        return username == null || username.isEmpty() || !username.matches(USERNAME_REGEX);
     }
 
-    private boolean isNotValidPassword(String password) {
-        boolean isNotValidPassword;
-        if (password==null || password.isEmpty()) {
-            isNotValidPassword = true;
-        } else {
-            isNotValidPassword = !password.matches(PASSWORD_REGEX);
-        }
-        return isNotValidPassword;
+    public static boolean isNotValidPassword(String password) {
+        return password == null || password.isEmpty() || !password.matches(PASSWORD_REGEX);
     }
 
-    private boolean isNotEqualsPasswords(String password, String confirmPassword) {
+    public static boolean isNotEqualsPasswords(String password, String confirmPassword) {
         return !password.equals(confirmPassword);
     }
 
-    private boolean isNotValidName(String name) {
-        return !name.matches(NAME_REGEX);
+    public static boolean isNotValidName(String name) {
+        return name == null || name.isEmpty() || !name.matches(NAME_REGEX);
     }
 
-    private boolean isNotValidEmail(String email) {
+    public static boolean isNotValidEmail(String email) {
         return !EmailValidator.validate(email);
     }
 }

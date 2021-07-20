@@ -9,10 +9,12 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
+import com.art.orion.model.validator.ProductValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,5 +112,12 @@ public class ProductServiceImpl implements ProductService {
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while updating a product", e);
         }
+    }
+
+    @Override
+    public boolean isProductValid(String brand, String modelName, BigDecimal cost) {
+        return ProductValidator.isBrandValid(brand)
+                && ProductValidator.isModelNameValid(modelName)
+                && ProductValidator.isCostValid(cost);
     }
 }

@@ -25,4 +25,7 @@ public interface UserService {
     boolean updateUser(User user) throws ServiceException;
 
     boolean deleteUser(String username) throws ServiceException;
+
+    boolean isValidUser(String username, String password, String confirmPassword, String firstname,
+                                String lastname, String email, StringBuilder validationStatus);
 }

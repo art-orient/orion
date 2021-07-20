@@ -12,7 +12,7 @@ public class EmailValidatorTest {
     }
 
     @Test(dataProvider = "validEmail")
-    public void isValidEmailPositiveUsernameTest(String email) {
+    public void isValidEmailPositiveTest(String email) {
         Assert.assertTrue(EmailValidator.validate(email));
     }
 

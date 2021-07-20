@@ -6,6 +6,7 @@ import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductCategory;
 import com.art.orion.model.entity.Shoes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,4 +29,6 @@ public interface ProductService {
     int countNumberProducts(ProductCategory productCategory, boolean isAdmin) throws ServiceException;
 
     void updateProduct(Object product) throws ServiceException;
+
+    boolean isProductValid(String brand, String modelName, BigDecimal cost);
 }

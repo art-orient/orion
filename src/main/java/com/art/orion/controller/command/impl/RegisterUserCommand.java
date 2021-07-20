@@ -6,7 +6,6 @@ import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
 import com.art.orion.exception.ServiceException;
 import com.art.orion.model.service.UserService;
-import com.art.orion.model.validator.UserValidator;
 import com.art.orion.util.ErrorMessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -45,7 +44,6 @@ public class RegisterUserCommand implements Command {
         String firstname = req.getParameter(FIRSTNAME);
         String lastname = req.getParameter(LASTNAME);
         String email = req.getParameter(EMAIL);
-        UserValidator validator = new UserValidator();
         String registrationStatus;
         StringBuilder validationStatus = new StringBuilder();
         boolean isUsernameBusy = false;
@@ -54,7 +52,7 @@ public class RegisterUserCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR, e);
         }
-        if (validator.isValidUser(username, password, confirmPassword, firstname, lastname, email, validationStatus)
+        if (userService.isValidUser(username, password, confirmPassword, firstname, lastname, email, validationStatus)
             && !isUsernameBusy) {
             User user = new User(username, firstname, lastname, email);
             String encryptedPassword = PasswordEncryptor.encryptPassword(password);

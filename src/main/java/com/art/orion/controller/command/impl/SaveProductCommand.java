@@ -10,7 +10,6 @@ import com.art.orion.model.entity.ProductDetails;
 import com.art.orion.model.entity.Shoes;
 import com.art.orion.model.service.ProductService;
 import com.art.orion.exception.ServiceException;
-import com.art.orion.model.validator.ProductValidator;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -64,7 +63,7 @@ public class SaveProductCommand implements Command {
         BigDecimal cost = RequestParseNumberHelper.getBigDecimal(req, COST);
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
         ProductDetails productDetails = new ProductDetails();
-        if (ProductValidator.isProductValid(brand, modelName, cost)) {
+        if (productService.isProductValid(brand, modelName, cost)) {
             productDetails.setBrand(brand);
             productDetails.setModelName(modelName);
             productDetails.setDescriptionRu(descriptionRu);
