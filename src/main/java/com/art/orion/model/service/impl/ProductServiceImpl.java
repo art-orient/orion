@@ -18,6 +18,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code ProductServiceImpl} class represents product service implementation
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see ProductService
+ */
 public class ProductServiceImpl implements ProductService {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductDao PRODUCT_DAO = ProductDaoJdbc.getInstance();

@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code UserServiceImpl} class represents user service implementation
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see UserService
+ */
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDao USER_DAO = UserDaoJdbc.getInstance();
@@ -34,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return isUsernameBusy;
     }
 
+    @Override
     public boolean isFirstUser() throws ServiceException {
         try {
             return USER_DAO.countUsers() == 0;
@@ -42,6 +49,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean registerUser(User user) throws ServiceException {
         try {
             return USER_DAO.createUser(user);
@@ -50,6 +58,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean[] validateCredentialsAndActivity(String username, String password) throws ServiceException {
         try {
             return USER_DAO.validateCredentialsAndActivity (username, password);
@@ -58,6 +67,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public Optional<User> findUserByUsername(String username) throws ServiceException {
         try {
             return USER_DAO.findUserByUsername(username);
@@ -75,6 +85,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public int countUsers() throws ServiceException {
         try {
             return USER_DAO.countUsers();
@@ -83,6 +94,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean updateUser(User user) throws ServiceException {
         try {
            return USER_DAO.updateUser(user);
@@ -91,6 +103,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean deleteUser(String username) throws ServiceException {
         try {
             return USER_DAO.deleteUser(username);
@@ -99,6 +112,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public boolean isValidUser (String username, String password, String confirmPassword, String firstname,
                                 String lastname, String email, StringBuilder validationStatus) {
         boolean isValidUser = true;

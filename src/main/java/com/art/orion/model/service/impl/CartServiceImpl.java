@@ -10,6 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The {@code CartServiceImpl} class represents cart service implementation
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see CartService
+ */
 public class CartServiceImpl implements CartService {
 
     @Override
