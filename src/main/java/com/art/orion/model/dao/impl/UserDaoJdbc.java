@@ -34,6 +34,13 @@ import static com.art.orion.model.dao.column.UsersColumn.USERNAME;
 import static com.art.orion.model.dao.column.UsersColumn.USERNAME_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
+/**
+ * The {@code UserDaoJdbc} class works with database table users
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ * @see UserDao
+ */
 public class UserDaoJdbc implements UserDao {
     private static final Logger logger = LogManager.getLogger();
     private static final UserDaoJdbc INSTANCE = new UserDaoJdbc();
@@ -209,6 +216,13 @@ public class UserDaoJdbc implements UserDao {
         return isUserDeleted;
     }
 
+    /**
+     * Creates the user from resultSet
+     *
+     * @param resultSet {@link ResultSet} the resultSet
+     * @return {@link User} the user
+     * @throws SQLException the SQLException exception
+     */
     private User buildUser(ResultSet resultSet) throws SQLException {
         String username = resultSet.getString(USERNAME);
         String password = resultSet.getString(PASSWORD);

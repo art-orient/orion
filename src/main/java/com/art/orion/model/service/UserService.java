@@ -55,7 +55,7 @@ public interface UserService {
      * Finds the user by his username
      *
      * @param username {@link String} the username
-     * @return the optional of found user
+     * @return {@link Optional} of {@link User} the optional of found user
      * @throws ServiceException the service exception
      */
     Optional<User> findUserByUsername(String username) throws ServiceException;
