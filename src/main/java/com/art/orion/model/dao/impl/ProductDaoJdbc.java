@@ -33,6 +33,13 @@ import static com.art.orion.model.dao.column.ShoesColumn.IMAGE_PATH;
 import static com.art.orion.model.dao.column.ShoesColumn.MODEL_NAME;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
+/**
+ * The {@code ProductDaoJdbc} class works with database tables: accessories, clothing and shoes
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ * @see ProductDao
+ */
 public class ProductDaoJdbc implements ProductDao {
     private static final Logger logger = LogManager.getLogger();
     private static final ProductDaoJdbc INSTANCE = new ProductDaoJdbc();
@@ -95,6 +102,7 @@ public class ProductDaoJdbc implements ProductDao {
         return SHOES_JDBC.findShoesById(id);
     }
 
+    @Override
     public int countNumberProducts(ProductCategory productCategory, boolean isAdmin)
                                     throws OrionDatabaseException {
         int number = 0;
@@ -130,6 +138,13 @@ public class ProductDaoJdbc implements ProductDao {
         logger.log(Level.DEBUG, "Product is updated in the database");
     }
 
+    /**
+     * Creates the product details
+     *
+     * @param resultSet {@link ResultSet} the resultSet
+     * @return {@link ProductDetails} the product details
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     protected static ProductDetails createProductDetails (ResultSet resultSet) throws OrionDatabaseException {
         ProductDetails productDetails;
         try {
@@ -149,9 +164,16 @@ public class ProductDaoJdbc implements ProductDao {
         return productDetails;
     }
 
-    protected static void setProductDetailsInStatement (PreparedStatement statement,
-                            ProductDetails productDetails, Map<String, Integer> indices)
-                            throws SQLException {
+    /**
+     * Fill the statement with the product details
+     *
+     * @param statement {@link PreparedStatement} the preparedStatement
+     * @param productDetails {@link ProductDetails} the product details
+     * @param indices {@link Map} of {@link String} and {@link Integer} indices of table columns of product
+     * @throws SQLException the SQLException exception
+     */
+    protected static void setProductDetailsInStatement (PreparedStatement statement, ProductDetails productDetails,
+                                                        Map<String, Integer> indices) throws SQLException {
         int brandIndex = indices.get(BRAND);
         int modelNameIndex = indices.get(MODEL_NAME);
         int descriptionRuIndex = indices.get(DESCRIPTION_RU);

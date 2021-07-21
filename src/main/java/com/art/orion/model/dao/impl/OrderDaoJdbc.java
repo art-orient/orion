@@ -45,6 +45,13 @@ import static com.art.orion.model.dao.column.OrdersDetailsColumn.PRODUCT_ID_INDE
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 import static com.art.orion.util.Constant.USERNAME;
 
+/**
+ * The {@code OrderDaoJdbc} class works with database tables orders and order_details
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ * @see OrderDao
+ */
 public class OrderDaoJdbc implements OrderDao {
     private static final Logger logger = LogManager.getLogger();
     private static final OrderDaoJdbc INSTANCE = new OrderDaoJdbc();
@@ -147,21 +154,6 @@ public class OrderDaoJdbc implements OrderDao {
         return orders;
     }
 
-    private Order createOrder(Connection connection, ResultSet ordersSet)
-            throws SQLException, OrionDatabaseException {
-        int orderId = ordersSet.getInt(ORDER_ID);
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_ORDER_DETAILS)) {
-            statement.setInt(1, orderId);
-            ResultSet productSet = statement.executeQuery();
-            Map<Object, Long> products = createProducts(productSet);
-            String username = ordersSet.getString(USERNAME);
-            Date orderDate = ordersSet.getDate(ORDER_DATE);
-            BigDecimal cost = ordersSet.getBigDecimal(ORDER_COST);
-            boolean status = ordersSet.getBoolean(ORDER_STATUS);
-            return new Order(orderId, username, orderDate, products, cost, status);
-        }
-    }
-
     @Override
     public int countNumberOrders(String username) throws OrionDatabaseException {
         int number = 0;
@@ -253,6 +245,37 @@ public class OrderDaoJdbc implements OrderDao {
         return isOrderUpdated;
     }
 
+    /**
+     * Creates the order
+     *
+     * @param connection {@link Connection} the connection with the database
+     * @param ordersSet {@link ResultSet} the resultSet
+     * @return {@link Order} the order
+     * @throws SQLException, OrionDatabaseException the SQLException and OrionDatabaseException exceptions
+     */
+    private Order createOrder(Connection connection, ResultSet ordersSet)
+            throws SQLException, OrionDatabaseException {
+        int orderId = ordersSet.getInt(ORDER_ID);
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ORDER_DETAILS)) {
+            statement.setInt(1, orderId);
+            ResultSet productSet = statement.executeQuery();
+            Map<Object, Long> products = createProducts(productSet);
+            String username = ordersSet.getString(USERNAME);
+            Date orderDate = ordersSet.getDate(ORDER_DATE);
+            BigDecimal cost = ordersSet.getBigDecimal(ORDER_COST);
+            boolean status = ordersSet.getBoolean(ORDER_STATUS);
+            return new Order(orderId, username, orderDate, products, cost, status);
+        }
+    }
+
+    /**
+     * Saves the order
+     *
+     * @param connection {@link Connection} the connection with the database
+     * @param order {@link Order} the order
+     * @return the number of changed rows in the database
+     * @throws SQLException the SQLException exception
+     */
     private int saveOrder(Connection connection, Order order) throws SQLException {
         int orderId = INVALID_ID;
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)){
@@ -270,7 +293,14 @@ public class OrderDaoJdbc implements OrderDao {
         return orderId;
     }
 
-
+    /**
+     * Saves the order details
+     *
+     * @param connection {@link Connection} the connection with the database
+     * @param order {@link Order} the order
+     * @param orderId the order id
+     * @throws SQLException the SQLException exception
+     */
     private void saveOrderDetails(Connection connection, Order order, int orderId) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(INSERT_ORDER_DETAILS,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -300,8 +330,14 @@ public class OrderDaoJdbc implements OrderDao {
         }
     }
 
-    private Map<Object, Long> createProducts(ResultSet productSet)
-            throws SQLException, OrionDatabaseException {
+    /**
+     * Creates the product from different categories
+     *
+     * @param productSet {@link ResultSet} the resultSet
+     * @return {@link Map} of {@link Object} and {@link Long} the list of products and their quantity
+     * @throws SQLException, OrionDatabaseException the SQLException and OrionDatabaseException exceptions
+     */
+    private Map<Object, Long> createProducts(ResultSet productSet) throws SQLException, OrionDatabaseException {
         Map<Object, Long> products = new HashMap<>();
         Object product = null;
         while (productSet.next()) {
@@ -347,6 +383,14 @@ public class OrderDaoJdbc implements OrderDao {
         return products;
     }
 
+    /**
+     * Removes order or order details
+     *
+     * @param connection {@link Connection} the connection with the database
+     * @param orderId the order id
+     * @param query {@link String} the SQL query
+     * @throws SQLException the SQLException exception
+     */
     private void removeOrderData(Connection connection, int orderId, String query) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, orderId);
