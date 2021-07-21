@@ -24,13 +24,16 @@ import java.util.Optional;
  */
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
-    private static final UserDao USER_DAO = UserDaoJdbc.getInstance();
+    private UserDao userDao = UserDaoJdbc.getInstance();
+
+    public UserServiceImpl() {
+    }
 
     @Override
     public boolean checkIsUsernameBusy(String username, StringBuilder validationStatus) throws ServiceException {
         boolean isUsernameBusy;
         try {
-            isUsernameBusy = USER_DAO.checkIsUsernameBusy(username);
+            isUsernameBusy = userDao.checkIsUsernameBusy(username);
         } catch (OrionDatabaseException e) {
             validationStatus.append(e.getMessage());
             throw new ServiceException("Database access error occurred while validating username", e);
@@ -44,7 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isFirstUser() throws ServiceException {
         try {
-            return USER_DAO.countUsers() == 0;
+            return userDao.countUsers() == 0;
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while counting users in the database", e);
         }
@@ -53,7 +56,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean registerUser(User user) throws ServiceException {
         try {
-            return USER_DAO.createUser(user);
+            return userDao.createUser(user);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("user registration error", e);
         }
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean[] validateCredentialsAndActivity(String username, String password) throws ServiceException {
         try {
-            return USER_DAO.validateCredentialsAndActivity (username, password);
+            return userDao.validateCredentialsAndActivity (username, password);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("Database access error occurred while validating credentials", e);
         }
@@ -71,7 +74,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserByUsername(String username) throws ServiceException {
         try {
-            return USER_DAO.findUserByUsername(username);
+            return userDao.findUserByUsername(username);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while retrieving the user from the database", e);
         }
@@ -80,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUsers(int limit, int offset) throws ServiceException {
         try {
-            return USER_DAO.findUsers(limit, offset);
+            return userDao.findUsers(limit, offset);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while retrieving users from the database", e);
         }
@@ -89,7 +92,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countUsers() throws ServiceException {
         try {
-            return USER_DAO.countUsers();
+            return userDao.countUsers();
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while retrieving number of users", e);
         }
@@ -98,7 +101,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUser(User user) throws ServiceException {
         try {
-           return USER_DAO.updateUser(user);
+           return userDao.updateUser(user);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while updating of user", e);
         }
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(String username) throws ServiceException {
         try {
-            return USER_DAO.deleteUser(username);
+            return userDao.deleteUser(username);
         } catch (OrionDatabaseException e) {
             throw new ServiceException("An error occurred while deleting of user", e);
         }
