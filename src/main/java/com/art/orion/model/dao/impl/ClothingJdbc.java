@@ -42,6 +42,12 @@ import static com.art.orion.model.dao.column.ClothingColumn.TYPE_RU;
 import static com.art.orion.model.dao.column.ClothingColumn.TYPE_RU_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
+/**
+ * The {@code ClothingJdbc} class works with database table clothing
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class ClothingJdbc {
     private static final Logger logger = LogManager.getLogger();
     private static final ClothingJdbc INSTANCE = new ClothingJdbc();
@@ -77,6 +83,12 @@ public class ClothingJdbc {
         return INSTANCE;
     }
 
+    /**
+     * Saves the clothing
+     *
+     * @param clothing {@link Clothing} the clothing
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void addClothingToDatabase(Clothing clothing) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_CLOTHING)){
@@ -88,6 +100,15 @@ public class ClothingJdbc {
         }
     }
 
+    /**
+     * Finds only active clothing or all clothing if the user role is an admin
+     *
+     * @param limit number of products per page
+     * @param offset index of the first product on the page
+     * @param isAdmin is the user role an admin
+     * @return {@link List} of {@link Clothing} the list of found clothing
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public List<Clothing> searchClothing(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
         List<Clothing> clothing = new ArrayList<>();
         String query = SELECT_ACTIVE_CLOTHING;
@@ -110,6 +131,13 @@ public class ClothingJdbc {
         return clothing;
     }
 
+    /**
+     * Finds the clothing by id
+     *
+     * @param id the clothing id
+     * @return {@link Optional} of {@link Clothing} the Optional of found clothing
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public Optional<Clothing> findClothingById(int id) throws OrionDatabaseException {
         Optional<Clothing> optionalClothing;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -130,6 +158,12 @@ public class ClothingJdbc {
         return optionalClothing;
     }
 
+    /**
+     * Updates the clothing
+     *
+     * @param clothing {@link Clothing} the clothing
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void updateProduct(Clothing clothing) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_CLOTHING)){
@@ -142,6 +176,13 @@ public class ClothingJdbc {
         }
     }
 
+    /**
+     * Creates the clothing
+     *
+     * @param resultSet {@link ResultSet} the accessory
+     * @return {@link Clothing} the clothing
+     * @throws SQLException, OrionDatabaseException the SQLException and OrionDatabaseException exceptions
+     */
     private Clothing createClothing(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int clothingId = resultSet.getInt(CLOTHING_ID);
         String typeRu = resultSet.getString(TYPE_RU);
@@ -151,6 +192,13 @@ public class ClothingJdbc {
         return new Clothing(clothingId, typeRu, typeEn, productDetails, color);
     }
 
+    /**
+     * Fills the statement
+     *
+     * @param statement {@link PreparedStatement} the preparedStatement
+     * @param clothing {@link Clothing} the accessory
+     * @throws SQLException the SQLException exception
+     */
     private void fillStatement(PreparedStatement statement, Clothing clothing) throws SQLException {
         statement.setString(TYPE_RU_INDEX - 1, clothing.getTypeRu());
         statement.setString(TYPE_EN_INDEX - 1, clothing.getTypeEn());

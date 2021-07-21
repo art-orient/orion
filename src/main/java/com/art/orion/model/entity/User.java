@@ -4,6 +4,7 @@ package com.art.orion.model.entity;
  * Bean class of model layer represents user
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  */
 public class User {
     /**

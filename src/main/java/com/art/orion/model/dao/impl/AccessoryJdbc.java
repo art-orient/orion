@@ -43,6 +43,12 @@ import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_RU;
 import static com.art.orion.model.dao.column.AccessoriesColumn.TYPE_RU_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
+/**
+ * The {@code ProductDaoJdbc} class works with database table accessories
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class AccessoryJdbc {
     private static final Logger logger = LogManager.getLogger();
     private static final AccessoryJdbc INSTANCE = new AccessoryJdbc();
@@ -80,6 +86,12 @@ public class AccessoryJdbc {
         return INSTANCE;
     }
 
+    /**
+     * Saves the accessory
+     *
+     * @param accessory {@link Accessory} the accessory
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void addAccessoryToDatabase(Accessory accessory) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_ACCESSORY)){
@@ -91,6 +103,15 @@ public class AccessoryJdbc {
         }
     }
 
+    /**
+     * Finds only active accessories or all accessories if the user role is an admin
+     *
+     * @param limit number of products per page
+     * @param offset index of the first product on the page
+     * @param isAdmin is the user role an admin
+     * @return {@link List} of {@link Accessory} the list of found accessories
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public List<Accessory> searchAccessories(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
         List<Accessory> accessories = new ArrayList<>();
         String query = SELECT_ACTIVE_ACCESSORIES;
@@ -114,6 +135,13 @@ public class AccessoryJdbc {
         return accessories;
     }
 
+    /**
+     * Finds the accessory by id
+     *
+     * @param id the accessory id
+     * @return {@link Optional} of {@link Accessory} the Optional of found accessory
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public Optional<Accessory> findAccessoryById(int id) throws OrionDatabaseException {
         Optional<Accessory> optionalAccessory;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -134,6 +162,12 @@ public class AccessoryJdbc {
         return optionalAccessory;
     }
 
+    /**
+     * Updates the accessory
+     *
+     * @param accessory {@link Accessory} the accessory
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void updateProduct(Accessory accessory) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_ACCESSORY)){
@@ -146,6 +180,13 @@ public class AccessoryJdbc {
         }
     }
 
+    /**
+     * Creates the accessory
+     *
+     * @param resultSet {@link ResultSet} the accessory
+     * @return {@link Accessory} the accessory
+     * @throws SQLException, OrionDatabaseException the SQLException and OrionDatabaseException exceptions
+     */
     private Accessory createAccessory(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int accessoryId = resultSet.getInt(ACCESSORIES_ID);
         String typeRu = resultSet.getString(TYPE_RU);
@@ -156,6 +197,13 @@ public class AccessoryJdbc {
         return new Accessory(accessoryId, typeRu, typeEn, productDetails, availability);
     }
 
+    /**
+     * Fills the statement
+     *
+     * @param statement {@link PreparedStatement} the preparedStatement
+     * @param accessory {@link Accessory} the accessory
+     * @throws SQLException the SQLException exception
+     */
     private void fillStatement(PreparedStatement statement, Accessory accessory) throws SQLException {
         statement.setString(TYPE_RU_INDEX - 1, accessory.getTypeRu());
         statement.setString(TYPE_EN_INDEX - 1, accessory.getTypeEn());

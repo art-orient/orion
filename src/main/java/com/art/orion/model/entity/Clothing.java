@@ -4,18 +4,51 @@ import java.util.Map;
 
 import static com.art.orion.util.Constant.CLOTHING;
 
+/**
+ * Bean class of model layer represents the clothing as the product
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class Clothing {
+    /**
+     * The marker {@link String} of product category
+     */
     private static final String CATEGORY = CLOTHING;
+    /**
+     * Unique identification {@code int} value for the clothing
+     */
     private int clothingId;
+    /**
+     * The {@link String} type of the clothing in Russian
+     */
     private String typeRu;
+    /**
+     * The {@link String} type of the clothing in English
+     */
     private String typeEn;
+    /**
+     * The {@link ProductDetails} set of product details
+     */
     private ProductDetails productDetails;
+    /**
+     * The {@link String} color of the clothing
+     */
     private String color;
+    /**
+     * The {@link Map} of {@link Integer} and {@link Integer} the list of clothing sizes and their quantity
+     */
     private Map<Integer, Integer> sizes;
 
+    /**
+     * Constructs a new product
+     */
     public Clothing() {
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Clothing(String typeRu, String typeEn, ProductDetails productDetails, String color) {
         this.typeRu = typeRu;
         this.typeEn = typeEn;
@@ -23,6 +56,9 @@ public class Clothing {
         this.color = color;
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Clothing(int clothingId,  String typeRu, String typeEn, ProductDetails productDetails,
                      String color) {
         this(typeRu, typeEn, productDetails, color);
@@ -31,10 +67,6 @@ public class Clothing {
 
     public int getClothingId() {
         return clothingId;
-    }
-
-    public void setClothingId(int clothingId) {
-        this.clothingId = clothingId;
     }
 
     public String getTypeRu() {

@@ -42,6 +42,12 @@ import static com.art.orion.model.dao.column.ShoesColumn.TYPE_RU;
 import static com.art.orion.model.dao.column.ShoesColumn.TYPE_RU_INDEX;
 import static com.art.orion.util.Constant.DATABASE_EXCEPTION;
 
+/**
+ * The {@code ShoesJdbc} class works with database table shoes
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class ShoesJdbc {
     private static final Logger logger = LogManager.getLogger();
     private static final ShoesJdbc INSTANCE = new ShoesJdbc();
@@ -77,6 +83,12 @@ public class ShoesJdbc {
         return INSTANCE;
     }
 
+    /**
+     * Saves the shoes
+     *
+     * @param shoes {@link Shoes} the shoes
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void addShoesToDatabase(Shoes shoes) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_SHOES)){
@@ -88,6 +100,15 @@ public class ShoesJdbc {
         }
     }
 
+    /**
+     * Finds only active shoes or all shoes if the user role is an admin
+     *
+     * @param limit number of products per page
+     * @param offset index of the first product on the page
+     * @param isAdmin is the user role an admin
+     * @return {@link List} of {@link Shoes} the list of found shoes
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public List<Shoes> searchShoes(int limit, int offset, boolean isAdmin) throws OrionDatabaseException {
         List<Shoes> products = new ArrayList<>();
         String query = SELECT_ACTIVE_SHOES;
@@ -111,6 +132,13 @@ public class ShoesJdbc {
         return products;
     }
 
+    /**
+     * Finds the shoes by id
+     *
+     * @param id the shoes id
+     * @return {@link Optional} of {@link Shoes} the Optional of found shoes
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public Optional<Shoes> findShoesById(int id) throws OrionDatabaseException {
         Optional<Shoes> optionalShoes;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -131,6 +159,12 @@ public class ShoesJdbc {
         return optionalShoes;
     }
 
+    /**
+     * Updates the shoes
+     *
+     * @param shoes {@link Shoes} the shoes
+     * @throws OrionDatabaseException the OrionDatabaseException exception
+     */
     public void updateProduct(Shoes shoes) throws OrionDatabaseException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_SHOES)){
@@ -143,6 +177,13 @@ public class ShoesJdbc {
         }
     }
 
+    /**
+     * Creates the shoes
+     *
+     * @param resultSet {@link ResultSet} the accessory
+     * @return {@link Shoes} the shoes
+     * @throws SQLException, OrionDatabaseException the SQLException and OrionDatabaseException exceptions
+     */
     private Shoes createShoes(ResultSet resultSet) throws SQLException, OrionDatabaseException {
         int shoesId = resultSet.getInt(SHOES_ID);
         String typeRu = resultSet.getString(TYPE_RU);
@@ -153,6 +194,13 @@ public class ShoesJdbc {
         return new Shoes(shoesId, typeRu, typeEn, productDetails, color);
     }
 
+    /**
+     * Fills the statement
+     *
+     * @param statement {@link PreparedStatement} the preparedStatement
+     * @param shoes {@link Shoes} the shoes
+     * @throws SQLException the SQLException exception
+     */
     private void fillStatement(PreparedStatement statement, Shoes shoes) throws SQLException {
         ProductDetails productDetails = shoes.getProductDetails();
         ProductDaoJdbc.setProductDetailsInStatement(statement, productDetails, indices);

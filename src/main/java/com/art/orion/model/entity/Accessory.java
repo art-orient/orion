@@ -1,18 +1,50 @@
 package com.art.orion.model.entity;
 
+import java.util.Map;
+
 import static com.art.orion.util.Constant.ACCESSORIES;
 
+/**
+ * Bean class of model layer represents the accessory as the product
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class Accessory {
+    /**
+     * The marker {@link String} of product category
+     */
     private static final String CATEGORY = ACCESSORIES;
+    /**
+     * Unique identification {@code int} value for the accessories
+     */
     private int accessoryId;
+    /**
+     * The {@link String} type of an accessory in Russian
+     */
     private String typeRu;
+    /**
+     * The {@link String} type of an accessory in English
+     */
     private String typeEn;
+    /**
+     * The {@link ProductDetails} set of product details
+     */
     private ProductDetails productDetails;
+    /**
+     * The quantity of the accessory
+     */
     private int availability;
 
+    /**
+     * Constructs a new product
+     */
     public Accessory() {
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Accessory(String typeRu, String typeEn, ProductDetails productDetails,
                      int availability) {
         this.typeRu = typeRu;
@@ -21,6 +53,9 @@ public class Accessory {
         this.availability = availability;
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Accessory(int accessoryId,  String typeRu, String typeEn, ProductDetails productDetails,
                      int availability) {
         this(typeRu, typeEn, productDetails, availability);
@@ -29,10 +64,6 @@ public class Accessory {
 
     public int getAccessoryId() {
         return accessoryId;
-    }
-
-    public void setAccessoryId(int accessoryId) {
-        this.accessoryId = accessoryId;
     }
 
     public ProductDetails getProductDetails() {
