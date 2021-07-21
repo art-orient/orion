@@ -9,44 +9,44 @@ package com.art.orion.model.entity;
 public class User {
     /**
      * Unique identification {@code String} value for user's account, also used during authorization
-     * process.
+     * process
      */
     private String username;
     /**
      * Secret {@code String} value that is determined by user and used during process of
-     * authorization. Represents encrypted value of original password.
+     * authorization. Represents encrypted value of original password
      */
     private String password;
     /**
-     * First name {@code String} of the user.
+     * First name {@code String} of the user
      */
     private String firstName;
     /**
-     * Last name {@code String} of the user.
+     * Last name {@code String} of the user
      */
     private String lastName;
     /**
-     * E-mail {@code String} of the user.
+     * E-mail {@code String} of the user
      */
     private String email;
     /**
-     * {@code Role} value represents user's role and defines user's account privileges.
+     * {@code Role} value represents user's role and defines user's account privileges
      */
     private Role role;
     /**
      * {@code boolean} value represents status of the user account. {@code true} - for active
-     * account, {@code false} - for inactive accounts.
+     * account, {@code false} - for inactive accounts
      */
     private boolean active;
 
     /**
-     * Explicit default constructor.
+     * Explicit default constructor
      */
     public User() {
     }
 
     /**
-     * The constructor with parameters.
+     * The constructor with parameters
      */
     public User(String username, String firstName, String lastName, String email) {
         this.username = username;
@@ -56,7 +56,7 @@ public class User {
     }
 
     /**
-     * The constructor with parameters.
+     * The constructor with parameters
      */
     public User(String username, String password, String firstName, String lastName, String email, Role role,
                 boolean active) {

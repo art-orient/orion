@@ -1,7 +1,5 @@
 package com.art.orion.model.entity;
 
-import java.util.Map;
-
 import static com.art.orion.util.Constant.CLOTHING;
 
 /**
@@ -35,10 +33,6 @@ public class Clothing {
      * The {@link String} color of the clothing
      */
     private String color;
-    /**
-     * The {@link Map} of {@link Integer} and {@link Integer} the list of clothing sizes and their quantity
-     */
-    private Map<Integer, Integer> sizes;
 
     /**
      * Constructs a new product
@@ -99,14 +93,6 @@ public class Clothing {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Map<Integer, Integer> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(Map<Integer, Integer> sizes) {
-        this.sizes = sizes;
     }
 
     public static String getCategory() {

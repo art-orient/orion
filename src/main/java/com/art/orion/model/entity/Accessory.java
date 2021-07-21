@@ -1,7 +1,5 @@
 package com.art.orion.model.entity;
 
-import java.util.Map;
-
 import static com.art.orion.util.Constant.ACCESSORIES;
 
 /**

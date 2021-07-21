@@ -1,23 +1,48 @@
 package com.art.orion.model.entity;
 
-import java.util.List;
-import java.util.Map;
-
 import static com.art.orion.util.Constant.SHOES;
 
+/**
+ * Bean class of model layer represents the shoes as the product
+ *
+ * @author Aliaksandr Artsikhovich
+ * @version 1.0
+ */
 public class Shoes {
+    /**
+     * The marker {@link String} of product category
+     */
     private static final String CATEGORY = SHOES;
+    /**
+     * Unique identification {@code int} value for the shoes
+     */
     private int shoesId;
+    /**
+     * The {@link String} type of the shoes in Russian
+     */
     private String typeRu;
+    /**
+     * The {@link String} type of the clothing in English
+     */
     private String typeEn;
+    /**
+     * The {@link ProductDetails} set of product details
+     */
     private ProductDetails productDetails;
+    /**
+     * The {@link String} color of the clothing
+     */
     private String color;
-    private Map<Integer, Integer> sizes;
-    private List<String> additionalImgPaths;
 
+    /**
+     * Constructs a new product
+     */
     public Shoes() {
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Shoes(String typeRu, String typeEn, ProductDetails productDetails, String color) {
         this.typeRu = typeRu;
         this.typeEn = typeEn;
@@ -25,6 +50,9 @@ public class Shoes {
         this.color = color;
     }
 
+    /**
+     * Constructs a new product use parameters
+     */
     public Shoes(int shoesId,  String typeRu, String typeEn, ProductDetails productDetails,
                     String color) {
         this(typeRu, typeEn, productDetails, color);
@@ -37,10 +65,6 @@ public class Shoes {
 
     public int getShoesId() {
         return shoesId;
-    }
-
-    public void setShoesId(int shoesId) {
-        this.shoesId = shoesId;
     }
 
     public String getTypeRu() {
@@ -73,22 +97,6 @@ public class Shoes {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public Map<Integer, Integer> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(Map<Integer, Integer> sizes) {
-        this.sizes = sizes;
-    }
-
-    public List<String> getAdditionalImgPaths() {
-        return additionalImgPaths;
-    }
-
-    public void setAdditionalImgPaths(List<String> additionalImgPaths) {
-        this.additionalImgPaths = additionalImgPaths;
     }
 
     public static String getCategory() {
