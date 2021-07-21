@@ -22,6 +22,7 @@ import java.util.Optional;
  * The {@code ProductServiceImpl} class represents product service implementation
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  * @see ProductService
  */
 public class ProductServiceImpl implements ProductService {

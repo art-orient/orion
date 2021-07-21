@@ -10,6 +10,12 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+/**
+ * Application listener
+ *
+ * @author Aliaksandr Artsikhovich
+ * @see ServletContextListener
+ */
 @WebListener
 public class ContextListener implements ServletContextListener {
     private static final Logger logger = LogManager.getLogger();

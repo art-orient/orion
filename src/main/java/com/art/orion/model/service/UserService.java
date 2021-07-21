@@ -10,18 +10,26 @@ import java.util.Optional;
  * The {@code UserService} interface represents user service
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  */
 public interface UserService {
 
     /**
      * Сhecks if the username is busy or free
      *
+     * @param username {@link String} the username
      * @param validationStatus {@link StringBuilder} the validation status
      * @return the boolean
      * @throws ServiceException the service exception
      */
     boolean checkIsUsernameBusy(String username, StringBuilder validationStatus) throws ServiceException;
 
+    /**
+     * Сhecks if the user logs into the application first
+     *
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
     boolean isFirstUser() throws ServiceException;
 
     /**
@@ -37,7 +45,7 @@ public interface UserService {
      * Validates user credentials and activity
      *
      * @param username {@link String} the username
-     * @param password the password
+     * @param password {@link String} the password
      * @return the boolean
      * @throws ServiceException the service exception
      */
@@ -46,7 +54,7 @@ public interface UserService {
     /**
      * Finds the user by his username
      *
-     * @param username the username
+     * @param username {@link String} the username
      * @return the optional of found user
      * @throws ServiceException the service exception
      */
@@ -55,7 +63,9 @@ public interface UserService {
     /**
      * Finds all users
      *
-     * @return the list of found users
+     * @param limit number of users per page
+     * @param offset index of the first user on the page
+     * @return {@link List} of {@link User} the list of found users
      * @throws ServiceException the service exception
      */
     List<User> findUsers(int limit, int offset) throws ServiceException;
@@ -63,7 +73,7 @@ public interface UserService {
     /**
      * Сounts the number of all users
      *
-     * @return the int
+     * @return the number of all users
      * @throws ServiceException the service exception
      */
     int countUsers() throws ServiceException;

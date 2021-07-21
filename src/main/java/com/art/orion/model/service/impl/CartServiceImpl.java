@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
  * The {@code CartServiceImpl} class represents cart service implementation
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  * @see CartService
  */
 public class CartServiceImpl implements CartService {

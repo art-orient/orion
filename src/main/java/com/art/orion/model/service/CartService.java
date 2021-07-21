@@ -8,6 +8,7 @@ import java.util.Map;
  * The {@code CartService} interface represents cart service
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  */
 public interface CartService {
 

@@ -18,6 +18,7 @@ import java.util.Optional;
  * The {@code OrderServiceImpl} class represents order service implementation
  *
  * @author Aliaksandr Artsikhovich
+ * @version 1.0
  * @see OrderService
  */
 public class OrderServiceImpl implements OrderService {
