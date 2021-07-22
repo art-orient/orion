@@ -26,8 +26,8 @@
         <form action="controller" method="post">
             <input type="hidden" name="command" value="login_user"/>
             <label for="username"><fmt:message key="ui.username"/>: </label><br>
-            <input type="text" pattern="[a-zA-Z\d-_]{3,30}" name="username" id="username"
-                   value="${username}" required><br><br>
+            <input type="text" name="username" id="username"
+                   value="${username}" required pattern="[a-zA-Zа-яА-Я0-9_-]{3,30}"><br><br>
             <label for="password"><fmt:message key="ui.password"/>: </label><br>
             <input type="text" minlength="5" maxlength="40" name="password" id="password"
                    value="${password}" required><br><br>

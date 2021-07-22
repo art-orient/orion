@@ -5,11 +5,9 @@ import com.art.orion.exception.ServiceException;
 import com.art.orion.model.dao.impl.UserDaoJdbc;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -19,20 +17,18 @@ import org.testng.annotations.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-//@RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
     @Mock
     private UserDaoJdbc USER_DAO;
     private AutoCloseable autoCloseable;
-    private User user;
 
     @InjectMocks
     private UserServiceImpl userService;
 
     @BeforeClass
     public void setUp() {
-        user = new User("alexei", "alexei", "Алексей", "Алексеев",
+        User user = new User("alexei", "alexei", "Алексей", "Алексеев",
                 "alekseev@al.com", Role.MANAGER, true);
     }
 

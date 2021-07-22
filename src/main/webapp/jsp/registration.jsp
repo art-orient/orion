@@ -25,8 +25,8 @@
         <form action="controller" method="post">
             <input type="hidden" name="command" value="register_user"/>
             <label for="username"><fmt:message key="ui.username"/>: </label><br>
-            <input type="text" pattern="[a-zA-Z\d-_]{3,30}" name="username" id="username"
-                   value="${username}" required><br><br>
+            <input type="text" name="username" id="username"
+                   value="${username}" required pattern="[a-zA-Zа-яА-Я0-9_-]{3,30}"><br><br>
             <label for="password"><fmt:message key="ui.password"/>: </label><br>
             <input type="text" minlength="5" maxlength="40" name="password" id="password"
                    value="${password}" required><br><br>
@@ -34,11 +34,11 @@
             <input type="text" minlength="5" maxlength="40" name="confirmPassword" id="confirmPassword"
                    value="${confirmPassword}" required><br><br>
             <label for="firstname"><fmt:message key="ui.firstname"/>: </label><br>
-            <input type="text" minlength="2" name="firstname" id="firstname" value="${firstname}"><br><br>
+            <input type="text" name="firstname" id="firstname" value="${firstname}" pattern="[a-zA-Zа-яА-Я-]{2,30}"><br><br>
             <label for="lastname"><fmt:message key="ui.lastname"/>:<br>
-            <input type="text" minlength="2" name="lastname" id="lastname" value="${lastname}"><br><br>
+            <input type="text" name="lastname" id="lastname" value="${lastname}" pattern="[a-zA-Zа-яА-Я-]{2,30}"><br><br>
             <label for="email">e-mail: </label><br>
-            <input type="text" name="email" id="email" value="${email}" required><br><br>
+            <input type="text" name="email" id="email" value="${email}" required pattern="^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,6}$"><br><br>
             <input type="submit" name="signup" value="<fmt:message key="ui.signUp"/>"><br><br>
         </form>
         <br>

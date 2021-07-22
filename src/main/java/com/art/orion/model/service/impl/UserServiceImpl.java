@@ -26,9 +26,6 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
     private UserDao userDao = UserDaoJdbc.getInstance();
 
-    public UserServiceImpl() {
-    }
-
     @Override
     public boolean checkIsUsernameBusy(String username, StringBuilder validationStatus) throws ServiceException {
         boolean isUsernameBusy;
