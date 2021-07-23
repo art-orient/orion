@@ -9,6 +9,11 @@ import java.math.BigDecimal;
 
 import static com.art.orion.util.Constant.COST;
 
+/**
+ * The utility is responsible for parsing of number from the request
+ *
+ * @author Aliaksandr Artsikhovich
+ */
 public class RequestParseNumberHelper {
     private static final Logger logger = LogManager.getLogger();
 

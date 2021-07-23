@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.ImageProcessor;
 import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.controller.command.util.TextHandler;
+import com.art.orion.controller.command.util.XssProtection;
 import com.art.orion.exception.ServiceException;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
@@ -56,7 +57,7 @@ public class UpdateProductCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        String category = req.getParameter(CATEGORY);
+        String category = XssProtection.replaceBrackets(req.getParameter(CATEGORY));
         req.getSession().setAttribute(CATEGORY, category);
         int productId = RequestParseNumberHelper.getInt(req, PRODUCT_ID);
         String page = INDEX_PAGE;
@@ -89,8 +90,8 @@ public class UpdateProductCommand implements Command {
     }
 
     private Accessory createAccessory(HttpServletRequest req, int productId) throws ServiceException {
-        String typeRu = req.getParameter(TYPE_RU);
-        String typeEn = req.getParameter(TYPE_EN);
+        String typeRu = XssProtection.replaceBrackets(req.getParameter(TYPE_RU));
+        String typeEn = XssProtection.replaceBrackets(req.getParameter(TYPE_EN));
         int availability = RequestParseNumberHelper.getInt(req, AVAILABILITY);
         Optional<Accessory> optionalAccessory = productService.findAccessoryById(productId);
         if (optionalAccessory.isPresent()) {
@@ -106,9 +107,9 @@ public class UpdateProductCommand implements Command {
     }
 
     private Clothing createClothing(HttpServletRequest req, int productId) throws ServiceException {
-        String typeRu = req.getParameter(TYPE_RU);
-        String typeEn = req.getParameter(TYPE_EN);
-        String color = req.getParameter(COLOR);
+        String typeRu = XssProtection.replaceBrackets(req.getParameter(TYPE_RU));
+        String typeEn = XssProtection.replaceBrackets(req.getParameter(TYPE_EN));
+        String color = XssProtection.replaceBrackets(req.getParameter(COLOR));
         Optional<Clothing> optionalClothing = productService.findClothingById(productId);
         if (optionalClothing.isPresent()) {
             Clothing clothing = optionalClothing.get();
@@ -123,9 +124,9 @@ public class UpdateProductCommand implements Command {
     }
 
     private Shoes createShoes(HttpServletRequest req, int productId) throws ServiceException {
-        String typeRu = req.getParameter(TYPE_RU);
-        String typeEn = req.getParameter(TYPE_EN);
-        String color = req.getParameter(COLOR);
+        String typeRu = XssProtection.replaceBrackets(req.getParameter(TYPE_RU));
+        String typeEn = XssProtection.replaceBrackets(req.getParameter(TYPE_EN));
+        String color = XssProtection.replaceBrackets(req.getParameter(COLOR));
         Optional<Shoes> optionalShoes = productService.findShoesById(productId);
         if (optionalShoes.isPresent()) {
             Shoes shoes = optionalShoes.get();
@@ -140,10 +141,12 @@ public class UpdateProductCommand implements Command {
     }
 
     private void createProductDetails(HttpServletRequest req, ProductDetails productDetails) {
-        String brand = req.getParameter(BRAND);
-        String modelName = req.getParameter(MODEL_NAME);
-        List<String> descriptionRu = TextHandler.createListFromText(req.getParameter(DESCRIPTION_RU));
-        List<String> descriptionEn = TextHandler.createListFromText(req.getParameter(DESCRIPTION_EN));
+        String descRu = XssProtection.replaceBrackets(req.getParameter(DESCRIPTION_RU));
+        List<String> descriptionRu = TextHandler.createListFromText(descRu);
+        String descEn = XssProtection.replaceBrackets(req.getParameter(DESCRIPTION_EN));
+        List<String> descriptionEn = TextHandler.createListFromText(descEn);
+        String brand = XssProtection.replaceBrackets(req.getParameter(BRAND));
+        String modelName = XssProtection.replaceBrackets(req.getParameter(MODEL_NAME));
         BigDecimal cost = RequestParseNumberHelper.getBigDecimal(req, COST);
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
         if (productService.isProductValid(brand, modelName, cost)) {

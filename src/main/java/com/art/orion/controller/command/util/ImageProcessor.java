@@ -16,11 +16,16 @@ import java.nio.file.Paths;
 import static com.art.orion.util.Constant.CATEGORY;
 import static com.art.orion.util.Constant.IMAGE;
 
+/**
+ * The utility is responsible for image handling
+ *
+ * @author Aliaksandr Artsikhovich
+ */
 public class ImageProcessor {
     private static final Logger logger = LogManager.getLogger();
     private static final char EXTENSION_SEPARATOR = '.';
     private static final char DIR_SEPARATOR = '/';
-    private static final char DASH = '-';
+    private static final char UNDERLINE = '_';
     private static final char SPACE = ' ';
     private static final String NO_IMAGE = "no image";
 
@@ -49,8 +54,8 @@ public class ImageProcessor {
         } catch (IOException | ServletException e) {
             logger.log(Level.ERROR, "file of image not found", e);
         }
-        modelName = modelName.replace(DIR_SEPARATOR, DASH);
-        return (brand + EXTENSION_SEPARATOR + modelName + extension).replace(SPACE, EXTENSION_SEPARATOR);
+        modelName = modelName.replace(DIR_SEPARATOR, UNDERLINE);
+        return (brand + UNDERLINE + modelName + extension).replace(SPACE, UNDERLINE);
     }
 
     private static String uploadFile(Part part, String category, String fileName) {

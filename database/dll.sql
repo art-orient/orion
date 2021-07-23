@@ -5,6 +5,12 @@ INSERT INTO users VALUES
 'art-orient@tut.by', 0, 1),  -- password=admin
 ('natarti', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'Наталья', 'Артихович',
 'natarti75@gmail.com', 2, 1),  -- password=123456
+('nikolai', 'ba5f015bda4c06b9a1be0f2b7f96fe18ff7ddbbcf83a4e582bb6f709270d1557', 'Mikalay', 'Melnik',
+'melnik@gmail.com', 2, 1),
+('marina', '8d3e0bf685d077784de23e1c217de5c5d8da4c0200d7c86df6ff607d9cbc6959', 'Марина', 'Овсяник',
+'ovsianik_M@tut.by', 2, 1),
+('economist', '829af112ee3cdf7f83063b3e7025ac32a1b8fce3535a98bcb514f956169891b9', 'Accountant', 'Production',
+'big-e-mail@yandex.ru', 2, 1),
 ('lesha', 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2', 'Lesha', 'Artsikhovich',
 'art22@tut.by', 1, 1);  -- password=11111
 INSERT INTO users
@@ -288,6 +294,27 @@ Frame Material: Grilamid TR90
 All KV + glasses are CE certified
 The KV + Vertical goggles come with a soft microfiber case (no hard case).',
  'KV+_Vertical_glasses.jpg', 79.00, 6, 1);
+
+INSERT INTO accessories
+VALUES (23, 'Комплект шапка и перчатки', 'Hat and gloves set ', 'Asics', 'Running Pack blue', 'КОМПЛЕКТ ИЗ ШАПКИ И ПЕРЧАТОК ASICS УНИСЕКС
+
+Комплект Asics Running Pack, сшитый из тонкого флиса, отлично подойдет для бега при температуре до -10ºС.
+
+Легкий, теплый материал с влаговыводящими свойствами
+
+Специальный материал на подушечках пальцев для сенсорного экрана
+
+Светоотражающие элементы для повышения уровня безопасности передвижения в темное время суток',
+ 'ASICS UNISEX HAT & GLOVES SET
+
+The Asics Running Pack, made from thin fleece, is perfect for running in temperatures as low as -10 ° C.
+
+Lightweight, warm material with moisture wicking properties
+
+Dedicated material on the fingertips for the touch screen
+
+Reflective elements to increase the level of safety of movement in the dark',
+ 'Asics_Running_Pack_blue.jpg', 54.00, 12, 1);
 
 
 INSERT INTO clothing
@@ -765,6 +792,21 @@ A special TPU insert on the inner surface of the sole smoothly guides the foot i
 
 INSERT INTO shoes
 VALUES (7, 'Кроссовки для бега мужские', 'Running shoes for men', 'Saucony', 'Kinvara 12 Future/Black', 'Saucony Kinvara 12 переработан, и в нем все, что вам нужно для комфортного бега. Благодаря плавному ходу, легкому дизайну и мягкой, но отзывчивой амортизации бегуны могут взять эту обувь независимо от того, какую тренировку они запланировали.
+
+Мягкие кроссовки.
+Амортизация PWRRUN поддерживает легкую отзывчивость, что делает эту обувь фаворитом для ежедневных тренировок на много миль или бега на длинные дистанции.
+Дополнительный контакт с землей добавляет мощности гибкой езде, делая переход от приземления к взлету еще быстрее.
+Легкая печать придает дышащему адаптируемому сетчатому верху достаточную структуру, чтобы чувствовать себя в безопасности, не отягощая вас.',
+ 'The Saucony Kinvara 12 is redesigned with everything you need for a comfortable run. With a smooth ride, lightweight design, and soft yet responsive cushioning, runners can take this shoe no matter what kind of workout they`ve planned.
+
+Soft sneakers.
+PWRRUN cushioning maintains lightweight responsiveness, making this shoe a favorite for daily long distance workouts or long distance running.
+The extra ground contact adds power to the agile ride, making the transition from touchdown to takeoff even faster.
+Lightweight printing gives the breathable, adaptable mesh upper enough structure to feel secure without weighing you down.',
+ 'Saucony_Kinvara_12_Future-Black.jpg', 'black', 324.00, 1);
+
+INSERT INTO shoes
+VALUES (8, 'Кроссовки для бега мужские', 'Running shoes for men', 'Saucony', 'Kinvara 12 Future/Black', 'Saucony Kinvara 12 переработан, и в нем все, что вам нужно для комфортного бега. Благодаря плавному ходу, легкому дизайну и мягкой, но отзывчивой амортизации бегуны могут взять эту обувь независимо от того, какую тренировку они запланировали.
 
 Мягкие кроссовки.
 Амортизация PWRRUN поддерживает легкую отзывчивость, что делает эту обувь фаворитом для ежедневных тренировок на много миль или бега на длинные дистанции.

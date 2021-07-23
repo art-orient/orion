@@ -23,16 +23,16 @@
             <input type="hidden" name="productId" value="${productId}">
             <input type="hidden" name="category" value="${category}">
             <label for="typeRu"><fmt:message key="ui.type"/> <fmt:message key="ui.russian"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="typeRu" id="typeRu" value="${product.typeRu}">
+            <input type="text" name="typeRu" id="typeRu" value="${product.typeRu}" pattern="[a-zA-Zа-яА-Я\- ()'/]{2,30}">
             <br>
             <label for="typeEn"><fmt:message key="ui.type"/>  <fmt:message key="ui.english"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="typeEn" id="typeEn" value="${product.typeEn}">
+            <input type="text" name="typeEn" id="typeEn" value="${product.typeEn}" pattern="[a-zA-Zа-яА-Я\- ()'/]{2,30}">
             <br>
             <label for="brand"><fmt:message key="ui.brand"/></label><br/>
-            <input type="text" minlength="2" maxlength="30" name="brand" id="brand" value="${product.productDetails.brand}" required>
+            <input type="text" name="brand" id="brand" value="${product.productDetails.brand}" required pattern="[a-zA-Zа-яА-Я0-9\- ()'/]{2,30}">
             <br>
             <label for="modelName"><fmt:message key="ui.modelName"/></label><br/>
-            <input type="text" minlength="2" maxlength="50" name="modelName" id="modelName" value="${product.productDetails.modelName}" required>
+            <input type="text" name="modelName" id="modelName" value="${product.productDetails.modelName}" required pattern="[a-zA-Zа-яА-Я0-9\- ()'/]{2,30}">
             <br>
             <label for="descriptionRu"><fmt:message key="ui.description"/> <fmt:message key="ui.russian"/></label><br/>
             <textarea rows="12" cols="70" name="descriptionRu" id="descriptionRu"><c:out value="${descriptionRu}"/>

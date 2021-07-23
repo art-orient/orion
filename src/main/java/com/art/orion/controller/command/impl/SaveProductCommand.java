@@ -4,6 +4,7 @@ import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.ImageProcessor;
 import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.controller.command.util.TextHandler;
+import com.art.orion.controller.command.util.XssProtection;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.ProductDetails;
@@ -52,13 +53,15 @@ public class SaveProductCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        String category = (String) req.getSession().getAttribute(CATEGORY);
-        String typeRu = req.getParameter(TYPE_RU);
-        String typeEn = req.getParameter(TYPE_EN);
-        String brand = req.getParameter(BRAND);
-        String modelName = req.getParameter(MODEL_NAME);
-        List<String> descriptionRu = TextHandler.createListFromText(req.getParameter(DESCRIPTION_RU));
-        List<String> descriptionEn = TextHandler.createListFromText(req.getParameter(DESCRIPTION_EN));
+        String category = XssProtection.replaceBrackets((String) req.getSession().getAttribute(CATEGORY));
+        String typeRu = XssProtection.replaceBrackets(req.getParameter(TYPE_RU));
+        String typeEn = XssProtection.replaceBrackets(req.getParameter(TYPE_EN));
+        String brand = XssProtection.replaceBrackets(req.getParameter(BRAND));
+        String modelName = XssProtection.replaceBrackets(req.getParameter(MODEL_NAME));
+        String descRu = XssProtection.replaceBrackets(req.getParameter(DESCRIPTION_RU));
+        List<String> descriptionRu = TextHandler.createListFromText(descRu);
+        String descEn = XssProtection.replaceBrackets(req.getParameter(DESCRIPTION_EN));
+        List<String> descriptionEn = TextHandler.createListFromText(descEn);
         String filename = ImageProcessor.uploadImage(req, brand, modelName);
         BigDecimal cost = RequestParseNumberHelper.getBigDecimal(req, COST);
         boolean active = Boolean.parseBoolean(req.getParameter(ACTIVE));
@@ -81,13 +84,13 @@ public class SaveProductCommand implements Command {
                 product = accessory;
             }
             case CLOTHING -> {
-                String color = req.getParameter(COLOR);
+                String color = XssProtection.replaceBrackets(req.getParameter(COLOR));
                 Clothing clothing = new Clothing(typeRu, typeEn, productDetails, color);
                 logger.log(Level.DEBUG, () -> "Created clothing - " + clothing);
                 product = clothing;
             }
             case SHOES -> {
-                String color = req.getParameter(COLOR);
+                String color = XssProtection.replaceBrackets(req.getParameter(COLOR));
                 Shoes shoes = new Shoes(typeRu, typeEn, productDetails, color);
                 logger.log(Level.DEBUG, () -> "Created shoes - " + shoes);
                 product = shoes;

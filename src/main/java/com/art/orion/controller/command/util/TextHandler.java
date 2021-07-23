@@ -3,6 +3,11 @@ package com.art.orion.controller.command.util;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The utility is responsible for changing from text to list of string and vice versa
+ *
+ * @author Aliaksandr Artsikhovich
+ */
 public class TextHandler {
 
     private TextHandler() {

@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.RequestParseNumberHelper;
+import com.art.orion.controller.command.util.XssProtection;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
 import com.art.orion.model.entity.Shoes;
@@ -46,7 +47,7 @@ public class AddProductCommand implements Command {
     public String execute(HttpServletRequest req) {
         HttpSession session = req.getSession();
         List<Object> cart = getCart(session);
-        String category = req.getParameter(CATEGORY);
+        String category = XssProtection.replaceBrackets(req.getParameter(CATEGORY));
         String page = INDEX_PAGE;
         int id = RequestParseNumberHelper.getInt(req, PRODUCT);
         try {

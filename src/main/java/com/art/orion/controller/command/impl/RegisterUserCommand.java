@@ -2,6 +2,7 @@ package com.art.orion.controller.command.impl;
 
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.PasswordEncryptor;
+import com.art.orion.controller.command.util.XssProtection;
 import com.art.orion.model.entity.Role;
 import com.art.orion.model.entity.User;
 import com.art.orion.exception.ServiceException;
@@ -38,12 +39,12 @@ public class RegisterUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        String username = req.getParameter(USERNAME);
+        String username = XssProtection.replaceBrackets(req.getParameter(USERNAME));
         String password = req.getParameter(PASSWORD);
         String confirmPassword = req.getParameter(CONFIRM_PASSWORD);
-        String firstname = req.getParameter(FIRSTNAME);
-        String lastname = req.getParameter(LASTNAME);
-        String email = req.getParameter(EMAIL);
+        String firstname = XssProtection.replaceBrackets(req.getParameter(FIRSTNAME));
+        String lastname = XssProtection.replaceBrackets(req.getParameter(LASTNAME));
+        String email = XssProtection.replaceBrackets(req.getParameter(EMAIL));
         String registrationStatus;
         StringBuilder validationStatus = new StringBuilder();
         boolean isUsernameBusy = false;

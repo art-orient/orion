@@ -11,6 +11,11 @@ import static com.art.orion.util.Constant.PAGE;
 import static com.art.orion.util.Constant.OFFSET;
 import static com.art.orion.util.Constant.USER_MANAGEMENT;
 
+/**
+ * The utility is responsible for pagination
+ *
+ * @author Aliaksandr Artsikhovich
+ */
 public class Paginator {
     private static final Logger logger = LogManager.getLogger();
     public static final int LIMIT = 5;

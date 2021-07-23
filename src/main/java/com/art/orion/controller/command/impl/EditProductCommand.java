@@ -3,6 +3,7 @@ package com.art.orion.controller.command.impl;
 import com.art.orion.controller.command.Command;
 import com.art.orion.controller.command.util.RequestParseNumberHelper;
 import com.art.orion.controller.command.util.TextHandler;
+import com.art.orion.controller.command.util.XssProtection;
 import com.art.orion.exception.ServiceException;
 import com.art.orion.model.entity.Accessory;
 import com.art.orion.model.entity.Clothing;
@@ -42,7 +43,7 @@ public class EditProductCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        String category = req.getParameter(CATEGORY);
+        String category = XssProtection.replaceBrackets(req.getParameter(CATEGORY));
         req.setAttribute(CATEGORY, category);
         int productId = RequestParseNumberHelper.getInt(req, PRODUCT_ID);
         req.setAttribute(PRODUCT_ID, productId);

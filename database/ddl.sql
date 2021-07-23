@@ -12,6 +12,8 @@ role int not null,
 active boolean
 );
 
+CREATE INDEX username_index ON users (username);
+
 CREATE table shoes (
 shoes_id int primary key auto_increment,
 type_Ru varchar(30),
