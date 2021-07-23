@@ -75,6 +75,6 @@ public class Paginator {
         if (numberUsers > 0) {
             numberPages = numberUsers / USER_LIMIT;
         }
-        return numberUsers % LIMIT > 0 ? numberPages + 1: numberPages;
+        return numberUsers % USER_LIMIT > 0 ? numberPages + 1: numberPages;
     }
 }
