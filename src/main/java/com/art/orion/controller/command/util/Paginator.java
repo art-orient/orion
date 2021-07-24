@@ -63,18 +63,24 @@ public class Paginator {
     }
 
     public static int findNumberPages(int numberProducts) {
-        int numberPages = 0;
+        int numberPages;
         if (numberProducts > 0) {
             numberPages = numberProducts / LIMIT;
+            numberPages = numberProducts % LIMIT > 0 ? numberPages + 1: numberPages;
+        } else {
+            numberPages = 1;
         }
-        return numberProducts % LIMIT > 0 ? numberPages + 1: numberPages;
+        return numberPages;
     }
 
     public static int findUserNumberPages(int numberUsers) {
-        int numberPages = 0;
+        int numberPages;
         if (numberUsers > 0) {
             numberPages = numberUsers / USER_LIMIT;
+            numberPages = numberUsers % USER_LIMIT > 0 ? numberPages + 1: numberPages;
+        } else {
+            numberPages = 1;
         }
-        return numberUsers % USER_LIMIT > 0 ? numberPages + 1: numberPages;
+        return numberPages;
     }
 }
